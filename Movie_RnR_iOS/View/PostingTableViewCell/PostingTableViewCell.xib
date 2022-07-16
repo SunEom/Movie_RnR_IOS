@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="CarterOne-Regular.ttf">
+            <string>CarterOne</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="528" id="KGk-i7-Jjw" customClass="PostingTableViewCell" customModule="Movie_RnR_iOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="571" height="528"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="571" height="528"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jXl-xA-nB6">
+                        <rect key="frame" x="10" y="10" width="320" height="450"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="3qH-c4-exu">
+                                <rect key="frame" x="10" y="20" width="300" height="410"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postImage1" translatesAutoresizingMaskIntoConstraints="NO" id="siM-Q6-Ayg">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="siM-Q6-Ayg" secondAttribute="height" multiplier="2:1" id="kA4-5i-T8v"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Gun" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TV1-MH-0OI">
+                                        <rect key="frame" x="116.5" y="159" width="67.5" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="VSA-Zi-BnT"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OyW-qz-64V">
+                                        <rect key="frame" x="0.0" y="193" width="300" height="15"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="A5L-1C-Qft"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiI-1Z-MyY">
+                                        <rect key="frame" x="0.0" y="217" width="300" height="163.5"/>
+                                        <mutableString key="text">최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 </mutableString>
+                                        <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="riI-hi-xRr">
+                                        <rect key="frame" x="0.0" y="389.5" width="300" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="★★★★★" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gfc-40-ZJS">
+                                                <rect key="frame" x="0.0" y="0.0" width="150" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="💬 105" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGF-24-xpw">
+                                                <rect key="frame" x="150" y="0.0" width="150" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="OyW-qz-64V" secondAttribute="trailing" id="AHR-z8-ZeE"/>
+                                    <constraint firstItem="OyW-qz-64V" firstAttribute="leading" secondItem="3qH-c4-exu" secondAttribute="leading" id="VQU-8B-qvq"/>
+                                    <constraint firstItem="riI-hi-xRr" firstAttribute="leading" secondItem="3qH-c4-exu" secondAttribute="leading" id="iMk-Vv-I4C"/>
+                                    <constraint firstAttribute="trailing" secondItem="riI-hi-xRr" secondAttribute="trailing" id="uhn-Ib-olQ"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" name="mainColor"/>
+                        <constraints>
+                            <constraint firstItem="3qH-c4-exu" firstAttribute="top" secondItem="jXl-xA-nB6" secondAttribute="top" constant="20" id="0oO-5L-OuH"/>
+                            <constraint firstAttribute="bottom" secondItem="3qH-c4-exu" secondAttribute="bottom" constant="20" id="2JF-L1-Ybb"/>
+                            <constraint firstAttribute="width" constant="320" id="9H2-XC-ZZr"/>
+                            <constraint firstItem="3qH-c4-exu" firstAttribute="leading" secondItem="jXl-xA-nB6" secondAttribute="leading" constant="10" id="UhI-Xd-x9N"/>
+                            <constraint firstAttribute="trailing" secondItem="3qH-c4-exu" secondAttribute="trailing" constant="10" id="cDX-IQ-vAp"/>
+                            <constraint firstAttribute="height" constant="450" id="seT-Ey-Hl9"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" name="mainColor"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="jXl-xA-nB6" secondAttribute="bottom" id="JHE-jY-qAP"/>
+                    <constraint firstItem="jXl-xA-nB6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="LsA-lg-nXb"/>
+                    <constraint firstItem="jXl-xA-nB6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Nhw-jY-OxJ"/>
+                    <constraint firstAttribute="bottom" secondItem="jXl-xA-nB6" secondAttribute="bottom" constant="10" id="dOk-Gx-tbb"/>
+                    <constraint firstAttribute="trailing" secondItem="jXl-xA-nB6" secondAttribute="trailing" constant="10" id="pWx-J7-8s2"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="commentNumLabel" destination="NGF-24-xpw" id="5FT-Pv-D2H"/>
+                <outlet property="genreLabel" destination="OyW-qz-64V" id="uta-1b-QtT"/>
+                <outlet property="rateLabel" destination="Gfc-40-ZJS" id="mkm-tv-2Z9"/>
+                <outlet property="titleLabel" destination="TV1-MH-0OI" id="A3c-XV-El2"/>
+                <outlet property="topView" destination="jXl-xA-nB6" id="6id-qk-h7w"/>
+            </connections>
+            <point key="canvasLocation" x="48.550724637681164" y="277.90178571428572"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="postImage1" width="3000" height="2000"/>
+        <namedColor name="mainColor">
+            <color red="0.88235294117647056" green="0.88627450980392153" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
