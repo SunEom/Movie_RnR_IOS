@@ -20,6 +20,8 @@
 		BF6DA09E28807C3300177714 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF6DA09C28807C3300177714 /* LaunchScreen.storyboard */; };
 		BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */; };
 		BFAC2C7C28832F3600CF3E49 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */; };
+		BFFE98462884660A003B5AF8 /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */; };
+		BFFE984828846992003B5AF8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE984728846992003B5AF8 /* DetailViewController.swift */; };
 		DCDD4BAA9918E90D7EBFF54B /* Pods_Movie_RnR_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FFDBC937D660670ED9197C /* Pods_Movie_RnR_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +43,8 @@
 		BF6DA09F28807C3300177714 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 		BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleTableViewCell.xib; sourceTree = "<group>"; };
+		BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jua-Regular.ttf"; sourceTree = "<group>"; };
+		BFFE984728846992003B5AF8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D4D40B14C315E568C02A1A26 /* Pods-Movie_RnR_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movie_RnR_iOS.release.xcconfig"; path = "Target Support Files/Pods-Movie_RnR_iOS/Pods-Movie_RnR_iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,17 +84,9 @@
 			isa = PBXGroup;
 			children = (
 				BF0DE86D288314640048905C /* CarterOne-Regular.ttf */,
+				BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */,
 			);
 			path = fonts;
-			sourceTree = "<group>";
-		};
-		BF0DE876288318250048905C /* PostingTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				BF0DE8712883181A0048905C /* PostingTableViewCell.swift */,
-				BF0DE8722883181A0048905C /* PostingTableViewCell.xib */,
-			);
-			path = PostingTableViewCell;
 			sourceTree = "<group>";
 		};
 		BF6DA08528807C3200177714 = {
@@ -128,8 +124,8 @@
 			children = (
 				BF6DA09C28807C3300177714 /* LaunchScreen.storyboard */,
 				BF6DA09728807C3200177714 /* Main.storyboard */,
-				BF0DE876288318250048905C /* PostingTableViewCell */,
-				BFAC2C7D28832F3A00CF3E49 /* TitleTableViewCell */,
+				BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */,
+				BF0DE8722883181A0048905C /* PostingTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -137,7 +133,8 @@
 		BF6DA0A628807C4F00177714 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				BF6DA09528807C3200177714 /* HomeViewController.swift */,
+				BFFE984328845800003B5AF8 /* TableViewCell */,
+				BFFE98442884580B003B5AF8 /* ViewController */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -150,13 +147,22 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		BFAC2C7D28832F3A00CF3E49 /* TitleTableViewCell */ = {
+		BFFE984328845800003B5AF8 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				BF0DE8712883181A0048905C /* PostingTableViewCell.swift */,
 				BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */,
-				BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */,
 			);
-			path = TitleTableViewCell;
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		BFFE98442884580B003B5AF8 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				BF6DA09528807C3200177714 /* HomeViewController.swift */,
+				BFFE984728846992003B5AF8 /* DetailViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		D816FA1394C55BBEDB57F896 /* Pods */ = {
@@ -227,6 +233,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFFE98462884660A003B5AF8 /* Jua-Regular.ttf in Resources */,
 				BFAC2C7C28832F3600CF3E49 /* TitleTableViewCell.xib in Resources */,
 				BF0DE8742883181A0048905C /* PostingTableViewCell.xib in Resources */,
 				BF6DA09E28807C3300177714 /* LaunchScreen.storyboard in Resources */,
@@ -275,6 +282,7 @@
 				BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */,
 				BF6DA09428807C3200177714 /* SceneDelegate.swift in Sources */,
 				BF0DE86A288311960048905C /* Post.swift in Sources */,
+				BFFE984828846992003B5AF8 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

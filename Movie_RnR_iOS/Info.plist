@@ -4,6 +4,7 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Jua-Regular.ttf</string>
 		<string>CarterOne-Regular.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>

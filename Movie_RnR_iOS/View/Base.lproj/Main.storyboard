@@ -5,8 +5,15 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="CarterOne-Regular.ttf">
+            <string>CarterOne</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="uTt-RP-Ecp">
@@ -16,6 +23,7 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="headerColor"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="25"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -29,6 +37,17 @@
                                 <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </textAttributes>
+                            <barButtonItemAppearance key="backButtonAppearance">
+                                <barButtonItemStateAppearance key="normal">
+                                    <textAttributes key="titleTextAttributes">
+                                        <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </textAttributes>
+                                </barButtonItemStateAppearance>
+                                <barButtonItemStateAppearance key="highlighted"/>
+                                <barButtonItemStateAppearance key="disabled"/>
+                                <barButtonItemStateAppearance key="focused"/>
+                            </barButtonItemAppearance>
                         </navigationBarAppearance>
                         <navigationBarAppearance key="scrollEdgeAppearance">
                             <color key="backgroundColor" name="headerColor"/>
@@ -36,6 +55,17 @@
                                 <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </textAttributes>
+                            <barButtonItemAppearance key="backButtonAppearance">
+                                <barButtonItemStateAppearance key="normal">
+                                    <textAttributes key="titleTextAttributes">
+                                        <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </textAttributes>
+                                </barButtonItemStateAppearance>
+                                <barButtonItemStateAppearance key="highlighted"/>
+                                <barButtonItemStateAppearance key="disabled"/>
+                                <barButtonItemStateAppearance key="focused"/>
+                            </barButtonItemAppearance>
                         </navigationBarAppearance>
                     </navigationBar>
                     <connections>
@@ -68,6 +98,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="mainColor"/>
+                                        <connections>
+                                            <segue destination="AT4-dn-6aw" kind="show" identifier="goToDetail" id="dkj-cQ-Cqp"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -93,13 +126,160 @@
             </objects>
             <point key="canvasLocation" x="132" y="70"/>
         </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="mR5-Wy-WE3">
+            <objects>
+                <viewController id="AT4-dn-6aw" customClass="DetailViewController" customModule="Movie_RnR_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FvE-Dd-GhU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fsk-Oj-8CX">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWD-3O-f4b">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1162.5"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3bn-TT-JOf">
+                                                <rect key="frame" x="20" y="0.0" width="374" height="1162.5"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postImage1" translatesAutoresizingMaskIntoConstraints="NO" id="6ad-jq-fgn">
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="299"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="6ad-jq-fgn" secondAttribute="height" multiplier="5:4" id="Ewz-FB-Dmu"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Gun" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVZ-Gh-sih">
+                                                        <rect key="frame" x="0.0" y="307" width="374" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="7i1-4w-nUK"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="25"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="EPV-Sp-OMK">
+                                                        <rect key="frame" x="0.0" y="365" width="374" height="50"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EaJ-5W-bA7">
+                                                                <rect key="frame" x="0.0" y="0.0" width="183" height="50"/>
+                                                                <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✭ 10 / 10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJE-az-UIK">
+                                                                <rect key="frame" x="191" y="0.0" width="183" height="50"/>
+                                                                <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="ETx-OH-865"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v4V-0H-Krn">
+                                                        <rect key="frame" x="0.0" y="423" width="374" height="681.5"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <mutableString key="text">최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 </mutableString>
+                                                        <color key="textColor" systemColor="labelColor"/>
+                                                        <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="18"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    </textView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ppa-QX-77x">
+                                                        <rect key="frame" x="0.0" y="1112.5" width="374" height="50"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2022.07.18." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mmn-0J-EuM">
+                                                                <rect key="frame" x="0.0" y="0.0" width="183" height="50"/>
+                                                                <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="18"/>
+                                                                <color key="textColor" systemColor="systemGrayColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by Master" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fpg-bV-X2T">
+                                                                <rect key="frame" x="191" y="0.0" width="183" height="50"/>
+                                                                <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="18"/>
+                                                                <color key="textColor" systemColor="systemGrayColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="a4p-O1-VfG"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="pVZ-Gh-sih" secondAttribute="trailing" id="30q-zQ-PqI"/>
+                                                    <constraint firstAttribute="trailing" secondItem="6ad-jq-fgn" secondAttribute="trailing" id="AMI-zf-6i7"/>
+                                                    <constraint firstItem="6ad-jq-fgn" firstAttribute="top" secondItem="3bn-TT-JOf" secondAttribute="top" id="Jc6-d1-HsO"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ppa-QX-77x" secondAttribute="trailing" id="Ya9-bV-876"/>
+                                                    <constraint firstAttribute="trailing" secondItem="EPV-Sp-OMK" secondAttribute="trailing" id="Zv5-1s-ppe"/>
+                                                    <constraint firstItem="6ad-jq-fgn" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="iav-Nt-Fx2"/>
+                                                    <constraint firstAttribute="trailing" secondItem="6ad-jq-fgn" secondAttribute="trailing" id="ivV-WB-3Mb"/>
+                                                    <constraint firstItem="6ad-jq-fgn" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="kSe-nl-WyU"/>
+                                                    <constraint firstItem="EPV-Sp-OMK" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="miD-8K-52c"/>
+                                                    <constraint firstItem="ppa-QX-77x" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="qZp-JT-hk1"/>
+                                                    <constraint firstItem="pVZ-Gh-sih" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="saN-zM-P6g"/>
+                                                    <constraint firstItem="v4V-0H-Krn" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="t6c-q4-YFY"/>
+                                                    <constraint firstAttribute="trailing" secondItem="v4V-0H-Krn" secondAttribute="trailing" id="tgx-Tp-MGc"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="3bn-TT-JOf" firstAttribute="top" secondItem="kWD-3O-f4b" secondAttribute="top" id="56n-SZ-R8X"/>
+                                            <constraint firstItem="3bn-TT-JOf" firstAttribute="leading" secondItem="kWD-3O-f4b" secondAttribute="leading" constant="20" id="FmI-63-N3d"/>
+                                            <constraint firstAttribute="trailing" secondItem="3bn-TT-JOf" secondAttribute="trailing" constant="20" id="MG3-fd-Co0"/>
+                                            <constraint firstAttribute="bottom" secondItem="3bn-TT-JOf" secondAttribute="bottom" id="UdQ-lE-dbe"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="299-y3-LFp" firstAttribute="top" secondItem="kWD-3O-f4b" secondAttribute="top" id="4B5-wn-Xi6"/>
+                                    <constraint firstItem="kWD-3O-f4b" firstAttribute="leading" secondItem="299-y3-LFp" secondAttribute="leading" id="4rY-tl-98O"/>
+                                    <constraint firstItem="kWD-3O-f4b" firstAttribute="width" secondItem="fsk-Oj-8CX" secondAttribute="width" id="88H-cK-wC1"/>
+                                    <constraint firstItem="kWD-3O-f4b" firstAttribute="trailing" secondItem="299-y3-LFp" secondAttribute="trailing" id="Itr-fV-WP7"/>
+                                    <constraint firstItem="kWD-3O-f4b" firstAttribute="bottom" secondItem="299-y3-LFp" secondAttribute="bottom" id="LXT-Xc-zhi"/>
+                                    <constraint firstItem="kWD-3O-f4b" firstAttribute="height" secondItem="fsk-Oj-8CX" secondAttribute="height" priority="250" id="jso-Se-ozW"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="299-y3-LFp"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="0BH-y8-ZDj"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ywu-dY-f9d"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fsk-Oj-8CX" firstAttribute="top" secondItem="Ywu-dY-f9d" secondAttribute="top" id="AQw-IL-Wc8"/>
+                            <constraint firstItem="fsk-Oj-8CX" firstAttribute="leading" secondItem="Ywu-dY-f9d" secondAttribute="leading" id="Cr3-my-UKd"/>
+                            <constraint firstItem="Ywu-dY-f9d" firstAttribute="bottom" secondItem="fsk-Oj-8CX" secondAttribute="bottom" id="Q9q-3A-YAy"/>
+                            <constraint firstItem="Ywu-dY-f9d" firstAttribute="trailing" secondItem="fsk-Oj-8CX" secondAttribute="trailing" id="mY3-po-kBf"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="6Ee-hG-5pQ"/>
+                    <connections>
+                        <outlet property="overviewTextView" destination="v4V-0H-Krn" id="9hl-0L-VMT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t7h-NM-WFm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1023" y="70"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="postImage1" width="3000" height="2000"/>
         <namedColor name="headerColor">
             <color red="0.62352941176470589" green="0.62352941176470589" blue="0.62352941176470589" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="mainColor">
             <color red="0.88235294117647056" green="0.88627450980392153" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

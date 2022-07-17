@@ -17,13 +17,18 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        
+        // Config Table View
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(UINib(nibName: "PostingTableViewCell", bundle: nil), forCellReuseIdentifier: Constant.TableViewCellID.PostingCellID)
         tableView.register(UINib(nibName: "TitleTableViewCell", bundle: nil), forCellReuseIdentifier: Constant.TableViewCellID.TitleCellID)
     }
 
 
 }
+
+//MARK: - Table View Data Source Methods
 
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -43,5 +48,13 @@ extension HomeViewController: UITableViewDataSource {
         
         
         
+    }
+}
+
+//MARK: - Table View Delegate Method
+
+extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: Constant.SegueID.detail, sender: self)
     }
 }

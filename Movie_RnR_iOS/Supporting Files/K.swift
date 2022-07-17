@@ -12,4 +12,8 @@ struct Constant {
         static let PostingCellID = "PostingCell"
         static let TitleCellID = "TitleCell"
     }
+    
+    struct SegueID {
+        static let detail = "goToDetail"
+    }
 }
