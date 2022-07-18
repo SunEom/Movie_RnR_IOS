@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF0DE86A288311960048905C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DE869288311960048905C /* Post.swift */; };
+		BF0DE86A288311960048905C /* Posting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DE869288311960048905C /* Posting.swift */; };
 		BF0DE86E288314640048905C /* CarterOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF0DE86D288314640048905C /* CarterOne-Regular.ttf */; };
 		BF0DE870288316E80048905C /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DE86F288316E80048905C /* K.swift */; };
 		BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DE8712883181A0048905C /* PostingTableViewCell.swift */; };
 		BF0DE8742883181A0048905C /* PostingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF0DE8722883181A0048905C /* PostingTableViewCell.xib */; };
+		BF187344288592D8003BAF16 /* PostingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF187343288592D8003BAF16 /* PostingManager.swift */; };
+		BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6A3F4A2885AF0400D33C6D /* PostingDetail.swift */; };
 		BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DA09128807C3200177714 /* AppDelegate.swift */; };
 		BF6DA09428807C3200177714 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DA09328807C3200177714 /* SceneDelegate.swift */; };
 		BF6DA09628807C3200177714 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DA09528807C3200177714 /* HomeViewController.swift */; };
@@ -28,11 +30,13 @@
 /* Begin PBXFileReference section */
 		55FFDBC937D660670ED9197C /* Pods_Movie_RnR_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movie_RnR_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3834DE8E9E89CF4F27F9527 /* Pods-Movie_RnR_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movie_RnR_iOS.debug.xcconfig"; path = "Target Support Files/Pods-Movie_RnR_iOS/Pods-Movie_RnR_iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		BF0DE869288311960048905C /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		BF0DE869288311960048905C /* Posting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posting.swift; sourceTree = "<group>"; };
 		BF0DE86D288314640048905C /* CarterOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CarterOne-Regular.ttf"; sourceTree = "<group>"; };
 		BF0DE86F288316E80048905C /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 		BF0DE8712883181A0048905C /* PostingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingTableViewCell.swift; sourceTree = "<group>"; };
 		BF0DE8722883181A0048905C /* PostingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostingTableViewCell.xib; sourceTree = "<group>"; };
+		BF187343288592D8003BAF16 /* PostingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingManager.swift; sourceTree = "<group>"; };
+		BF6A3F4A2885AF0400D33C6D /* PostingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingDetail.swift; sourceTree = "<group>"; };
 		BF6DA08E28807C3200177714 /* Movie_RnR_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movie_RnR_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF6DA09128807C3200177714 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF6DA09328807C3200177714 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -142,7 +146,9 @@
 		BF6DA0A728807C5600177714 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BF0DE869288311960048905C /* Post.swift */,
+				BF0DE869288311960048905C /* Posting.swift */,
+				BF187343288592D8003BAF16 /* PostingManager.swift */,
+				BF6A3F4A2885AF0400D33C6D /* PostingDetail.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -185,6 +191,7 @@
 				BF6DA08A28807C3200177714 /* Sources */,
 				BF6DA08B28807C3200177714 /* Frameworks */,
 				BF6DA08C28807C3200177714 /* Resources */,
+				337DE622F296775C2B78607D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -246,6 +253,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		337DE622F296775C2B78607D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Movie_RnR_iOS/Pods-Movie_RnR_iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Movie_RnR_iOS/Pods-Movie_RnR_iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Movie_RnR_iOS/Pods-Movie_RnR_iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B9FA70C0B12F7D790A2F6946 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -280,8 +304,10 @@
 				BF6DA09628807C3200177714 /* HomeViewController.swift in Sources */,
 				BF0DE870288316E80048905C /* K.swift in Sources */,
 				BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */,
+				BF187344288592D8003BAF16 /* PostingManager.swift in Sources */,
 				BF6DA09428807C3200177714 /* SceneDelegate.swift in Sources */,
-				BF0DE86A288311960048905C /* Post.swift in Sources */,
+				BF0DE86A288311960048905C /* Posting.swift in Sources */,
+				BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */,
 				BFFE984828846992003B5AF8 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

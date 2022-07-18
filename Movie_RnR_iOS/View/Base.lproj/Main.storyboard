@@ -6,7 +6,6 @@
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -104,21 +103,32 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="rkx-YK-6ym">
+                                <rect key="frame" x="202" y="399" width="10" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="10" id="Jqt-vT-5RF"/>
+                                    <constraint firstAttribute="height" constant="10" id="Vpp-uL-eZZ"/>
+                                </constraints>
+                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="mainColor"/>
                         <constraints>
+                            <constraint firstItem="rkx-YK-6ym" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="1fR-iT-me1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KqZ-9f-ql7" secondAttribute="bottom" id="4gL-dk-PQh"/>
                             <constraint firstItem="KqZ-9f-ql7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="EvI-Gk-XFK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KqZ-9f-ql7" secondAttribute="trailing" id="Ije-JR-HI3"/>
                             <constraint firstItem="KqZ-9f-ql7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Jdc-gy-2py"/>
                             <constraint firstItem="KqZ-9f-ql7" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Qc4-xO-2yd"/>
+                            <constraint firstItem="rkx-YK-6ym" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UCg-cr-flf"/>
                             <constraint firstItem="KqZ-9f-ql7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="j7V-6L-RVp"/>
                             <constraint firstItem="KqZ-9f-ql7" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="vA8-sQ-Ihx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="MOVIE R&amp;R 🎬" id="pw3-qJ-kt2"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="rkx-YK-6ym" id="ecJ-vQ-ahQ"/>
                         <outlet property="tableView" destination="KqZ-9f-ql7" id="GYa-E4-rgO"/>
                     </connections>
                 </viewController>
@@ -138,10 +148,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWD-3O-f4b">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1162.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="885.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3bn-TT-JOf">
-                                                <rect key="frame" x="20" y="0.0" width="374" height="1162.5"/>
+                                                <rect key="frame" x="20" y="0.0" width="374" height="885.5"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postImage1" translatesAutoresizingMaskIntoConstraints="NO" id="6ad-jq-fgn">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="299"/>
@@ -154,8 +164,8 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="7i1-4w-nUK"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="25"/>
-                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="22"/>
+                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="EPV-Sp-OMK">
@@ -163,14 +173,14 @@
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EaJ-5W-bA7">
                                                                 <rect key="frame" x="0.0" y="0.0" width="183" height="50"/>
-                                                                <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="20"/>
-                                                                <nil key="textColor"/>
+                                                                <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="13"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✭ 10 / 10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJE-az-UIK">
                                                                 <rect key="frame" x="191" y="0.0" width="183" height="50"/>
-                                                                <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="20"/>
-                                                                <nil key="textColor"/>
+                                                                <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="13"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
@@ -179,26 +189,26 @@
                                                         </constraints>
                                                     </stackView>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v4V-0H-Krn">
-                                                        <rect key="frame" x="0.0" y="423" width="374" height="681.5"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                        <mutableString key="text">최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 </mutableString>
-                                                        <color key="textColor" systemColor="labelColor"/>
-                                                        <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="18"/>
+                                                        <rect key="frame" x="0.0" y="423" width="374" height="404.5"/>
+                                                        <color key="backgroundColor" name="mainColor"/>
+                                                        <string key="text">최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 </string>
+                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     </textView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ppa-QX-77x">
-                                                        <rect key="frame" x="0.0" y="1112.5" width="374" height="50"/>
+                                                        <rect key="frame" x="0.0" y="835.5" width="374" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2022.07.18." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mmn-0J-EuM">
                                                                 <rect key="frame" x="0.0" y="0.0" width="183" height="50"/>
-                                                                <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="18"/>
-                                                                <color key="textColor" systemColor="systemGrayColor"/>
+                                                                <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="12"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by Master" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fpg-bV-X2T">
                                                                 <rect key="frame" x="191" y="0.0" width="183" height="50"/>
-                                                                <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="18"/>
-                                                                <color key="textColor" systemColor="systemGrayColor"/>
+                                                                <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="12"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
@@ -207,6 +217,7 @@
                                                         </constraints>
                                                     </stackView>
                                                 </subviews>
+                                                <color key="backgroundColor" name="mainColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="pVZ-Gh-sih" secondAttribute="trailing" id="30q-zQ-PqI"/>
                                                     <constraint firstAttribute="trailing" secondItem="6ad-jq-fgn" secondAttribute="trailing" id="AMI-zf-6i7"/>
@@ -224,7 +235,7 @@
                                                 </constraints>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" name="mainColor"/>
                                         <constraints>
                                             <constraint firstItem="3bn-TT-JOf" firstAttribute="top" secondItem="kWD-3O-f4b" secondAttribute="top" id="56n-SZ-R8X"/>
                                             <constraint firstItem="3bn-TT-JOf" firstAttribute="leading" secondItem="kWD-3O-f4b" secondAttribute="leading" constant="20" id="FmI-63-N3d"/>
@@ -233,6 +244,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" name="mainColor"/>
                                 <constraints>
                                     <constraint firstItem="299-y3-LFp" firstAttribute="top" secondItem="kWD-3O-f4b" secondAttribute="top" id="4B5-wn-Xi6"/>
                                     <constraint firstItem="kWD-3O-f4b" firstAttribute="leading" secondItem="299-y3-LFp" secondAttribute="leading" id="4rY-tl-98O"/>
@@ -244,19 +256,34 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="299-y3-LFp"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="0BH-y8-ZDj"/>
                             </scrollView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="z47-ik-6k6">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                <color key="backgroundColor" name="mainColor"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Ywu-dY-f9d"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="mainColor"/>
                         <constraints>
                             <constraint firstItem="fsk-Oj-8CX" firstAttribute="top" secondItem="Ywu-dY-f9d" secondAttribute="top" id="AQw-IL-Wc8"/>
                             <constraint firstItem="fsk-Oj-8CX" firstAttribute="leading" secondItem="Ywu-dY-f9d" secondAttribute="leading" id="Cr3-my-UKd"/>
+                            <constraint firstItem="z47-ik-6k6" firstAttribute="top" secondItem="Ywu-dY-f9d" secondAttribute="top" id="GqQ-Bm-hP5"/>
                             <constraint firstItem="Ywu-dY-f9d" firstAttribute="bottom" secondItem="fsk-Oj-8CX" secondAttribute="bottom" id="Q9q-3A-YAy"/>
+                            <constraint firstItem="Ywu-dY-f9d" firstAttribute="trailing" secondItem="z47-ik-6k6" secondAttribute="trailing" id="del-on-hIe"/>
+                            <constraint firstItem="Ywu-dY-f9d" firstAttribute="bottom" secondItem="z47-ik-6k6" secondAttribute="bottom" id="hub-XQ-KDW"/>
                             <constraint firstItem="Ywu-dY-f9d" firstAttribute="trailing" secondItem="fsk-Oj-8CX" secondAttribute="trailing" id="mY3-po-kBf"/>
+                            <constraint firstItem="z47-ik-6k6" firstAttribute="leading" secondItem="Ywu-dY-f9d" secondAttribute="leading" id="oRk-8U-QSL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6Ee-hG-5pQ"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="z47-ik-6k6" id="ubO-yI-Ho5"/>
+                        <outlet property="dateLabel" destination="Mmn-0J-EuM" id="ytc-88-Jtr"/>
+                        <outlet property="genreLabel" destination="EaJ-5W-bA7" id="8UF-4h-lvE"/>
                         <outlet property="overviewTextView" destination="v4V-0H-Krn" id="9hl-0L-VMT"/>
+                        <outlet property="rateLabel" destination="eJE-az-UIK" id="9vs-rT-EMt"/>
+                        <outlet property="titleLabel" destination="pVZ-Gh-sih" id="mrB-Lk-XQ3"/>
+                        <outlet property="writerNicknameLabel" destination="Fpg-bV-X2T" id="wLf-jY-mD1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t7h-NM-WFm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -272,14 +299,5 @@
         <namedColor name="mainColor">
             <color red="0.88235294117647056" green="0.88627450980392153" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

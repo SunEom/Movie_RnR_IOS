@@ -7,4 +7,6 @@ target 'Movie_RnR_iOS' do
 
   # Pods for Movie_RnR_iOS
 
+  pod 'Alamofire'
+  
 end

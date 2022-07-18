@@ -7,13 +7,18 @@
 
 import Foundation
 
-class Post: Decodable {
+class PostingResponse: Decodable {
+    let code: Int
+    let data: [Posting]
+}
+
+class Posting: Decodable {
     let id: Int
     let title: String
     let overview: String
     let created: String
     let genres: String
-    let rate: Double
+    let rates: Double
     let updated: String
     let user_id: Int
     let commentCount: Int?

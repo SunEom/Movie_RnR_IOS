@@ -11,7 +11,7 @@ class PostingTableViewCell: UITableViewCell {
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var genreLabel: UILabel!
-    @IBOutlet weak var overviewLabel: UITextView!
+    @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
     @IBOutlet weak var commentNumLabel: UILabel!
     
@@ -34,7 +34,7 @@ class PostingTableViewCell: UITableViewCell {
         topView.layer.shadowRadius = 10
         topView.layer.shadowOffset = CGSize.zero
         topView.layer.shadowPath = nil
-        topView.layer.cornerRadius = 3
+        topView.layer.cornerRadius = 5
     }
     
 }
