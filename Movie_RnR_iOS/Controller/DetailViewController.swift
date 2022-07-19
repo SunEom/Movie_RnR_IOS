@@ -18,6 +18,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     let postingManager = PostingManager()
+    let commentManager = CommentManager()
+    
     var postNum: Int?
     
     override func viewDidLoad() {
@@ -27,6 +29,7 @@ class DetailViewController: UIViewController {
         
         if let postNum = postNum {
             postingManager.fetchPostingDetail(postID: postNum)
+            commentManager.fetchComment(postNum: postNum)
         }
         
     }
