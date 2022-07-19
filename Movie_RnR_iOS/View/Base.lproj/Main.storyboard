@@ -6,7 +6,6 @@
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -145,19 +144,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="z47-ik-6k6">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
-                                <color key="backgroundColor" name="mainColor"/>
-                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </activityIndicatorView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fsk-Oj-8CX">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWD-3O-f4b">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="885.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="893"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3bn-TT-JOf">
-                                                <rect key="frame" x="20" y="0.0" width="374" height="885.5"/>
+                                                <rect key="frame" x="20" y="0.0" width="374" height="893"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postImage1" translatesAutoresizingMaskIntoConstraints="NO" id="6ad-jq-fgn">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="299"/>
@@ -195,15 +189,14 @@
                                                         </constraints>
                                                     </stackView>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v4V-0H-Krn">
-                                                        <rect key="frame" x="0.0" y="423" width="374" height="404.5"/>
+                                                        <rect key="frame" x="0.0" y="423" width="374" height="38"/>
                                                         <color key="backgroundColor" name="mainColor"/>
-                                                        <string key="text">최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 최고의 파일럿이자 전설적인 인물 매버릭은 자신이 졸업한 훈련학교 교관으로 발탁된다. 그의 명성을 </string>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     </textView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ppa-QX-77x">
-                                                        <rect key="frame" x="0.0" y="835.5" width="374" height="50"/>
+                                                        <rect key="frame" x="0.0" y="469" width="374" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2022.07.18." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mmn-0J-EuM">
                                                                 <rect key="frame" x="0.0" y="0.0" width="183" height="50"/>
@@ -222,18 +215,72 @@
                                                             <constraint firstAttribute="height" constant="50" id="a4p-O1-VfG"/>
                                                         </constraints>
                                                     </stackView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0uf-dL-iKa">
+                                                        <rect key="frame" x="0.0" y="527" width="374" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="mfp-uJ-PMw"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="CarterOne" family="Carter One" pointSize="20"/>
+                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="OJF-aQ-ARy">
+                                                        <rect key="frame" x="0.0" y="585" width="374" height="100"/>
+                                                        <subviews>
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SaE-Ne-wFs">
+                                                                <rect key="frame" x="0.0" y="0.0" width="274" height="100"/>
+                                                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                            </textView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="in9-ak-H8r">
+                                                                <rect key="frame" x="274" y="0.0" width="100" height="100"/>
+                                                                <color key="backgroundColor" name="headerColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="100" id="5Go-Q7-O7j"/>
+                                                                </constraints>
+                                                                <color key="tintColor" name="headerColor"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="filled" title="Save">
+                                                                    <color key="baseBackgroundColor" name="headerColor"/>
+                                                                </buttonConfiguration>
+                                                            </button>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="in9-ak-H8r" firstAttribute="top" secondItem="OJF-aQ-ARy" secondAttribute="top" id="1S2-jC-1DT"/>
+                                                            <constraint firstAttribute="bottom" secondItem="SaE-Ne-wFs" secondAttribute="bottom" id="LID-1Z-TDz"/>
+                                                            <constraint firstAttribute="height" constant="100" id="Nay-eJ-zbx"/>
+                                                            <constraint firstItem="SaE-Ne-wFs" firstAttribute="top" secondItem="OJF-aQ-ARy" secondAttribute="top" id="YaJ-Xz-tqE"/>
+                                                            <constraint firstAttribute="bottom" secondItem="in9-ak-H8r" secondAttribute="bottom" id="nEB-ko-njc"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="9VG-Yc-VG0">
+                                                        <rect key="frame" x="0.0" y="693" width="374" height="200"/>
+                                                        <color key="backgroundColor" name="mainColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="200" id="t9V-wb-IlU"/>
+                                                        </constraints>
+                                                        <sections/>
+                                                    </tableView>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemCyanColor"/>
+                                                <color key="backgroundColor" name="mainColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="pVZ-Gh-sih" secondAttribute="trailing" id="30q-zQ-PqI"/>
+                                                    <constraint firstItem="OJF-aQ-ARy" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="8Xy-o8-vf2"/>
                                                     <constraint firstAttribute="trailing" secondItem="6ad-jq-fgn" secondAttribute="trailing" id="AMI-zf-6i7"/>
                                                     <constraint firstItem="6ad-jq-fgn" firstAttribute="top" secondItem="3bn-TT-JOf" secondAttribute="top" id="Jc6-d1-HsO"/>
+                                                    <constraint firstAttribute="trailing" secondItem="9VG-Yc-VG0" secondAttribute="trailing" id="PH9-fl-FFV"/>
                                                     <constraint firstAttribute="trailing" secondItem="ppa-QX-77x" secondAttribute="trailing" id="Ya9-bV-876"/>
+                                                    <constraint firstItem="0uf-dL-iKa" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="Z4y-Qz-h2J"/>
                                                     <constraint firstAttribute="trailing" secondItem="EPV-Sp-OMK" secondAttribute="trailing" id="Zv5-1s-ppe"/>
+                                                    <constraint firstItem="9VG-Yc-VG0" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="drT-Zx-LT7"/>
                                                     <constraint firstItem="6ad-jq-fgn" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="iav-Nt-Fx2"/>
                                                     <constraint firstAttribute="trailing" secondItem="6ad-jq-fgn" secondAttribute="trailing" id="ivV-WB-3Mb"/>
                                                     <constraint firstItem="6ad-jq-fgn" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="kSe-nl-WyU"/>
                                                     <constraint firstItem="EPV-Sp-OMK" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="miD-8K-52c"/>
+                                                    <constraint firstAttribute="trailing" secondItem="OJF-aQ-ARy" secondAttribute="trailing" id="nTU-pN-Wbh"/>
+                                                    <constraint firstAttribute="trailing" secondItem="0uf-dL-iKa" secondAttribute="trailing" id="ntg-jm-chD"/>
                                                     <constraint firstItem="ppa-QX-77x" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="qZp-JT-hk1"/>
                                                     <constraint firstItem="pVZ-Gh-sih" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="saN-zM-P6g"/>
                                                     <constraint firstItem="v4V-0H-Krn" firstAttribute="leading" secondItem="3bn-TT-JOf" secondAttribute="leading" id="t6c-q4-YFY"/>
@@ -262,6 +309,11 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="299-y3-LFp"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="0BH-y8-ZDj"/>
                             </scrollView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="z47-ik-6k6">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                <color key="backgroundColor" name="mainColor"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Ywu-dY-f9d"/>
                         <color key="backgroundColor" name="mainColor"/>
@@ -283,6 +335,8 @@
                         <outlet property="genreLabel" destination="EaJ-5W-bA7" id="8UF-4h-lvE"/>
                         <outlet property="overviewTextView" destination="v4V-0H-Krn" id="9hl-0L-VMT"/>
                         <outlet property="rateLabel" destination="eJE-az-UIK" id="9vs-rT-EMt"/>
+                        <outlet property="tableView" destination="9VG-Yc-VG0" id="fqg-Rt-wg8"/>
+                        <outlet property="tableViewHeight" destination="t9V-wb-IlU" id="Ru3-zG-1J5"/>
                         <outlet property="titleLabel" destination="pVZ-Gh-sih" id="mrB-Lk-XQ3"/>
                         <outlet property="writerNicknameLabel" destination="Fpg-bV-X2T" id="wLf-jY-mD1"/>
                     </connections>
@@ -300,8 +354,5 @@
         <namedColor name="mainColor">
             <color red="0.88235294117647056" green="0.88627450980392153" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemCyanColor">
-            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

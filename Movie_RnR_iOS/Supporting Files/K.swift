@@ -11,6 +11,7 @@ struct Constant {
     struct TableViewCellID {
         static let PostingCellID = "PostingCell"
         static let TitleCellID = "TitleCell"
+        static let CommentCellID = "CommentCell"
     }
     
     struct SegueID {

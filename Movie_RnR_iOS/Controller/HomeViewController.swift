@@ -27,7 +27,7 @@ class HomeViewController: UIViewController {
         tableView.register(UINib(nibName: "TitleTableViewCell", bundle: nil), forCellReuseIdentifier: Constant.TableViewCellID.TitleCellID)
         
         
-        postingManager.recentPostingsDelegate = self
+        postingManager.delegate = self
         
         postingManager.fetchRecentPost()
     
@@ -83,14 +83,14 @@ extension HomeViewController: UITableViewDelegate {
 
             guard let postNum = sender else { return }
             
-            detailVC.postNum = postNum as! Int
+            detailVC.postNum = (postNum as! Int)
         }
     }
 }
 
 //MARK: - Post Manager delegate Method
 
-extension HomeViewController: PostingManagerRecentPostingsDelegate {
+extension HomeViewController: PostingManagerDelegate {
     func didUpdatePostings(_ postingManager: PostingManager, postings: [Posting]) {
         activityIndicator.stopAnimating()
         tableView.reloadData()

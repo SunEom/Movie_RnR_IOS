@@ -8,19 +8,20 @@
 import Foundation
 import Alamofire
 
-protocol PostingManagerRecentPostingsDelegate {
+protocol PostingManagerDelegate {
     func didUpdatePostings(_ postingManager: PostingManager, postings: [Posting])
+    func didFetchPostingDetail(_ postingManager: PostingManager, detail: PostingDetail)
 }
 
-protocol PostingManagerPostingDetailDelegate {
-    func didFetchPostingDetail(_ postingManager: PostingManager, detail: PostingDetail)
+extension PostingManagerDelegate {
+    func didUpdatePostings(_ postingManager: PostingManager, postings: [Posting]){}
+    func didFetchPostingDetail(_ postingManager: PostingManager, detail: PostingDetail){}
 }
 
 class PostingManager {
     var postings = [Posting]()
     
-    var recentPostingsDelegate: PostingManagerRecentPostingsDelegate?
-    var postingDetailDelegate: PostingManagerPostingDetailDelegate?
+    var delegate: PostingManagerDelegate?
     
     func fetchRecentPost() {
     
@@ -33,7 +34,7 @@ class PostingManager {
                     if let safeData = response.data {
                         let decodedData = try decoder.decode(PostingResponse.self, from: safeData)
                         self.postings = decodedData.data
-                        self.recentPostingsDelegate?.didUpdatePostings(self, postings: decodedData.data)
+                        self.delegate?.didUpdatePostings(self, postings: decodedData.data)
                     }
                 } catch {
                     print("Error requesting HTTP: \(error)")
@@ -53,7 +54,7 @@ class PostingManager {
                     let decoder = JSONDecoder()
                     if let safeData = response.data {
                         let decodedData = try decoder.decode(PostingDetailResponse.self, from: safeData)
-                        self.postingDetailDelegate?.didFetchPostingDetail(self, detail: decodedData.data)
+                        self.delegate?.didFetchPostingDetail(self, detail: decodedData.data)
                     }
                 } catch {
                     print("Error requesting HTTP: \(error)")
