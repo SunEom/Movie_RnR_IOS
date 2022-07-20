@@ -30,10 +30,28 @@ class HomeViewController: UIViewController {
         postingManager.delegate = self
         
         postingManager.fetchRecentPost()
+        
+
+        if let id = UserDefaults.standard.object(forKey: "id") as? String, let password = UserDefaults.standard.object(forKey: "password") as? String {
+            UserManager.loginPost(id: id, password: password)
+        }
+        
+    }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UserManager.loginGet()
     }
 
-
+    @IBAction func userPressed(_ sender: UIBarButtonItem) {
+        if UserManager.getInstance() != nil {
+            print("goToMyPage")
+            return
+        } else {
+            performSegue(withIdentifier: Constant.SegueID.login, sender: self)
+        }
+    }
+    
 }
 
 //MARK: - Table View Data Source Methods

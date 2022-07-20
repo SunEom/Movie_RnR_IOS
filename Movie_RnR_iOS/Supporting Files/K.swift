@@ -16,5 +16,6 @@ struct Constant {
     
     struct SegueID {
         static let detail = "goToDetail"
+        static let login = "goToLogin"
     }
 }

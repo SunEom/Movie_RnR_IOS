@@ -228,13 +228,14 @@
                     <navigationItem key="navigationItem" title="MOVIE R&amp;R 🎬" id="pw3-qJ-kt2">
                         <barButtonItem key="leftBarButtonItem" title="Login" image="person" catalog="system" id="I5C-Po-TDF">
                             <connections>
-                                <segue destination="9KU-us-btt" kind="show" id="8If-D0-qeT"/>
+                                <action selector="userPressed:" destination="BYZ-38-t0r" id="8Qf-Wp-nan"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="rkx-YK-6ym" id="ecJ-vQ-ahQ"/>
                         <outlet property="tableView" destination="KqZ-9f-ql7" id="GYa-E4-rgO"/>
+                        <segue destination="9KU-us-btt" kind="show" identifier="goToLogin" id="hQn-Ts-tf5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

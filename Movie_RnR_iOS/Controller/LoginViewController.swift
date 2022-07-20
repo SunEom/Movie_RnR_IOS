@@ -42,13 +42,23 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            AF.request("\(ProcessInfo.processInfo.environment["ServerURL"]!)/auth/login", method: .post, parameters: ["id": id, "password": password])
-                .validate(statusCode: 200..<300)
-                .responseDecodable(of: LoginResponse.self) { response in
-                    if let res = response.value {
-                        print(res)
+            UserManager.loginPost(id: id, password: password) {
+                if let _ = UserManager.getInstance() {
+                    let alert = UIAlertController(title: "로그인 성공", message: "정상적으로 로그인되었습니다!", preferredStyle: .alert)
+                    
+                    let action = UIAlertAction(title: "확인", style: .default) { action in
+                        DispatchQueue.main.async {
+                            self.navigationController?.popToRootViewController(animated: true)
+                        }
                     }
+                    
+                    alert.addAction(action)
+        
+                    self.present(alert, animated: true)
                 }
+            }
+            
+            
             
         }
     }

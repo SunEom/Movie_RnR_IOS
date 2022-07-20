@@ -18,7 +18,8 @@
 		BF440DF32887389000DABCA5 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF440DF12887389000DABCA5 /* CommentTableViewCell.swift */; };
 		BF440DF42887389000DABCA5 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF440DF22887389000DABCA5 /* CommentTableViewCell.xib */; };
 		BF56AADF288801C7001D74C8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56AADE288801C7001D74C8 /* LoginViewController.swift */; };
-		BF56AAE12888035F001D74C8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56AAE02888035F001D74C8 /* User.swift */; };
+		BF56AAE12888035F001D74C8 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56AAE02888035F001D74C8 /* UserData.swift */; };
+		BF56AAE328881B0B001D74C8 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56AAE228881B0B001D74C8 /* UserManager.swift */; };
 		BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6A3F4A2885AF0400D33C6D /* PostingDetail.swift */; };
 		BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DA09128807C3200177714 /* AppDelegate.swift */; };
 		BF6DA09428807C3200177714 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DA09328807C3200177714 /* SceneDelegate.swift */; };
@@ -47,7 +48,8 @@
 		BF440DF12887389000DABCA5 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		BF440DF22887389000DABCA5 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
 		BF56AADE288801C7001D74C8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		BF56AAE02888035F001D74C8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		BF56AAE02888035F001D74C8 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		BF56AAE228881B0B001D74C8 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		BF6A3F4A2885AF0400D33C6D /* PostingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingDetail.swift; sourceTree = "<group>"; };
 		BF6DA08E28807C3200177714 /* Movie_RnR_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movie_RnR_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF6DA09128807C3200177714 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -192,7 +194,8 @@
 				BF6A3F4A2885AF0400D33C6D /* PostingDetail.swift */,
 				BF440DED28872A7000DABCA5 /* Comment.swift */,
 				BF440DEF28872AD200DABCA5 /* CommentManager.swift */,
-				BF56AAE02888035F001D74C8 /* User.swift */,
+				BF56AAE02888035F001D74C8 /* UserData.swift */,
+				BF56AAE228881B0B001D74C8 /* UserManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -332,7 +335,8 @@
 				BF6DA09628807C3200177714 /* HomeViewController.swift in Sources */,
 				BF0DE870288316E80048905C /* K.swift in Sources */,
 				BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */,
-				BF56AAE12888035F001D74C8 /* User.swift in Sources */,
+				BF56AAE328881B0B001D74C8 /* UserManager.swift in Sources */,
+				BF56AAE12888035F001D74C8 /* UserData.swift in Sources */,
 				BF187344288592D8003BAF16 /* PostingManager.swift in Sources */,
 				BF6DA09428807C3200177714 /* SceneDelegate.swift in Sources */,
 				BF0DE86A288311960048905C /* Posting.swift in Sources */,
