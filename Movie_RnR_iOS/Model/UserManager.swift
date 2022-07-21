@@ -20,13 +20,14 @@ class UserManager {
         return UserManager.user
     }
     
-    static func loginPost(id: String, password: String, completion: (() -> Void)? = nil) {
+    static func loginPost(id: String, password: String, errorHandler: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
         AF.request("\(Constant.serverURL)/auth/login", method: .post, parameters: ["id": id, "password": password])
             .validate(statusCode: 200..<300)
             .responseDecodable(of: LoginResponse.self) { response in
                 
                 if let err = response.value?.error {
                     print("Post Login Error : \(err)")
+                    errorHandler?()
                     return
                 } else if let userData = response.value?.data {
                     print("Post Login: \(userData)")
@@ -35,14 +36,12 @@ class UserManager {
                     UserDefaults.standard.set(password, forKey: "password")
                     
                     UserManager.user = userData
-                    if let completion = completion {
-                        completion()
-                    }
+                    completion?()
                 }
             }
     }
     
-    static func loginGet(completion: (() -> Void)? = nil) {
+    static func loginGet(errorHandler: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
         AF.request("\(Constant.serverURL)/auth/login", method: .get)
             .validate(statusCode: 200..<500)
             .responseDecodable(of: LoginResponse.self) { response in

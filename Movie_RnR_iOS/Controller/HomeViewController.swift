@@ -31,11 +31,6 @@ class HomeViewController: UIViewController {
         
         postingManager.fetchRecentPost()
         
-
-        if let id = UserDefaults.standard.object(forKey: "id") as? String, let password = UserDefaults.standard.object(forKey: "password") as? String {
-            UserManager.loginPost(id: id, password: password)
-        }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

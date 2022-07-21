@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TPG-2o-xBX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Aaq-1X-c1y">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -19,6 +19,7 @@
         <scene sceneID="uTt-RP-Ecp">
             <objects>
                 <navigationController id="TPG-2o-xBX" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="SWw-m4-UTI"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="fbP-1a-Zth">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -69,12 +70,12 @@
                         </navigationBarAppearance>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="fsz-3i-ixc"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="N3N-6A-4cD"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FZ4-9d-aGV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-809" y="70"/>
+            <point key="canvasLocation" x="-823" y="70"/>
         </scene>
         <!--My Page View Controller-->
         <scene sceneID="AqT-f9-0NV">
@@ -1088,10 +1089,43 @@
             </objects>
             <point key="canvasLocation" x="1914" y="854"/>
         </scene>
+        <!--Start View Controller-->
+        <scene sceneID="uDw-1t-QZ6">
+            <objects>
+                <viewController id="Aaq-1X-c1y" customClass="StartViewController" customModule="Movie_RnR_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pBh-Oi-ytC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreenIcon" translatesAutoresizingMaskIntoConstraints="NO" id="zSw-t1-UWD">
+                                <rect key="frame" x="117" y="358" width="180" height="180"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="180" id="M3j-T9-4pw"/>
+                                    <constraint firstAttribute="width" constant="180" id="Nss-8N-cp7"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="NTL-VS-dsf"/>
+                        <color key="backgroundColor" name="mainColor"/>
+                        <constraints>
+                            <constraint firstItem="zSw-t1-UWD" firstAttribute="centerX" secondItem="pBh-Oi-ytC" secondAttribute="centerX" id="uuf-g4-d2I"/>
+                            <constraint firstItem="zSw-t1-UWD" firstAttribute="centerY" secondItem="pBh-Oi-ytC" secondAttribute="centerY" id="z5H-AV-C80"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="deY-HW-FBa"/>
+                    <connections>
+                        <segue destination="TPG-2o-xBX" kind="presentation" identifier="goToHome" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="UsI-dL-0e1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SH9-R1-aIF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1788" y="70"/>
+        </scene>
     </scenes>
     <resources>
         <image name="facebook" width="30" height="30"/>
         <image name="instagram" width="24" height="24"/>
+        <image name="launchScreenIcon" width="60" height="60"/>
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="postImage1" width="3000" height="2000"/>
         <image name="twitter" width="30" height="30"/>

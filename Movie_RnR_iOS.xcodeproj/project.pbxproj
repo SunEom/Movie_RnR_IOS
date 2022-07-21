@@ -30,6 +30,7 @@
 		BF90A60A28894CDC0077E479 /* Pods_Movie_RnR_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FFDBC937D660670ED9197C /* Pods_Movie_RnR_iOS.framework */; };
 		BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */; };
 		BFAC2C7C28832F3600CF3E49 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */; };
+		BFF4107C28899E3300DA9043 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF4107B28899E3300DA9043 /* StartViewController.swift */; };
 		BFFE98462884660A003B5AF8 /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */; };
 		BFFE984828846992003B5AF8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE984728846992003B5AF8 /* DetailViewController.swift */; };
 		BFFF0603288925DF00885916 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF0602288925DF00885916 /* MyPageViewController.swift */; };
@@ -63,6 +64,7 @@
 		BF6DA09F28807C3300177714 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 		BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleTableViewCell.xib; sourceTree = "<group>"; };
+		BFF4107B28899E3300DA9043 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jua-Regular.ttf"; sourceTree = "<group>"; };
 		BFFE984728846992003B5AF8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		BFFF0602288925DF00885916 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				BF56AADE288801C7001D74C8 /* LoginViewController.swift */,
 				BFFF0602288925DF00885916 /* MyPageViewController.swift */,
 				BFFF060428893DF200885916 /* WebViewController.swift */,
+				BFF4107B28899E3300DA9043 /* StartViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				BFFF0603288925DF00885916 /* MyPageViewController.swift in Sources */,
 				BF0DE86A288311960048905C /* Posting.swift in Sources */,
 				BF440DF32887389000DABCA5 /* CommentTableViewCell.swift in Sources */,
+				BFF4107C28899E3300DA9043 /* StartViewController.swift in Sources */,
 				BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */,
 				BF440DF028872AD200DABCA5 /* CommentManager.swift in Sources */,
 				BF440DEE28872A7000DABCA5 /* Comment.swift in Sources */,

@@ -24,6 +24,7 @@ struct Constant {
         static let viewPostings = "goToViewPostings"
         static let dangerZone = "goToDangerZone"
         static let SNS = "goToSNS"
+        static let Home = "goToHome"
     }
     
     struct MyPageMenu {
