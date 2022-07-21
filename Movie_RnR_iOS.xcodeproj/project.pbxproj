@@ -27,13 +27,13 @@
 		BF6DA09928807C3200177714 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF6DA09728807C3200177714 /* Main.storyboard */; };
 		BF6DA09B28807C3300177714 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF6DA09A28807C3300177714 /* Assets.xcassets */; };
 		BF6DA09E28807C3300177714 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF6DA09C28807C3300177714 /* LaunchScreen.storyboard */; };
+		BF90A60A28894CDC0077E479 /* Pods_Movie_RnR_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FFDBC937D660670ED9197C /* Pods_Movie_RnR_iOS.framework */; };
 		BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */; };
 		BFAC2C7C28832F3600CF3E49 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */; };
 		BFFE98462884660A003B5AF8 /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */; };
 		BFFE984828846992003B5AF8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE984728846992003B5AF8 /* DetailViewController.swift */; };
 		BFFF0603288925DF00885916 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF0602288925DF00885916 /* MyPageViewController.swift */; };
 		BFFF060528893DF200885916 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF060428893DF200885916 /* WebViewController.swift */; };
-		DCDD4BAA9918E90D7EBFF54B /* Pods_Movie_RnR_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FFDBC937D660670ED9197C /* Pods_Movie_RnR_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCDD4BAA9918E90D7EBFF54B /* Pods_Movie_RnR_iOS.framework in Frameworks */,
+				BF90A60A28894CDC0077E479 /* Pods_Movie_RnR_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +498,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KB3R84Q4BQ;
@@ -515,6 +516,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.taeyangeom.Movie-RnR-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -527,6 +529,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KB3R84Q4BQ;
@@ -544,6 +547,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.taeyangeom.Movie-RnR-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

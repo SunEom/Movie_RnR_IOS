@@ -25,7 +25,7 @@ class PostingManager {
     
     func fetchRecentPost() {
     
-        AF.request("\(ProcessInfo.processInfo.environment["ServerURL"]!)/post", method: .get)
+        AF.request("\(Constant.serverURL)/post", method: .get)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseDecodable(of: PostingResponse.self) { response in
@@ -46,7 +46,7 @@ class PostingManager {
     
     func fetchPostingDetail(postID: Int) {
         
-        AF.request("\(ProcessInfo.processInfo.environment["ServerURL"]!)/post/\(postID)", method: .get)
+        AF.request("\(Constant.serverURL)/post/\(postID)", method: .get)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseDecodable(of: PostingDetailResponse.self) { response in

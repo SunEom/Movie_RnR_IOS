@@ -23,7 +23,7 @@ class CommentManager {
     var delegate: CommentManagerDelegate?
     
     func fetchComment(postNum: Int) {
-        AF.request("\(ProcessInfo.processInfo.environment["ServerURL"]!)/comment/\(postNum)")
+        AF.request("\(Constant.serverURL)/comment/\(postNum)")
             .validate(statusCode: 200..<300)
             .responseDecodable(of: CommentResponse.self) { response in
                 if let res = response.value {

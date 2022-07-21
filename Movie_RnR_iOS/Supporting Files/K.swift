@@ -33,4 +33,6 @@ struct Constant {
         static let viewPostings = "View Postings"
         static let dangerZone = "Danger Zone"
     }
+    
+    static let serverURL = "https://movie-rnr-server.herokuapp.com"
 }
