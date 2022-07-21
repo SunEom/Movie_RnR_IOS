@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 class MyPageViewController: UIViewController {
     @IBOutlet weak var nicknameLabel: UILabel!
@@ -18,24 +19,63 @@ class MyPageViewController: UIViewController {
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     
     let menuList = Constant.MyPageMenu.list
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.dataSource = self
         tableView.delegate = self
+        
+        guard let userData = UserManager.getInstance() else {
+            self.navigationController?.popViewController(animated: true)
+            return
+        }
+        
+        nicknameLabel.text = userData.nickname
+        genderLabel.text = userData.gender
+        biographyTextView.text = userData.biography
+
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        if segue.identifier == Constant.SegueID.SNS, let sender = sender {
+            let destination = segue.destination as! WebViewController
+            
+            
+            switch sender as! UIButton {
+            case facebookButton:
+                destination.urlString = UserManager.getInstance()?.facebook
+            case instagramButton:
+                destination.urlString = UserManager.getInstance()?.instagram
+            case twitterButton:
+                destination.urlString = UserManager.getInstance()?.twitter
+            default:
+                return
+            }
+            
+            
+            
+        }
     }
     
     @IBAction func socialMediaPressed(_ sender: UIButton) {
-        
-        if sender == facebookButton {
-            print("FaceBook")
-        } else if sender == instagramButton {
-            print("Instagram")
-        } else if sender == twitterButton {
-            print("Twitter")
+        performSegue(withIdentifier: Constant.SegueID.SNS, sender: sender)
+    }
+    
+    @IBAction func logoutPressed(_ sender: UIButton) {
+        UserManager.logout {
+            let alert = UIAlertController(title: "로그아웃 성공", message: "정상적으로 로그아웃 되었습니다.", preferredStyle: .alert)
+            
+            let action = UIAlertAction(title: "확인", style: .default) { _ in
+                self.navigationController?.popViewController(animated: true)
+            }
+            
+            alert.addAction(action)
+            
+            self.present(alert, animated: true)
         }
-        
     }
     
 }
@@ -53,6 +93,7 @@ extension MyPageViewController: UITableViewDataSource {
         cell.accessoryType = .disclosureIndicator
         
         cell.textLabel?.text = menuList[indexPath.row]
+        cell.textLabel?.textColor = .black
         
         DispatchQueue.main.async {
             self.tableViewHeight.constant = self.tableView.contentSize.height

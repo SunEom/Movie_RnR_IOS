@@ -10,6 +10,7 @@ import Alamofire
 
 class UserManager {
     private static var user: UserData?
+    private static let serverURL = ProcessInfo.processInfo.environment["ServerURL"]!
     
     private init() {
         UserManager.user = nil
@@ -20,7 +21,7 @@ class UserManager {
     }
     
     static func loginPost(id: String, password: String, completion: (() -> Void)? = nil) {
-        AF.request("\(ProcessInfo.processInfo.environment["ServerURL"]!)/auth/login", method: .post, parameters: ["id": id, "password": password])
+        AF.request("\(serverURL)/auth/login", method: .post, parameters: ["id": id, "password": password])
             .validate(statusCode: 200..<300)
             .responseDecodable(of: LoginResponse.self) { response in
                 
@@ -42,7 +43,7 @@ class UserManager {
     }
     
     static func loginGet(completion: (() -> Void)? = nil) {
-        AF.request("\(ProcessInfo.processInfo.environment["ServerURL"]!)/auth/login", method: .get)
+        AF.request("\(serverURL)/auth/login", method: .get)
             .validate(statusCode: 200..<500)
             .responseDecodable(of: LoginResponse.self) { response in
                 
@@ -57,6 +58,28 @@ class UserManager {
             
     }
     
+    static func logout(completion: (()->Void)? = nil) {
+        AF.request("\(serverURL)/auth/logout", method: .get)
+            .validate(statusCode: 200..<300)
+            .response { response in
+                switch response.result {
+                case .success(_):
+                    self.user = nil
+                    
+                    UserDefaults.standard.removeObject(forKey: "id")
+                    UserDefaults.standard.removeObject(forKey: "password")
+                    
+                    completion?()
+                    
+                case .failure(let error):
+                    print("Logout Error: \(error)")
+                    return
+                    
+                default:
+                    return
+                }
+            }
+    }
     
 }
 

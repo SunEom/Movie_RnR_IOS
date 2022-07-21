@@ -23,6 +23,7 @@ struct Constant {
         static let changePassword = "goToChangePassword"
         static let viewPostings = "goToViewPostings"
         static let dangerZone = "goToDangerZone"
+        static let SNS = "goToSNS"
     }
     
     struct MyPageMenu {

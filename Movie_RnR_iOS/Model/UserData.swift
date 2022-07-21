@@ -14,14 +14,14 @@ class LoginResponse: Decodable {
 }
 
 class UserData: Decodable {
-    private let id: Int
-    private let password: String
-    private let nickname: String
-    private let gender: String
-    private let aboutId: Int
-    private let biography: String
-    private let instagram: String
-    private let facebook: String
-    private let twitter: String
-    private let my_id: Int
+    let id: Int
+    let password: String
+    let nickname: String
+    let gender: String
+    let aboutId: Int
+    let biography: String
+    let instagram: String
+    let facebook: String
+    let twitter: String
+    let my_id: Int
 }
