@@ -17,7 +17,7 @@ class MyPageViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     
-    let menuList = ["Edit Profile", "Change Password", "View Postings", "Danger Zone"]
+    let menuList = Constant.MyPageMenu.list
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +72,22 @@ extension MyPageViewController: UITableViewDelegate {
         selectedCell.isSelected = false
         
         if let selectedMenu = selectedCell.textLabel?.text {
-            print(selectedMenu)
+            switch selectedMenu {
+            case Constant.MyPageMenu.editProfile:
+                performSegue(withIdentifier: Constant.SegueID.editProfile, sender: self)
+                
+            case Constant.MyPageMenu.changePassword:
+                performSegue(withIdentifier: Constant.SegueID.changePassword, sender: self)
+                
+            case Constant.MyPageMenu.viewPostings:
+                performSegue(withIdentifier: Constant.SegueID.viewPostings, sender: self)
+                
+            case Constant.MyPageMenu.dangerZone:
+                performSegue(withIdentifier: Constant.SegueID.dangerZone, sender: self)
+                
+            default:
+                return
+            }
         }
         
         

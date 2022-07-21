@@ -19,5 +19,17 @@ struct Constant {
         static let detail = "goToDetail"
         static let login = "goToLogin"
         static let myPage = "goToMyPage"
+        static let editProfile = "goToEditProfile"
+        static let changePassword = "goToChangePassword"
+        static let viewPostings = "goToViewPostings"
+        static let dangerZone = "goToDangerZone"
+    }
+    
+    struct MyPageMenu {
+        static let list = [editProfile, changePassword, viewPostings, dangerZone]
+        static let editProfile = "Edit Profile"
+        static let changePassword = "Change Password"
+        static let viewPostings = "View Postings"
+        static let dangerZone = "Danger Zone"
     }
 }
