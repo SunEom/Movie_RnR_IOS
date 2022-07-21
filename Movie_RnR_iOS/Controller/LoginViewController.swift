@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
             
             UserManager.loginPost(id: id, password: password) {
                 if let _ = UserManager.getInstance() {
-                    let alert = UIAlertController(title: "로그인 성공", message: "정상적으로 로그인되었습니다!", preferredStyle: .alert)
+                    let alert = UIAlertController(title:     "로그인 성공", message: "정상적으로 로그인되었습니다!", preferredStyle: .alert)
                     
                     let action = UIAlertAction(title: "확인", style: .default) { action in
                         DispatchQueue.main.async {

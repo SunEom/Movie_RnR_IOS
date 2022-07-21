@@ -23,8 +23,8 @@ class HomeViewController: UIViewController {
         // Config Table View
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UINib(nibName: "PostingTableViewCell", bundle: nil), forCellReuseIdentifier: Constant.TableViewCellID.PostingCellID)
-        tableView.register(UINib(nibName: "TitleTableViewCell", bundle: nil), forCellReuseIdentifier: Constant.TableViewCellID.TitleCellID)
+        tableView.register(UINib(nibName: "PostingTableViewCell", bundle: nil), forCellReuseIdentifier: Constant.TableViewCellID.Posting)
+        tableView.register(UINib(nibName: "TitleTableViewCell", bundle: nil), forCellReuseIdentifier: Constant.TableViewCellID.Title)
         
         
         postingManager.delegate = self
@@ -45,8 +45,7 @@ class HomeViewController: UIViewController {
 
     @IBAction func userPressed(_ sender: UIBarButtonItem) {
         if UserManager.getInstance() != nil {
-            print("goToMyPage")
-            return
+            performSegue(withIdentifier: Constant.SegueID.myPage, sender: self)
         } else {
             performSegue(withIdentifier: Constant.SegueID.login, sender: self)
         }
@@ -64,10 +63,10 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.TitleCellID, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Title, for: indexPath)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.PostingCellID, for: indexPath) as! PostingTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostingTableViewCell
             
             cell.titleLabel.text = postingManager.postings[indexPath.row-1].title
             cell.genreLabel.text = postingManager.postings[indexPath.row-1].genres

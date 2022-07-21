@@ -31,7 +31,7 @@ class DetailViewController: UIViewController {
         commentManager.delegate = self
         
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "CommentTableViewCell", bundle: nil), forCellReuseIdentifier: Constant.TableViewCellID.CommentCellID)
+        tableView.register(UINib(nibName: "CommentTableViewCell", bundle: nil), forCellReuseIdentifier: Constant.TableViewCellID.Comment)
         
         if let postNum = postNum {
             postingManager.fetchPostingDetail(postID: postNum)
@@ -77,7 +77,7 @@ extension DetailViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.CommentCellID, for: indexPath) as! CommentTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Comment, for: indexPath) as! CommentTableViewCell
         
         cell.nicknameLabel.text = commentManager.comments[indexPath.row].nickname
         cell.contentsTextView.text = commentManager.comments[indexPath.row].contents

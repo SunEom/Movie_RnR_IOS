@@ -9,13 +9,15 @@ import Foundation
 
 struct Constant {
     struct TableViewCellID {
-        static let PostingCellID = "PostingCell"
-        static let TitleCellID = "TitleCell"
-        static let CommentCellID = "CommentCell"
+        static let Posting = "PostingCell"
+        static let Title = "TitleCell"
+        static let Comment = "CommentCell"
+        static let MyPageMenu = "MyPageMenuCell"
     }
     
     struct SegueID {
         static let detail = "goToDetail"
         static let login = "goToLogin"
+        static let myPage = "goToMyPage"
     }
 }

@@ -31,6 +31,7 @@
 		BFAC2C7C28832F3600CF3E49 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */; };
 		BFFE98462884660A003B5AF8 /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */; };
 		BFFE984828846992003B5AF8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE984728846992003B5AF8 /* DetailViewController.swift */; };
+		BFFF0603288925DF00885916 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF0602288925DF00885916 /* MyPageViewController.swift */; };
 		DCDD4BAA9918E90D7EBFF54B /* Pods_Movie_RnR_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FFDBC937D660670ED9197C /* Pods_Movie_RnR_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleTableViewCell.xib; sourceTree = "<group>"; };
 		BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jua-Regular.ttf"; sourceTree = "<group>"; };
 		BFFE984728846992003B5AF8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		BFFF0602288925DF00885916 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		D4D40B14C315E568C02A1A26 /* Pods-Movie_RnR_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movie_RnR_iOS.release.xcconfig"; path = "Target Support Files/Pods-Movie_RnR_iOS/Pods-Movie_RnR_iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,6 +184,7 @@
 				BF6DA09528807C3200177714 /* HomeViewController.swift */,
 				BFFE984728846992003B5AF8 /* DetailViewController.swift */,
 				BF56AADE288801C7001D74C8 /* LoginViewController.swift */,
+				BFFF0602288925DF00885916 /* MyPageViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				BF56AAE12888035F001D74C8 /* UserData.swift in Sources */,
 				BF187344288592D8003BAF16 /* PostingManager.swift in Sources */,
 				BF6DA09428807C3200177714 /* SceneDelegate.swift in Sources */,
+				BFFF0603288925DF00885916 /* MyPageViewController.swift in Sources */,
 				BF0DE86A288311960048905C /* Posting.swift in Sources */,
 				BF440DF32887389000DABCA5 /* CommentTableViewCell.swift in Sources */,
 				BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */,
