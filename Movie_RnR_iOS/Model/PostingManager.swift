@@ -11,11 +11,13 @@ import Alamofire
 protocol PostingManagerDelegate {
     func didUpdatePostings(_ postingManager: PostingManager, postings: [Posting])
     func didFetchPostingDetail(_ postingManager: PostingManager, detail: PostingDetail)
+    func didFetchMyPostings(_ postingManager: PostingManager, postings: [Posting])
 }
 
 extension PostingManagerDelegate {
     func didUpdatePostings(_ postingManager: PostingManager, postings: [Posting]){}
     func didFetchPostingDetail(_ postingManager: PostingManager, detail: PostingDetail){}
+    func didFetchMyPostings(_ postingManager: PostingManager, postings: [Posting]){}
 }
 
 class PostingManager {
@@ -60,6 +62,20 @@ class PostingManager {
                     print("Error requesting HTTP: \(error)")
                 }
                 
+            }
+    }
+    
+    func fetchMyPostings() {
+        guard let id = UserManager.getInstance()?.id else { return }
+        AF.request("\(Constant.serverURL)/post/user/\(id)", method: .get)
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: PostingResponse.self ) { response in
+                if let res = response.value {
+                    self.postings = res.data
+                    self.delegate?.didFetchMyPostings(self, postings: self.postings)
+                } else {
+                    print("Error fetching my Postings: \(response.error)")
+                }
             }
     }
 }

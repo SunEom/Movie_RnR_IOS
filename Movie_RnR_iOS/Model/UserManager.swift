@@ -80,5 +80,28 @@ class UserManager {
             }
     }
     
+    static func update(with parameter: UpdateProfileRequest) {
+        AF.request("\(Constant.serverURL)/user/profile", method: .post, parameters: ["nickname":parameter.nickname, "biography":parameter.biography, "gender": parameter.gender, "instagram":parameter.instagram , "facebook": parameter.facebook, "twitter": parameter.twitter])
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: LoginResponse.self) { response in
+                print(response)
+                if let res = response.value {
+                    print(res)
+                } else {
+                    print("Error updating profile")
+                }
+                
+            }
+    }
+    
+}
+
+struct UpdateProfileRequest {
+    let nickname: String
+    let gender: String
+    let biography: String
+    let facebook: String
+    let instagram: String
+    let twitter: String
 }
 

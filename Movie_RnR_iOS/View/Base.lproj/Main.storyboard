@@ -338,7 +338,7 @@
         <!--Edit Profile-->
         <scene sceneID="TmU-Gd-3aU">
             <objects>
-                <viewController id="lJG-H3-2eG" sceneMemberID="viewController">
+                <viewController id="lJG-H3-2eG" customClass="EditProfileViewController" customModule="Movie_RnR_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ilf-bp-9zL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -388,6 +388,7 @@
                                                     </label>
                                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s8a-9g-Vif">
                                                         <rect key="frame" x="0.0" y="34" width="384" height="100"/>
+                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="100" id="rxa-X6-e7S"/>
                                                         </constraints>
@@ -500,7 +501,21 @@
                             <constraint firstItem="NzT-6C-qEW" firstAttribute="trailing" secondItem="iri-bC-qAL" secondAttribute="trailing" id="wzK-ED-y6v"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Profile" id="2CX-WT-qss"/>
+                    <navigationItem key="navigationItem" title="Edit Profile" id="2CX-WT-qss">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="1Mo-YK-stS">
+                            <connections>
+                                <action selector="savePressed:" destination="lJG-H3-2eG" id="7lb-Va-yXn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="biographyTextView" destination="79k-1N-Mf1" id="9eJ-vh-BcR"/>
+                        <outlet property="fbTextField" destination="zZe-j4-Oka" id="kA3-8p-2Tp"/>
+                        <outlet property="genderPicker" destination="s8a-9g-Vif" id="DK0-x9-Uqd"/>
+                        <outlet property="igTextField" destination="Eb1-Ll-GdZ" id="isQ-ls-VZo"/>
+                        <outlet property="nicknameTextField" destination="PMo-hu-BGA" id="aHr-HN-fOv"/>
+                        <outlet property="ttTextField" destination="m3J-Bp-L5Y" id="hjS-R1-Xd2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a5j-PN-WWr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -643,12 +658,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vhK-BF-Fta" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1672" y="1582"/>
+            <point key="canvasLocation" x="1913" y="1582"/>
         </scene>
         <!--View Postings-->
         <scene sceneID="hDY-yS-4hJ">
             <objects>
-                <viewController id="cMy-9w-NM1" sceneMemberID="viewController">
+                <viewController id="cMy-9w-NM1" customClass="ViewPostingsViewController" customModule="Movie_RnR_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uBu-af-3Zm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -668,6 +683,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="View Postings" id="Fqp-ep-fwJ"/>
+                    <connections>
+                        <outlet property="tableView" destination="Nle-Ob-hM9" id="m5z-jx-eId"/>
+                        <segue destination="AT4-dn-6aw" kind="show" identifier="goToDetail" id="LVK-Ja-MhF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gwo-ec-n7h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -693,14 +712,14 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7EV-6C-ztx">
                                         <rect key="frame" x="0.0" y="54" width="300" height="100"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="qwerqwer" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8gh-a8-5b5">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="asdfasdf" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8gh-a8-5b5">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="45"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="qwerqwer" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ieD-7W-Z8F">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="asdfasdf" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ieD-7W-Z8F">
                                                 <rect key="frame" x="0.0" y="55" width="300" height="45"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1122,6 +1141,9 @@
             <point key="canvasLocation" x="-1788" y="70"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="LVK-Ja-MhF"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="facebook" width="30" height="30"/>
         <image name="instagram" width="24" height="24"/>
