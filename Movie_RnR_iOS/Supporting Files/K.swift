@@ -25,6 +25,7 @@ struct Constant {
         static let dangerZone = "goToDangerZone"
         static let SNS = "goToSNS"
         static let Home = "goToHome"
+        static let Join = "goToJoin"
     }
     
     struct MyPageMenu {
@@ -36,4 +37,6 @@ struct Constant {
     }
     
     static let serverURL = "https://movie-rnr-server.herokuapp.com"
+    
+    static let genderList = ["None","Man","Woman"]
 }

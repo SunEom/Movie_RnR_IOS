@@ -13,6 +13,7 @@
 		BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DE8712883181A0048905C /* PostingTableViewCell.swift */; };
 		BF0DE8742883181A0048905C /* PostingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF0DE8722883181A0048905C /* PostingTableViewCell.xib */; };
 		BF187344288592D8003BAF16 /* PostingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF187343288592D8003BAF16 /* PostingManager.swift */; };
+		BF37089D288D539C00A99482 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37089C288D539C00A99482 /* JoinViewController.swift */; };
 		BF440DEE28872A7000DABCA5 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF440DED28872A7000DABCA5 /* Comment.swift */; };
 		BF440DF028872AD200DABCA5 /* CommentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF440DEF28872AD200DABCA5 /* CommentManager.swift */; };
 		BF440DF32887389000DABCA5 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF440DF12887389000DABCA5 /* CommentTableViewCell.swift */; };
@@ -48,6 +49,7 @@
 		BF0DE8712883181A0048905C /* PostingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingTableViewCell.swift; sourceTree = "<group>"; };
 		BF0DE8722883181A0048905C /* PostingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostingTableViewCell.xib; sourceTree = "<group>"; };
 		BF187343288592D8003BAF16 /* PostingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingManager.swift; sourceTree = "<group>"; };
+		BF37089C288D539C00A99482 /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
 		BF440DED28872A7000DABCA5 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		BF440DEF28872AD200DABCA5 /* CommentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentManager.swift; sourceTree = "<group>"; };
 		BF440DF12887389000DABCA5 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				BFF4107B28899E3300DA9043 /* StartViewController.swift */,
 				BFA71BED288A944200782C86 /* ViewPostingsViewController.swift */,
 				BFA71BEF288A99A500782C86 /* EditProfileViewController.swift */,
+				BF37089C288D539C00A99482 /* JoinViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 			files = (
 				BF56AADF288801C7001D74C8 /* LoginViewController.swift in Sources */,
 				BFFF060528893DF200885916 /* WebViewController.swift in Sources */,
+				BF37089D288D539C00A99482 /* JoinViewController.swift in Sources */,
 				BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */,
 				BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */,
 				BFA71BEE288A944200782C86 /* ViewPostingsViewController.swift in Sources */,

@@ -31,6 +31,7 @@ class EditProfileViewController: UIViewController {
         genderPicker.dataSource = self
         genderPicker.delegate = self
         genderPicker.setValue(UIColor.black, forKey: "textColor")
+        
     }
     
 
@@ -46,7 +47,7 @@ class EditProfileViewController: UIViewController {
 //            let instagram = igTextField.text,
 //            let twitter = ttTextField.text {
 //
-//            let gender = ["None","Man","Woman"][genderPicker.selectedRow(inComponent: 0)]
+//            let gender = Constant.genderList[genderPicker.selectedRow(inComponent: 0)]
 //
 //            params["nickname"] = nickname
 //            params["biography"] = biography
