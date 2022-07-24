@@ -14,6 +14,8 @@
 		BF0DE8742883181A0048905C /* PostingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF0DE8722883181A0048905C /* PostingTableViewCell.xib */; };
 		BF187344288592D8003BAF16 /* PostingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF187343288592D8003BAF16 /* PostingManager.swift */; };
 		BF37089D288D539C00A99482 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37089C288D539C00A99482 /* JoinViewController.swift */; };
+		BF37089F288D94A400A99482 /* JoinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37089E288D94A400A99482 /* JoinManager.swift */; };
+		BF3708A1288D99F100A99482 /* JoinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3708A0288D99F100A99482 /* JoinData.swift */; };
 		BF440DEE28872A7000DABCA5 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF440DED28872A7000DABCA5 /* Comment.swift */; };
 		BF440DF028872AD200DABCA5 /* CommentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF440DEF28872AD200DABCA5 /* CommentManager.swift */; };
 		BF440DF32887389000DABCA5 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF440DF12887389000DABCA5 /* CommentTableViewCell.swift */; };
@@ -50,6 +52,8 @@
 		BF0DE8722883181A0048905C /* PostingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostingTableViewCell.xib; sourceTree = "<group>"; };
 		BF187343288592D8003BAF16 /* PostingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingManager.swift; sourceTree = "<group>"; };
 		BF37089C288D539C00A99482 /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
+		BF37089E288D94A400A99482 /* JoinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinManager.swift; sourceTree = "<group>"; };
+		BF3708A0288D99F100A99482 /* JoinData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinData.swift; sourceTree = "<group>"; };
 		BF440DED28872A7000DABCA5 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		BF440DEF28872AD200DABCA5 /* CommentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentManager.swift; sourceTree = "<group>"; };
 		BF440DF12887389000DABCA5 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -214,6 +218,8 @@
 				BF440DEF28872AD200DABCA5 /* CommentManager.swift */,
 				BF56AAE02888035F001D74C8 /* UserData.swift */,
 				BF56AAE228881B0B001D74C8 /* UserManager.swift */,
+				BF37089E288D94A400A99482 /* JoinManager.swift */,
+				BF3708A0288D99F100A99482 /* JoinData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -347,6 +353,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF37089F288D94A400A99482 /* JoinManager.swift in Sources */,
 				BF56AADF288801C7001D74C8 /* LoginViewController.swift in Sources */,
 				BFFF060528893DF200885916 /* WebViewController.swift in Sources */,
 				BF37089D288D539C00A99482 /* JoinViewController.swift in Sources */,
@@ -365,6 +372,7 @@
 				BF440DF32887389000DABCA5 /* CommentTableViewCell.swift in Sources */,
 				BFF4107C28899E3300DA9043 /* StartViewController.swift in Sources */,
 				BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */,
+				BF3708A1288D99F100A99482 /* JoinData.swift in Sources */,
 				BF440DF028872AD200DABCA5 /* CommentManager.swift in Sources */,
 				BF440DEE28872A7000DABCA5 /* Comment.swift in Sources */,
 				BFFE984828846992003B5AF8 /* DetailViewController.swift in Sources */,

@@ -865,7 +865,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Ovs-GQ-yi6">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="uat-SS-3AS"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="uat-SS-3AS">
+                            <connections>
+                                <action selector="donePressed:" destination="YtY-4U-XMG" id="A6A-ov-qaB"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="genderPicker" destination="Nhj-Ed-Afh" id="wSS-lj-nDl"/>
