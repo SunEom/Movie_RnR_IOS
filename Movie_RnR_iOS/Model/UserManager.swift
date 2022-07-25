@@ -51,6 +51,9 @@ class UserManager {
                     return
                 } else if let userData = response.value?.data {
                     print("Get Login : \(userData)")
+                    
+                    UserManager.user = userData
+                    completion?()
                 }
                 
             }
@@ -80,18 +83,17 @@ class UserManager {
             }
     }
     
-    static func update(with parameter: [String: String]) {
-//        AF.request("\(Constant.serverURL)/user/profile", method: .post, parameters: ["nickname":parameter.nickname, "biography":parameter.biography, "gender": parameter.gender, "instagram":parameter.instagram , "facebook": parameter.facebook, "twitter": parameter.twitter])
-//            .validate(statusCode: 200..<300)
-//            .responseDecodable(of: LoginResponse.self) { response in
-//                print(response)
-//                if let res = response.value {
-//                    print(res)
-//                } else {
-//                    print("Error updating profile")
-//                }
-//                
-//            }
+    static func update(with parameter: UserUpdateRequest, completion: (() -> Void)? = nil) {
+        AF.request("\(Constant.serverURL)/user/profile", method: .post, parameters: ["nickname":parameter.nickname, "biography":parameter.biography, "gender": parameter.gender, "instagram":parameter.instagram , "facebook": parameter.facebook, "twitter": parameter.twitter])
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: UserUpdateResponse.self) { response in
+                if let res = response.value {
+                    UserManager.loginGet( completion: completion )
+                } else {
+                    print("Error updating profile")
+                }
+                
+            }
     }
     
 }

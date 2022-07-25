@@ -25,16 +25,25 @@ class MyPageViewController: UIViewController {
 
         tableView.dataSource = self
         tableView.delegate = self
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("View will appear")
         
         guard let userData = UserManager.getInstance() else {
             self.navigationController?.popViewController(animated: true)
             return
         }
         
-        nicknameLabel.text = userData.nickname
-        genderLabel.text = userData.gender
-        biographyTextView.text = userData.biography
-
+        DispatchQueue.main.async {
+            self.nicknameLabel.text = userData.nickname
+            self.genderLabel.text = userData.gender
+            self.biographyTextView.text = userData.biography
+        }
+        
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

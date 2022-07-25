@@ -32,33 +32,53 @@ class EditProfileViewController: UIViewController {
         genderPicker.delegate = self
         genderPicker.setValue(UIColor.black, forKey: "textColor")
         
+        switch userData.gender {
+        case "None":
+            genderPicker.selectRow(0, inComponent: 0, animated: false)
+        case "Man":
+            genderPicker.selectRow(1, inComponent: 0, animated: false)
+        case "Woman":
+            genderPicker.selectRow(2, inComponent: 0, animated: false)
+        default:
+            break
+        }
+        
     }
     
 
     @IBAction func savePressed(_ sender: Any) {
-        // 프로필 수정시 모든 정보가 null로 수정되는 오류 발생
         
-        
-//        var params = [String: String]()
-//
-//        if let nickname = nicknameTextField.text,
-//            let biography = biographyTextView.text,
-//            let facebook = fbTextField.text,
-//            let instagram = igTextField.text,
-//            let twitter = ttTextField.text {
-//
-//            let gender = Constant.genderList[genderPicker.selectedRow(inComponent: 0)]
-//
-//            params["nickname"] = nickname
-//            params["biography"] = biography
-//            params["gender"] = gender
-//            params["facebook"] = facebook
-//            params["instagram"] = instagram
-//            params["twitter"] = twitter
-//
-//
-//            UserManager.update(with: UpdateProfileRequest(nickname: nickname, gender: gender, biography: biography, facebook: facebook, instagram: instagram, twitter: twitter))
-//        }
+        var params = [String: String]()
+
+        if let nickname = nicknameTextField.text,
+            let biography = biographyTextView.text,
+            let facebook = fbTextField.text,
+            let instagram = igTextField.text,
+            let twitter = ttTextField.text {
+
+            let gender = Constant.genderList[genderPicker.selectedRow(inComponent: 0)]
+
+            params["nickname"] = nickname
+            params["biography"] = biography
+            params["gender"] = gender
+            params["facebook"] = facebook
+            params["instagram"] = instagram
+            params["twitter"] = twitter
+
+
+            UserManager.update(with: UserUpdateRequest(nickname: nickname, gender: gender, biography: biography, facebook: facebook, instagram: instagram, twitter: twitter)) {
+                let alert = UIAlertController(title: "정보 수정", message: "정상적으로 수정되었습니다.", preferredStyle: .alert)
+                
+                let action = UIAlertAction(title: "확인", style: .default) { action in
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
+                alert.addAction(action)
+                
+                self.present(alert, animated: true)
+            }
+            
+        }
         
         
     }
