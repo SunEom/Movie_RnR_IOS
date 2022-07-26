@@ -524,7 +524,7 @@
         <!--Change Password-->
         <scene sceneID="ghC-h0-Nhd">
             <objects>
-                <viewController id="013-QR-sOf" sceneMemberID="viewController">
+                <viewController id="013-QR-sOf" customClass="ChangePasswordViewController" customModule="Movie_RnR_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UPX-UT-rcB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -546,7 +546,7 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -564,7 +564,7 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -582,7 +582,7 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -597,6 +597,9 @@
                                         <buttonConfiguration key="configuration" style="plain" title="Change password">
                                             <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="14"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="changePressed:" destination="013-QR-sOf" eventType="touchUpInside" id="4G2-Il-DoB"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <edgeInsets key="layoutMargins" top="15" left="15" bottom="8" right="15"/>
@@ -611,6 +614,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Change Password" id="Acq-E0-aq8"/>
+                    <connections>
+                        <outlet property="currentPasswordTextField" destination="jBj-E2-ISP" id="bLx-1P-JaE"/>
+                        <outlet property="newPasswordCheckTextField" destination="yan-bm-xbF" id="nvV-AK-Fxh"/>
+                        <outlet property="newPasswordTextField" destination="QoJ-ec-VJV" id="lQD-md-Wf9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8GF-mT-hp3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

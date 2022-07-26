@@ -49,3 +49,8 @@ class UserUpdateRequest {
         self.twitter = twitter
     }
 }
+
+class PwdResponse: Decodable {
+    let code: Int
+    let error: String?
+}

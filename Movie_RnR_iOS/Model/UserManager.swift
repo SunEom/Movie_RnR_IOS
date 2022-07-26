@@ -57,7 +57,7 @@ class UserManager {
                 }
                 
             }
-            
+        
     }
     
     static func logout(completion: (()->Void)? = nil) {
@@ -107,6 +107,23 @@ class UserManager {
                 
                 completion?()
             }
+    }
+    
+    static func changePassword(current: String, new: String, errorHandler: ((String) -> Void)? = nil, completion: (() -> Void)? = nil) {
+        AF.request("\(Constant.serverURL)/user/password", method: .post, parameters: ["password": current, "newPassword": new])
+            .validate(statusCode: 200...400)
+            .responseDecodable(of: PwdResponse.self) { response in
+                
+                if let res = response.value {
+                    if let error = res.error {
+                        errorHandler?(error)
+                    } else {
+                        UserDefaults.standard.set(new, forKey: "password")
+                        completion?()
+                    }
+                }
+            }
+        
     }
     
 }
