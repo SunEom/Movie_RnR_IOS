@@ -96,6 +96,19 @@ class UserManager {
             }
     }
     
+    static func removeAccount(completion: (()->Void)? = nil) {
+        AF.request("\(Constant.serverURL)/user/", method: .delete)
+            .validate(statusCode: 200..<300)
+            .response { response in
+                UserManager.user = nil
+                
+                UserDefaults.standard.removeObject(forKey: "id")
+                UserDefaults.standard.removeObject(forKey: "password")
+                
+                completion?()
+            }
+    }
+    
 }
 
 

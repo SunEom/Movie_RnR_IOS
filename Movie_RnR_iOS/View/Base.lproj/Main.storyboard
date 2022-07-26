@@ -619,7 +619,7 @@
         <!--Danger Zone-->
         <scene sceneID="axd-4g-4nb">
             <objects>
-                <viewController id="dr3-Le-V4A" sceneMemberID="viewController">
+                <viewController id="dr3-Le-V4A" customClass="DangerZoneViewController" customModule="Movie_RnR_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QeL-bB-LzX">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -641,6 +641,9 @@
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
                                     <color key="baseBackgroundColor" red="0.55686277149999996" green="0.1607843041" blue="0.14509806040000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="removeAccountPressed:" destination="dr3-Le-V4A" eventType="touchUpInside" id="pq0-Fn-XRg"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="KEx-pF-jLB"/>
