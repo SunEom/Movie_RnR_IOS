@@ -12,12 +12,14 @@ protocol PostingManagerDelegate {
     func didUpdatePostings(_ postingManager: PostingManager, postings: [Posting])
     func didFetchPostingDetail(_ postingManager: PostingManager, detail: PostingDetail)
     func didFetchMyPostings(_ postingManager: PostingManager, postings: [Posting])
+    func didSearchPostings(_ postingManager: PostingManager, postings: [Posting])
 }
 
 extension PostingManagerDelegate {
     func didUpdatePostings(_ postingManager: PostingManager, postings: [Posting]){}
     func didFetchPostingDetail(_ postingManager: PostingManager, detail: PostingDetail){}
     func didFetchMyPostings(_ postingManager: PostingManager, postings: [Posting]){}
+    func didSearchPostings(_ postingManager: PostingManager, postings: [Posting]){}
 }
 
 class PostingManager {
@@ -75,6 +77,17 @@ class PostingManager {
                     self.delegate?.didFetchMyPostings(self, postings: self.postings)
                 } else {
                     print("Error fetching my Postings: \(response.error)")
+                }
+            }
+    }
+    
+    func searchPostings(keyword: String) {
+        AF.request("\(Constant.serverURL)/search", method: .post, parameters: ["keyword": keyword])
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: PostingResponse.self) { response in
+                if let res = response.value {
+                    self.postings = res.data
+                    self.delegate?.didSearchPostings(self, postings: self.postings)
                 }
             }
     }

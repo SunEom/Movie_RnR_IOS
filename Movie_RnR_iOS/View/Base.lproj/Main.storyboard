@@ -1000,6 +1000,63 @@
             </objects>
             <point key="canvasLocation" x="-1681" y="854"/>
         </scene>
+        <!--Search View Controller-->
+        <scene sceneID="moH-96-tPU">
+            <objects>
+                <viewController id="amA-2n-yB1" customClass="SearchViewController" customModule="Movie_RnR_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eWO-x1-7Yp">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZbN-QA-2qw">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                <color key="backgroundColor" name="mainColor"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" id="69q-5G-CUR">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="barTintColor" name="mainColor"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="J4N-8Z-bAI">
+                                        <rect key="frame" x="0.0" y="88.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="J4N-8Z-bAI" id="E7y-OZ-R64">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="AT4-dn-6aw" kind="show" identifier="goToDetail" id="KfM-6d-Q9t"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" id="6Yq-8s-YDv">
+                                <rect key="frame" x="0.0" y="40" width="414" height="734"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="mainColor"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Tzv-lo-kq3"/>
+                        <color key="backgroundColor" name="mainColor"/>
+                        <constraints>
+                            <constraint firstItem="ZbN-QA-2qw" firstAttribute="leading" secondItem="Tzv-lo-kq3" secondAttribute="leading" id="7o1-qv-5dz"/>
+                            <constraint firstItem="Tzv-lo-kq3" firstAttribute="bottom" secondItem="ZbN-QA-2qw" secondAttribute="bottom" id="Dtt-XR-kQq"/>
+                            <constraint firstItem="ZbN-QA-2qw" firstAttribute="top" secondItem="Tzv-lo-kq3" secondAttribute="top" id="Wy5-3N-dYg"/>
+                            <constraint firstItem="Tzv-lo-kq3" firstAttribute="trailing" secondItem="ZbN-QA-2qw" secondAttribute="trailing" id="ZhX-co-8B1"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ccz-SL-b3s"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="6Yq-8s-YDv" id="V3v-mw-QhI"/>
+                        <outlet property="searchBar" destination="69q-5G-CUR" id="snV-MO-Qz6"/>
+                        <outlet property="tableView" destination="ZbN-QA-2qw" id="pWl-zY-nKN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mks-MZ-Txa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1011.5942028985507" y="-615.40178571428567"/>
+        </scene>
         <!--MOVIE R&R 🎬-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -1055,6 +1112,11 @@
                         <barButtonItem key="leftBarButtonItem" title="Login" image="person" catalog="system" id="I5C-Po-TDF">
                             <connections>
                                 <action selector="userPressed:" destination="BYZ-38-t0r" id="8Qf-Wp-nan"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="Jrd-vy-rQ9">
+                            <connections>
+                                <segue destination="amA-2n-yB1" kind="show" id="CEm-cX-Bil"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1354,7 +1416,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dkj-cQ-Cqp"/>
+        <segue reference="KfM-6d-Q9t"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="facebook" width="30" height="30"/>

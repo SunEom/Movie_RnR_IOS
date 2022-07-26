@@ -14,6 +14,7 @@
 		BF0DE8742883181A0048905C /* PostingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF0DE8722883181A0048905C /* PostingTableViewCell.xib */; };
 		BF1530E9288E8B9F009569D1 /* DangerZoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1530E8288E8B9F009569D1 /* DangerZoneViewController.swift */; };
 		BF1530EB288FA79F009569D1 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1530EA288FA79F009569D1 /* ChangePasswordViewController.swift */; };
+		BF1530ED2890477E009569D1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1530EC2890477E009569D1 /* SearchViewController.swift */; };
 		BF187344288592D8003BAF16 /* PostingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF187343288592D8003BAF16 /* PostingManager.swift */; };
 		BF37089D288D539C00A99482 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37089C288D539C00A99482 /* JoinViewController.swift */; };
 		BF37089F288D94A400A99482 /* JoinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37089E288D94A400A99482 /* JoinManager.swift */; };
@@ -54,6 +55,7 @@
 		BF0DE8722883181A0048905C /* PostingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostingTableViewCell.xib; sourceTree = "<group>"; };
 		BF1530E8288E8B9F009569D1 /* DangerZoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DangerZoneViewController.swift; sourceTree = "<group>"; };
 		BF1530EA288FA79F009569D1 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		BF1530EC2890477E009569D1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		BF187343288592D8003BAF16 /* PostingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingManager.swift; sourceTree = "<group>"; };
 		BF37089C288D539C00A99482 /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
 		BF37089E288D94A400A99482 /* JoinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinManager.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				BFA71BEF288A99A500782C86 /* EditProfileViewController.swift */,
 				BF37089C288D539C00A99482 /* JoinViewController.swift */,
 				BF1530E8288E8B9F009569D1 /* DangerZoneViewController.swift */,
+				BF1530EC2890477E009569D1 /* SearchViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				BF37089F288D94A400A99482 /* JoinManager.swift in Sources */,
 				BF56AADF288801C7001D74C8 /* LoginViewController.swift in Sources */,
 				BFFF060528893DF200885916 /* WebViewController.swift in Sources */,
+				BF1530ED2890477E009569D1 /* SearchViewController.swift in Sources */,
 				BF37089D288D539C00A99482 /* JoinViewController.swift in Sources */,
 				BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */,
 				BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */,
