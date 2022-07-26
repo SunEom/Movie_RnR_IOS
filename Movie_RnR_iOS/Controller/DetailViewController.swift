@@ -18,6 +18,10 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var commentTextView: UITextView!
+    @IBOutlet weak var commentSaveButton: UIButton!
+    @IBOutlet weak var commentTableView: UITableView!
+    @IBOutlet weak var commentTableViewHeight: NSLayoutConstraint!
     
     let postingManager = PostingManager()
     let commentManager = CommentManager()
@@ -38,8 +42,35 @@ class DetailViewController: UIViewController {
             commentManager.fetchComment(postNum: postNum)
         }
         
+        if UserManager.getInstance() == nil {
+            commentTextView.isEditable = false
+            commentTextView.text = "로그인을 해주세요."
+            commentTextView.textColor = .gray
+            commentSaveButton.isEnabled = false
+        }
+        
     }
     
+    @IBAction func commentSavePressed(_ sender: UIButton) {
+        guard let contents = commentTextView.text else { return }
+        guard let postNum = postNum else {
+            return
+        }
+
+        if contents.count == 0 {
+            let alert = UIAlertController(title: "입력 오류", message: "댓글 내용을 입력해주세요", preferredStyle: .alert)
+            
+            let action = UIAlertAction(title: "확인", style: .default)
+            
+            alert.addAction(action)
+            
+            present(alert, animated: true)
+            
+            return
+        }
+        
+        commentManager.newComment(postNum: postNum, contents: contents)
+    }
     
 }
 
@@ -57,6 +88,8 @@ extension DetailViewController: PostingManagerDelegate {
     }
 }
 
+
+
 //MARK: - Comment Manager Delegate Method
 
 extension DetailViewController: CommentManagerDelegate {
@@ -64,7 +97,7 @@ extension DetailViewController: CommentManagerDelegate {
         tableView.reloadData()
         
         DispatchQueue.main.async {
-            self.tableViewHeight.constant = self.tableView.contentSize.height
+            self.commentTableViewHeight.constant = self.commentTableView.contentSize.height
         }
     }
 }
@@ -79,9 +112,24 @@ extension DetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Comment, for: indexPath) as! CommentTableViewCell
         
-        cell.nicknameLabel.text = commentManager.comments[indexPath.row].nickname
-        cell.contentsTextView.text = commentManager.comments[indexPath.row].contents
-        cell.dateLabel.text = String(commentManager.comments[indexPath.row].created.split(separator: "T")[0])
+        let comment = commentManager.comments[indexPath.row]
+        
+        cell.postNum = self.postNum
+        cell.commentId = comment.id
+        cell.commentManager = self.commentManager
+        cell.vc = self
+        
+        cell.nicknameLabel.text = comment.nickname
+        cell.contentsTextView.text = comment.contents
+        cell.dateLabel.text = String(comment.created.split(separator: "T")[0])
+        
+        if let user = UserManager.getInstance(), comment.commenter == user.id {
+            cell.baseStackView.isHidden = false
+        }
+        
+        DispatchQueue.main.async {
+            self.commentTableViewHeight.constant = self.commentTableView.contentSize.height
+        }
         
         return cell
         

@@ -17,18 +17,93 @@
                 <rect key="frame" x="0.0" y="0.0" width="446" height="225"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2iu-lt-fO9">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2iu-lt-fO9">
                         <rect key="frame" x="10" y="10" width="426" height="205"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ms9-78-Nqn">
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SFg-oq-Y4u">
                                 <rect key="frame" x="0.0" y="0.0" width="426" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="W8m-gl-dpi"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ms9-78-Nqn">
+                                        <rect key="frame" x="0.0" y="0.0" width="146" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="W8m-gl-dpi"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="lastBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="ZKG-Ow-YYb">
+                                        <rect key="frame" x="146" y="0.0" width="280" height="20"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bgg-aW-dSW">
+                                                <rect key="frame" x="0.0" y="0.0" width="130" height="20"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ic2-VL-7iZ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="50" id="Xpp-tk-lzU"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="Edit">
+                                                            <fontDescription key="titleFontDescription" type="system" pointSize="12"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="editPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="pu4-kb-eoa"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xrM-0P-9hp">
+                                                        <rect key="frame" x="50" y="0.0" width="80" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="80" id="Pn3-qd-HrT"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="Delete">
+                                                            <fontDescription key="titleFontDescription" type="system" pointSize="12"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="deletePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Gdp-w1-Ztj"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zFN-Id-9LI">
+                                                <rect key="frame" x="130" y="0.0" width="150" height="20"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YnZ-h8-hpd">
+                                                        <rect key="frame" x="0.0" y="0.0" width="70" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="70" id="amT-rr-3I5"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="Save">
+                                                            <fontDescription key="titleFontDescription" type="system" pointSize="12"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="savePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wok-3X-Ovb"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YhS-zi-bGS">
+                                                        <rect key="frame" x="70" y="0.0" width="80" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="80" id="Ncn-aX-uKI"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="Cancel">
+                                                            <fontDescription key="titleFontDescription" type="system" pointSize="12"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="cancelPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Mah-4a-UBJ"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="F0H-aO-ZSd"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htS-UZ-GpT">
                                 <rect key="frame" x="0.0" y="25" width="426" height="155"/>
                                 <color key="backgroundColor" name="mainColor"/>
@@ -49,8 +124,6 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="bw1-8p-DJ4" secondAttribute="trailing" id="2rS-Sg-KLc"/>
-                            <constraint firstAttribute="trailing" secondItem="ms9-78-Nqn" secondAttribute="trailing" id="53W-uf-McW"/>
-                            <constraint firstItem="ms9-78-Nqn" firstAttribute="leading" secondItem="2iu-lt-fO9" secondAttribute="leading" id="PKo-Rw-hnf"/>
                             <constraint firstItem="bw1-8p-DJ4" firstAttribute="leading" secondItem="2iu-lt-fO9" secondAttribute="leading" id="dRU-BX-AOa"/>
                             <constraint firstAttribute="trailing" secondItem="htS-UZ-GpT" secondAttribute="trailing" id="giF-iP-dBT"/>
                             <constraint firstItem="htS-UZ-GpT" firstAttribute="leading" secondItem="2iu-lt-fO9" secondAttribute="leading" id="l0j-ri-mni"/>
@@ -67,8 +140,10 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="baseStackView" destination="Bgg-aW-dSW" id="qQ9-ye-OnF"/>
                 <outlet property="contentsTextView" destination="htS-UZ-GpT" id="x4b-nE-Rtw"/>
                 <outlet property="dateLabel" destination="bw1-8p-DJ4" id="WWh-dD-3oh"/>
+                <outlet property="editStackView" destination="zFN-Id-9LI" id="nj5-Wh-jAP"/>
                 <outlet property="nicknameLabel" destination="ms9-78-Nqn" id="A2U-7b-YON"/>
             </connections>
             <point key="canvasLocation" x="223.18840579710147" y="135.60267857142856"/>

@@ -1178,6 +1178,9 @@
                                                                 <buttonConfiguration key="configuration" style="filled" title="Save">
                                                                     <color key="baseBackgroundColor" name="headerColor"/>
                                                                 </buttonConfiguration>
+                                                                <connections>
+                                                                    <action selector="commentSavePressed:" destination="AT4-dn-6aw" eventType="touchUpInside" id="KA2-of-Kpy"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
@@ -1264,6 +1267,10 @@
                     <navigationItem key="navigationItem" id="6Ee-hG-5pQ"/>
                     <connections>
                         <outlet property="activityIndicator" destination="z47-ik-6k6" id="ubO-yI-Ho5"/>
+                        <outlet property="commentSaveButton" destination="in9-ak-H8r" id="BZn-FW-Fta"/>
+                        <outlet property="commentTableView" destination="9VG-Yc-VG0" id="KTc-kR-N4F"/>
+                        <outlet property="commentTableViewHeight" destination="t9V-wb-IlU" id="sSf-U2-gHT"/>
+                        <outlet property="commentTextView" destination="SaE-Ne-wFs" id="cP4-ZS-7FN"/>
                         <outlet property="dateLabel" destination="Mmn-0J-EuM" id="ytc-88-Jtr"/>
                         <outlet property="genreLabel" destination="EaJ-5W-bA7" id="8UF-4h-lvE"/>
                         <outlet property="overviewTextView" destination="v4V-0H-Krn" id="9hl-0L-VMT"/>
@@ -1347,7 +1354,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="LVK-Ja-MhF"/>
+        <segue reference="dkj-cQ-Cqp"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="facebook" width="30" height="30"/>

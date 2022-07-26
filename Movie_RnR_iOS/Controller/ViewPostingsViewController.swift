@@ -57,10 +57,10 @@ extension ViewPostingsViewController: UITableViewDataSource {
             
             cell.titleLabel.text = postingManager.postings[indexPath.row-1].title
             cell.genreLabel.text = postingManager.postings[indexPath.row-1].genres
-            cell.rateLabel.text = "\(postingManager.postings[indexPath.row-1].rates)"
+            cell.rateLabel.text = "✭ \(postingManager.postings[indexPath.row-1].rates)"
             cell.overviewLabel.text = postingManager.postings[indexPath.row-1].overview
             if let commentCount = postingManager.postings[indexPath.row-1].commentCount {
-                cell.commentNumLabel.text = "\(commentCount)"
+                cell.commentNumLabel.text = "💬 \(commentCount)"
             } else {
                 cell.commentNumLabel.text = "\(0)"
             }
