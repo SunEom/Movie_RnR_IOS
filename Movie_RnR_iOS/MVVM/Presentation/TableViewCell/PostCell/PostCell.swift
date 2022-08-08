@@ -27,14 +27,14 @@ class PostCell: UITableViewCell {
     }
 
     
-    func setUp(post: Post) {
+    func bind(_ viewModel: PostCellViewModel) {
         postImageView.image = UIImage(named: "postImage1")
         
-        titleLabel.text = post.title
-        genreLabel.text = post.genres
-        overviewLabel.text = post.overview
-        rateLabel.text = "★ \(post.rates)"
-        commentLabel.text = "💬 \(post.commentCount ?? 0)"
+        titleLabel.text = viewModel.title
+        genreLabel.text = viewModel.genres
+        overviewLabel.text = viewModel.overview
+        rateLabel.text = "★ \(viewModel.rates)"
+        commentLabel.text = "💬 \(viewModel.commnetNum)"
         
         layout()
         attribute()
