@@ -11,6 +11,7 @@ enum PostNetworkError: Error {
     case invalidURL
     case invalidJSON
     case networkError
+    case invalidQuery
 }
 
 struct PostNetwork {
@@ -43,5 +44,39 @@ struct PostNetwork {
                 return .just(.failure(PostNetworkError.networkError))
             }
             .asSingle()
+    }
+    
+    func searchPosts(query: String) -> Single<Result<PostResponse, PostNetworkError>> {
+        let urlString = "\(Constant.serverURL)/search"
+        
+        guard let url = URL(string: urlString) else {
+            return .just(.failure(.invalidURL))
+        }
+        do {
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            let parameter = ["keyword": query]
+            
+            request.setValue("application/json", forHTTPHeaderField:"Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameter)
+            
+            return session.rx.data(request: request)
+                .map { data in
+                    do {
+                        let decodedData = try JSONDecoder().decode(PostResponse.self, from: data)
+                        return .success(decodedData)
+                    } catch {
+                        return .failure(PostNetworkError.invalidJSON)
+                    }
+                }
+                .catch { _ in
+                    return .just(.failure(PostNetworkError.networkError))
+                }
+                .asSingle()
+        } catch {
+            return .just(.failure(.invalidQuery))
+        }
+        
     }
 }

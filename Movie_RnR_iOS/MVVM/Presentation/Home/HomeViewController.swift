@@ -13,6 +13,8 @@ class HomeViewController: UIViewController {
     let disposeBag = DisposeBag()
     
     let tableView = UITableView()
+    let rightBarButtonItem = UIBarButtonItem(systemItem: .search)
+    let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: self, action: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +49,22 @@ class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        tableView.rx.itemSelected
+            .subscribe(onNext: {
+                self.tableView.cellForRow(at: $0)?.isSelected = false
+            })
+            .disposed(by: disposeBag)
+            
+        rightBarButtonItem.rx.tap
+            .subscribe(onNext: {_ in
+                let vc = SearchViewController()
+                let vm = SearchViewModel()
+                vc.bind(vm)
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        
     }
     
     private func layout() {
@@ -75,8 +93,8 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
         title = "MOVIE R&R"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .search)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.leftBarButtonItem = leftBarButtonItem
         
         view.backgroundColor = UIColor(named: "mainColor")
         
