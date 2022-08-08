@@ -18,6 +18,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         tableView.register(PostCell.self, forCellReuseIdentifier: Constant.TableViewCellID.Posting)
+        tableView.register(TitleCell.self, forCellReuseIdentifier: Constant.TableViewCellID.Title)
         
         layout()
         attribute()
@@ -28,11 +29,21 @@ class HomeViewController: UIViewController {
         viewModel.cellData
             .drive(tableView.rx.items) { tv, row, post in
                 let indexPath = IndexPath(row: row, section: 0)
-                let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
+                if row == 0 {
+                    
+                    let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Title, for: indexPath) as! TitleCell
+                    
+                    cell.setUp(title: "Recent Postings")
+                    
+                    return cell
+                } else {
                 
-                cell.setUp(post: post!)
-                
-                return cell
+                    let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
+                    
+                    cell.setUp(post: post!)
+                    
+                    return cell
+                }
             }
             .disposed(by: disposeBag)
         

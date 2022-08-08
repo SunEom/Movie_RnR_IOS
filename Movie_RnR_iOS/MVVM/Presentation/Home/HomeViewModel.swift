@@ -16,7 +16,7 @@ struct HomeViewModel {
         cellData = PostNetwork().fetchRecentPosts()
             .map { result -> [Post] in
                 guard case .success(let response) = result else { return [] }
-                return response.data
+                return [Post(id: 0, title: "", overview: "", created: "", genres: "", rates: 0, updated: "", user_id: 0, commentCount: 0)] + response.data
             }
             .asDriver(onErrorJustReturn: [])
             

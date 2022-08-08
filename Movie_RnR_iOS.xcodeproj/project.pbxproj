@@ -27,6 +27,7 @@
 		BF9095BF28A0BDCA00DA01B1 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9095BE28A0BDCA00DA01B1 /* Post.swift */; };
 		BF9095C128A0BE6D00DA01B1 /* PostNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9095C028A0BE6D00DA01B1 /* PostNetwork.swift */; };
 		BF9095C928A1004300DA01B1 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9095C828A1004300DA01B1 /* PostCell.swift */; };
+		BF9095CB28A1155900DA01B1 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9095CA28A1155900DA01B1 /* TitleCell.swift */; };
 		BF90A60A28894CDC0077E479 /* Pods_Movie_RnR_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FFDBC937D660670ED9197C /* Pods_Movie_RnR_iOS.framework */; };
 		BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */; };
 		BFAC2C7C28832F3600CF3E49 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */; };
@@ -69,6 +70,7 @@
 		BF9095BE28A0BDCA00DA01B1 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		BF9095C028A0BE6D00DA01B1 /* PostNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNetwork.swift; sourceTree = "<group>"; };
 		BF9095C828A1004300DA01B1 /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		BF9095CA28A1155900DA01B1 /* TitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		BFA71BED288A944200782C86 /* ViewPostingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPostingsViewController.swift; sourceTree = "<group>"; };
 		BFA71BEF288A99A500782C86 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				BF9095C728A1003300DA01B1 /* PostCell */,
+				BF9095CC28A1155E00DA01B1 /* TitleCell */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -301,6 +304,14 @@
 				BF9095C828A1004300DA01B1 /* PostCell.swift */,
 			);
 			path = PostCell;
+			sourceTree = "<group>";
+		};
+		BF9095CC28A1155E00DA01B1 /* TitleCell */ = {
+			isa = PBXGroup;
+			children = (
+				BF9095CA28A1155900DA01B1 /* TitleCell.swift */,
+			);
+			path = TitleCell;
 			sourceTree = "<group>";
 		};
 		D816FA1394C55BBEDB57F896 /* Pods */ = {
@@ -444,6 +455,7 @@
 				BF9095BA28A0ADF300DA01B1 /* HomeViewModel.swift in Sources */,
 				BF9095B728A0A40E00DA01B1 /* HomeViewController.swift in Sources */,
 				BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */,
+				BF9095CB28A1155900DA01B1 /* TitleCell.swift in Sources */,
 				BF3708A1288D99F100A99482 /* JoinData.swift in Sources */,
 				BF440DEE28872A7000DABCA5 /* Comment.swift in Sources */,
 				BF9095C928A1004300DA01B1 /* PostCell.swift in Sources */,
