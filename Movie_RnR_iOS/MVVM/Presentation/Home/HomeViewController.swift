@@ -42,7 +42,7 @@ class HomeViewController: UIViewController {
                 
                     let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
                     
-                    cell.setUp(post: post!)
+                    cell.setUp(post: post)
                     
                     return cell
                 }

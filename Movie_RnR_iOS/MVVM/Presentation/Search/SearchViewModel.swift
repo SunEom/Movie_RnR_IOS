@@ -13,21 +13,14 @@ struct SearchViewModel {
     
     let cellData: Driver<[Post]>
     
-    init() {
+    init(_ repository: SearchRepository = SearchRepository()) {
         
         cellData = keyword
             .filter { query in
                 return query != nil && query != ""
             }
-            .flatMapLatest { query in
-                return PostNetwork().searchPosts(query: query!)
-            }
-            .map { result in
-                guard case .success(let response) = result else { return [] }
-                return response.data
-            }
+            .flatMapLatest(repository.searchPostings)
             .asDriver(onErrorJustReturn: [])
-        
             
     }
 }
