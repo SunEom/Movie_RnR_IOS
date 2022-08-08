@@ -17,6 +17,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(PostCell.self, forCellReuseIdentifier: Constant.TableViewCellID.Posting)
+        
         layout()
         attribute()
     }
@@ -24,12 +26,16 @@ class HomeViewController: UIViewController {
     func bind(_ viewModel: HomeViewModel) {
         
         viewModel.cellData
-            .drive(tableView.rx.items) { tv, idx, post in
-                let cell = UITableViewCell()
-                cell.textLabel?.text = post?.title
+            .drive(tableView.rx.items) { tv, row, post in
+                let indexPath = IndexPath(row: row, section: 0)
+                let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
+                
+                cell.setUp(post: post!)
+                
                 return cell
             }
             .disposed(by: disposeBag)
+        
     }
     
     private func layout() {
@@ -64,6 +70,10 @@ class HomeViewController: UIViewController {
         view.backgroundColor = UIColor(named: "mainColor")
         
         tableView.backgroundColor = UIColor(named: "mainColor")
+        tableView.contentInset.top = 20
+        tableView.contentInset.bottom = 20
+        tableView.separatorStyle = .none
+        
     }
     
 }
