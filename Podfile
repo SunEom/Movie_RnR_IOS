@@ -7,6 +7,7 @@ target 'Movie_RnR_iOS' do
 
   # Pods for Movie_RnR_iOS
 
-  pod 'Alamofire'
+  pod 'RxSwift', '6.5.0'
+  pod 'RxCocoa', '6.5.0'
   
 end

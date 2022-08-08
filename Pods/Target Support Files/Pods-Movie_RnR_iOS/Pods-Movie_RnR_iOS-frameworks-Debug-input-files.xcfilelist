@@ -1,2 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-Movie_RnR_iOS/Pods-Movie_RnR_iOS-frameworks.sh
-${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework
+${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework
+${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework

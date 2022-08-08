@@ -12,37 +12,22 @@
 		BF0DE870288316E80048905C /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DE86F288316E80048905C /* K.swift */; };
 		BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DE8712883181A0048905C /* PostingTableViewCell.swift */; };
 		BF0DE8742883181A0048905C /* PostingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF0DE8722883181A0048905C /* PostingTableViewCell.xib */; };
-		BF1530E9288E8B9F009569D1 /* DangerZoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1530E8288E8B9F009569D1 /* DangerZoneViewController.swift */; };
-		BF1530EB288FA79F009569D1 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1530EA288FA79F009569D1 /* ChangePasswordViewController.swift */; };
-		BF1530ED2890477E009569D1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1530EC2890477E009569D1 /* SearchViewController.swift */; };
-		BF187344288592D8003BAF16 /* PostingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF187343288592D8003BAF16 /* PostingManager.swift */; };
-		BF37089D288D539C00A99482 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37089C288D539C00A99482 /* JoinViewController.swift */; };
-		BF37089F288D94A400A99482 /* JoinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37089E288D94A400A99482 /* JoinManager.swift */; };
 		BF3708A1288D99F100A99482 /* JoinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3708A0288D99F100A99482 /* JoinData.swift */; };
 		BF440DEE28872A7000DABCA5 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF440DED28872A7000DABCA5 /* Comment.swift */; };
-		BF440DF028872AD200DABCA5 /* CommentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF440DEF28872AD200DABCA5 /* CommentManager.swift */; };
-		BF440DF32887389000DABCA5 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF440DF12887389000DABCA5 /* CommentTableViewCell.swift */; };
 		BF440DF42887389000DABCA5 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF440DF22887389000DABCA5 /* CommentTableViewCell.xib */; };
-		BF56AADF288801C7001D74C8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56AADE288801C7001D74C8 /* LoginViewController.swift */; };
 		BF56AAE12888035F001D74C8 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56AAE02888035F001D74C8 /* UserData.swift */; };
-		BF56AAE328881B0B001D74C8 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56AAE228881B0B001D74C8 /* UserManager.swift */; };
 		BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6A3F4A2885AF0400D33C6D /* PostingDetail.swift */; };
 		BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DA09128807C3200177714 /* AppDelegate.swift */; };
 		BF6DA09428807C3200177714 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DA09328807C3200177714 /* SceneDelegate.swift */; };
-		BF6DA09628807C3200177714 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DA09528807C3200177714 /* HomeViewController.swift */; };
 		BF6DA09928807C3200177714 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF6DA09728807C3200177714 /* Main.storyboard */; };
 		BF6DA09B28807C3300177714 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF6DA09A28807C3300177714 /* Assets.xcassets */; };
 		BF6DA09E28807C3300177714 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF6DA09C28807C3300177714 /* LaunchScreen.storyboard */; };
+		BF9095B728A0A40E00DA01B1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9095B628A0A40E00DA01B1 /* HomeViewController.swift */; };
+		BF9095BA28A0ADF300DA01B1 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9095B928A0ADF300DA01B1 /* HomeViewModel.swift */; };
 		BF90A60A28894CDC0077E479 /* Pods_Movie_RnR_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FFDBC937D660670ED9197C /* Pods_Movie_RnR_iOS.framework */; };
-		BFA71BEE288A944200782C86 /* ViewPostingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA71BED288A944200782C86 /* ViewPostingsViewController.swift */; };
-		BFA71BF0288A99A500782C86 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA71BEF288A99A500782C86 /* EditProfileViewController.swift */; };
 		BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */; };
 		BFAC2C7C28832F3600CF3E49 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */; };
-		BFF4107C28899E3300DA9043 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF4107B28899E3300DA9043 /* StartViewController.swift */; };
 		BFFE98462884660A003B5AF8 /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */; };
-		BFFE984828846992003B5AF8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE984728846992003B5AF8 /* DetailViewController.swift */; };
-		BFFF0603288925DF00885916 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF0602288925DF00885916 /* MyPageViewController.swift */; };
-		BFFF060528893DF200885916 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF060428893DF200885916 /* WebViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +61,8 @@
 		BF6DA09A28807C3300177714 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF6DA09D28807C3300177714 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BF6DA09F28807C3300177714 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF9095B628A0A40E00DA01B1 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		BF9095B928A0ADF300DA01B1 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		BFA71BED288A944200782C86 /* ViewPostingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPostingsViewController.swift; sourceTree = "<group>"; };
 		BFA71BEF288A99A500782C86 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
@@ -111,8 +98,6 @@
 		BF0DE86B288314460048905C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				BF6DA09128807C3200177714 /* AppDelegate.swift */,
-				BF6DA09328807C3200177714 /* SceneDelegate.swift */,
 				BF0DE86C288314560048905C /* fonts */,
 				BF6DA09A28807C3300177714 /* Assets.xcassets */,
 				BF0DE86F288316E80048905C /* K.swift */,
@@ -177,9 +162,9 @@
 		BF6DA09028807C3200177714 /* Movie_RnR_iOS */ = {
 			isa = PBXGroup;
 			children = (
-				BF6DA0A728807C5600177714 /* Model */,
-				BF6DA0A528807C4500177714 /* View */,
-				BF6DA0A628807C4F00177714 /* Controller */,
+				BF9095B828A0A4D300DA01B1 /* Delegate */,
+				BF9095BC28A0AFF100DA01B1 /* Network */,
+				BF9095B228A0A3CE00DA01B1 /* MVC */,
 				BF0DE86B288314460048905C /* Supporting Files */,
 				BF6DA09F28807C3300177714 /* Info.plist */,
 			);
@@ -231,6 +216,58 @@
 				BF3708A0288D99F100A99482 /* JoinData.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		BF9095B228A0A3CE00DA01B1 /* MVC */ = {
+			isa = PBXGroup;
+			children = (
+				BF6DA0A728807C5600177714 /* Model */,
+				BF6DA0A528807C4500177714 /* View */,
+				BF6DA0A628807C4F00177714 /* Controller */,
+			);
+			path = MVC;
+			sourceTree = "<group>";
+		};
+		BF9095B328A0A3D700DA01B1 /* MVVM */ = {
+			isa = PBXGroup;
+			children = (
+				BF9095B428A0A3DF00DA01B1 /* Presentation */,
+			);
+			path = MVVM;
+			sourceTree = "<group>";
+		};
+		BF9095B428A0A3DF00DA01B1 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				BF9095BB28A0ADF900DA01B1 /* Home */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		BF9095B828A0A4D300DA01B1 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				BF6DA09128807C3200177714 /* AppDelegate.swift */,
+				BF6DA09328807C3200177714 /* SceneDelegate.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
+		BF9095BB28A0ADF900DA01B1 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				BF9095B628A0A40E00DA01B1 /* HomeViewController.swift */,
+				BF9095B928A0ADF300DA01B1 /* HomeViewModel.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		BF9095BC28A0AFF100DA01B1 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				BF9095B328A0A3D700DA01B1 /* MVVM */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		D816FA1394C55BBEDB57F896 /* Pods */ = {
@@ -362,33 +399,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF37089F288D94A400A99482 /* JoinManager.swift in Sources */,
-				BF56AADF288801C7001D74C8 /* LoginViewController.swift in Sources */,
-				BFFF060528893DF200885916 /* WebViewController.swift in Sources */,
-				BF1530ED2890477E009569D1 /* SearchViewController.swift in Sources */,
-				BF37089D288D539C00A99482 /* JoinViewController.swift in Sources */,
 				BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */,
 				BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */,
-				BFA71BEE288A944200782C86 /* ViewPostingsViewController.swift in Sources */,
-				BF6DA09628807C3200177714 /* HomeViewController.swift in Sources */,
 				BF0DE870288316E80048905C /* K.swift in Sources */,
 				BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */,
-				BF56AAE328881B0B001D74C8 /* UserManager.swift in Sources */,
 				BF56AAE12888035F001D74C8 /* UserData.swift in Sources */,
-				BF187344288592D8003BAF16 /* PostingManager.swift in Sources */,
 				BF6DA09428807C3200177714 /* SceneDelegate.swift in Sources */,
-				BFFF0603288925DF00885916 /* MyPageViewController.swift in Sources */,
 				BF0DE86A288311960048905C /* Posting.swift in Sources */,
-				BF440DF32887389000DABCA5 /* CommentTableViewCell.swift in Sources */,
-				BFF4107C28899E3300DA9043 /* StartViewController.swift in Sources */,
-				BF1530E9288E8B9F009569D1 /* DangerZoneViewController.swift in Sources */,
-				BF1530EB288FA79F009569D1 /* ChangePasswordViewController.swift in Sources */,
+				BF9095BA28A0ADF300DA01B1 /* HomeViewModel.swift in Sources */,
+				BF9095B728A0A40E00DA01B1 /* HomeViewController.swift in Sources */,
 				BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */,
 				BF3708A1288D99F100A99482 /* JoinData.swift in Sources */,
-				BF440DF028872AD200DABCA5 /* CommentManager.swift in Sources */,
 				BF440DEE28872A7000DABCA5 /* Comment.swift in Sources */,
-				BFFE984828846992003B5AF8 /* DetailViewController.swift in Sources */,
-				BFA71BF0288A99A500782C86 /* EditProfileViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,7 +564,6 @@
 				INFOPLIST_FILE = Movie_RnR_iOS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -573,7 +594,6 @@
 				INFOPLIST_FILE = Movie_RnR_iOS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
