@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class HomeViewController: UIViewController {
+    let disposeBag = DisposeBag()
     
     let tableView = UITableView()
     
@@ -18,8 +21,15 @@ class HomeViewController: UIViewController {
         attribute()
     }
     
-    func bind() {
+    func bind(_ viewModel: HomeViewModel) {
         
+        viewModel.cellData
+            .drive(tableView.rx.items) { tv, idx, post in
+                let cell = UITableViewCell()
+                cell.textLabel?.text = post?.title
+                return cell
+            }
+            .disposed(by: disposeBag)
     }
     
     private func layout() {
