@@ -41,8 +41,9 @@ class HomeViewController: UIViewController {
                 } else {
                 
                     let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
+                    let cellVM = PostCellViewModel(post)
                     
-                    cell.setUp(post: post)
+                    cell.bind(cellVM)
                     
                     return cell
                 }
@@ -64,6 +65,21 @@ class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        tableView.rx.itemSelected
+            .map { indexPath -> Int in
+                indexPath.row
+            }
+            .bind(to: viewModel.itemSelected)
+            .disposed(by: disposeBag)
+        
+        viewModel.selectedItem
+            .drive(onNext: { post in
+                let vc = DetailViewController()
+                let vm = DetailViewModel(post!)
+                vc.bind(vm)
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
         
     }
     

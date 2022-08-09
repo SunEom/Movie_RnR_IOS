@@ -33,8 +33,9 @@ class SearchViewController: UIViewController {
             .drive(tableView.rx.items) { tv, row, post in
                 let indexPath = IndexPath(row: row, section: 0)
                 let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
+                let cellVM = PostCellViewModel(post)
                 
-                cell.setUp(post: post)
+                cell.bind(cellVM)
                 
                 return cell
             }

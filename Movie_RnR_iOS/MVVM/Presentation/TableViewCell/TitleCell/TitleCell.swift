@@ -8,14 +8,6 @@
 import UIKit
 
 class TitleCell: UITableViewCell {
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("Initialize with not available way")
-    }
     
     let titleLabel = UILabel()
     

@@ -10,8 +10,16 @@ import RxCocoa
 
 struct HomeViewModel {
     let cellData: Driver<[Post]>
+    let itemSelected = PublishSubject<Int>()
+    let selectedItem: Driver<Post?>
 
     init(_ repository: HomeRepository = HomeRepository()) {
         cellData = repository.fetchRecentPostings()
+        
+        selectedItem = itemSelected
+            .withLatestFrom(cellData) { idx, list in
+                list[idx]
+            }
+            .asDriver(onErrorJustReturn: nil)
     }
 }
