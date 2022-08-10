@@ -20,15 +20,12 @@ class DetailViewController: UIViewController {
         tableView.register(TopStackViewCell.self, forCellReuseIdentifier: "DetailTopStackViewCell")
         tableView.register(OverviewCell.self, forCellReuseIdentifier: "DetailOverviewCell")
         tableView.register(BottomStackViewCell.self, forCellReuseIdentifier: "DetailBottomStackViewCell")
-        tableView.register(CommentListCell.self, forCellReuseIdentifier: "DetailCommentListCell")
         
         attribute()
         layout()
     }
     
     func bind(_ viewModel: DetailViewModel) {
-        title = viewModel.post.title
-        
         viewModel.cellData
             .drive(tableView.rx.items) { tv, row, data in
                 switch row {
@@ -63,16 +60,30 @@ class DetailViewController: UIViewController {
                     cell.setUp(date: viewModel.post.created, nickname: "")
                     return cell
                 case 5:
-                    let indexPath = IndexPath(row: row, section: 0)
-                    let cell = tv.dequeueReusableCell(withIdentifier: "DetailCommentListCell", for: indexPath) as! CommentListCell
-                    cell.isUserInteractionEnabled = false
-                    cell.setUp()
+                    let cell = UITableViewCell()
+                    cell.backgroundColor = .clear
+                    cell.textLabel?.text = "Comments (\(viewModel.post.commentCount ?? 0))"
+                    cell.textLabel?.font = UIFont(name: "CarterOne", size: 18)
+                    cell.textLabel?.textColor = .black
+                    cell.accessoryView = UIImageView(image: UIImage(systemName: "chevron.right"))
+                    cell.tintColor = .black
+                    
                     return cell
                 default:
                     return UITableViewCell()
                 }
             }
             .disposed(by:disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(onNext: { indexPath in
+                self.tableView.cellForRow(at: indexPath)?.isSelected = false
+                let vc = CommentViewController()
+                let vm = CommentViewModel(postID: viewModel.post.id)
+                vc.bind(vm)
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {
