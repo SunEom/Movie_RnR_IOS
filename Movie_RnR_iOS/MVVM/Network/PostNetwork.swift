@@ -79,4 +79,29 @@ struct PostNetwork {
         }
         
     }
+    
+    func fetchPostDetail(postID: Int) -> Single<Result<PostDetailRepsonse, PostNetworkError>> {
+        let urlString = "\(Constant.serverURL)/post/\(postID)"
+        
+        guard let url = URL(string: urlString) else { return .just(.failure(.invalidURL)) }
+        
+        let request = URLRequest(url: url)
+        
+        return session.rx.data(request: request)
+            .map { data in
+                
+                do {
+                    let response = try JSONDecoder().decode(PostDetailRepsonse.self, from: data)
+                    
+                    return .success(response)
+                } catch {
+                    return .failure(PostNetworkError.invalidJSON)
+                }
+                
+            }
+            .catch { _ in
+                return .just(.failure(PostNetworkError.networkError))
+            }
+            .asSingle()
+    }
 }

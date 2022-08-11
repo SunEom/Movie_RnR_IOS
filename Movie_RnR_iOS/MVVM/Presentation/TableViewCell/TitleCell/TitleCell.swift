@@ -6,16 +6,22 @@
 //
 
 import UIKit
+import RxSwift
 
 class TitleCell: UITableViewCell {
-    
+    let disposeBag = DisposeBag()
     let titleLabel = UILabel()
     
-    func setUp(title: String) {
+    func bind(_ viewModel: TitleCellViewModel) {
+        viewModel.title
+            .bind(to: titleLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+    
+    func setUp() {
         contentView.backgroundColor = UIColor(named: "mainColor")
         titleLabel.backgroundColor = UIColor(named: "mainColor")
         
-        titleLabel.text = title
         titleLabel.textAlignment = .center
         titleLabel.textColor = .black
         titleLabel.font = UIFont(name: "CarterOne", size: 20)

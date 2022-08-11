@@ -6,14 +6,21 @@
 //
 
 import UIKit
+import RxSwift
 
 class OverviewCell: UITableViewCell {
+    let disposeBag = DisposeBag()
+    
     let textView = UITextView()
     
-    func setup(overview: String) {
+    func bind(_ viewModel: OverviewCellViewModel) {
+        viewModel.overview
+            .bind(to: textView.rx.text)
+            .disposed(by: disposeBag)
+    }
+    
+    func setUp() {
         backgroundColor = UIColor(named: "mainColor")
-        
-        textView.text = overview
         textView.font = UIFont(name: "CarterOne", size: 15)
         textView.textColor = .black
         textView.isScrollEnabled = false
@@ -22,13 +29,13 @@ class OverviewCell: UITableViewCell {
         addSubview(textView)
         textView.translatesAutoresizingMaskIntoConstraints = false
         
+        
         [
             textView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width-30),
             textView.centerXAnchor.constraint(equalTo: centerXAnchor),
             textView.centerYAnchor.constraint(equalTo: centerYAnchor),
             heightAnchor.constraint(equalTo: textView.heightAnchor)
         ].forEach{ $0.isActive = true }
-        
         
     }
 }

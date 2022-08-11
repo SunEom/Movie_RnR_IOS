@@ -9,16 +9,59 @@ import RxSwift
 import RxCocoa
 
 struct DetailViewModel {
+    let disposeBag = DisposeBag()
+    
+    let titleCellViewModel = TitleCellViewModel()
+    let topStackViewCellViewModel = TopStackViewCellViewModel()
+    let overviewCellViewModel = OverviewCellViewModel()
+    let bottomStackViewCellViewModel = BottomStackViewCellViewModel()
+    
     let post: Post!
     
-    let cellData: Driver<[String]>
+    let cellList: Driver<[String]>
+    
+    let detailData: Driver<PostDetail?>
     
     init(_ post: Post) {
         
         self.post = post
         
-        cellData = Observable.just(["image","title","topStackView","overview","bottomStackview","comments"])
+        cellList = Observable.just(["image","title","topStackView","overview","bottomStackview","comments"])
             .asDriver(onErrorJustReturn: [])
+        
+        detailData = PostNetwork().fetchPostDetail(postID: post.id)
+            .map{ result -> PostDetail? in
+                guard case .success(let response) = result else { return nil }
+                return response.data
+            }
+            .asDriver(onErrorJustReturn: nil)
+        
+        let postDetail = detailData
+            .asObservable()
+            
+        postDetail.compactMap { $0?.movie.title }
+            .bind(to: titleCellViewModel.title)
+            .disposed(by: disposeBag)
+        
+        postDetail.compactMap { $0?.movie.genres }
+            .bind(to: topStackViewCellViewModel.genres)
+            .disposed(by: disposeBag)
+        
+        postDetail.compactMap { "\($0?.movie.rates ?? 0)" }
+            .bind(to: topStackViewCellViewModel.rates)
+            .disposed(by: disposeBag)
+        
+        postDetail.compactMap { $0?.movie.overview }
+            .bind(to: overviewCellViewModel.overview)
+            .disposed(by: disposeBag)
+
+        postDetail.compactMap { $0?.movie.created }
+            .bind(to: bottomStackViewCellViewModel.date)
+            .disposed(by: disposeBag)
+        
+        postDetail.compactMap { $0?.user.nickname }
+            .bind(to: bottomStackViewCellViewModel.nickname)
+            .disposed(by: disposeBag)
         
     }
 }

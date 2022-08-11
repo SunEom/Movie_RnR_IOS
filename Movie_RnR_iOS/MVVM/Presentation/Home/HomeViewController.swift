@@ -34,8 +34,12 @@ class HomeViewController: UIViewController {
                 if row == 0 {
                     
                     let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Title, for: indexPath) as! TitleCell
+                    let vm = TitleCellViewModel()
                     
-                    cell.setUp(title: "Recent Postings")
+                    cell.bind(vm)
+                    vm.title.onNext("Recent Postings")
+                    
+                    cell.setUp()
                     
                     return cell
                 } else {

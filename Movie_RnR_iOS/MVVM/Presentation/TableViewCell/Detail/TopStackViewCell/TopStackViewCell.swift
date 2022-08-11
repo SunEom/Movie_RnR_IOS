@@ -6,14 +6,28 @@
 //
 
 import UIKit
+import RxSwift
 
 class TopStackViewCell: UITableViewCell {
+    
+    let disposeBag = DisposeBag()
     
     let stackView = UIStackView()
     let genresLabel = UILabel()
     let ratesLabel = UILabel()
     
-    func setUp(genres: String, rates: Double) {
+    func bind(_ viewModel: TopStackViewCellViewModel) {
+        viewModel.genres
+            .bind(to: genresLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.rates
+            .map { "★ \($0 ?? "0") / 10"}
+            .bind(to: ratesLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+    
+    func setUp() {
         backgroundColor = UIColor(named: "mainColor")
         
         stackView.addArrangedSubview(genresLabel)
@@ -22,11 +36,9 @@ class TopStackViewCell: UITableViewCell {
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         
-        genresLabel.text = genres
         genresLabel.textColor = .black
         genresLabel.font = UIFont(name: "CarterOne", size: 13)
-        
-        ratesLabel.text = "★ \(rates) / 10"
+    
         ratesLabel.textAlignment = .right
         ratesLabel.textColor = .black
         ratesLabel.font = UIFont(name: "CarterOne", size: 13)

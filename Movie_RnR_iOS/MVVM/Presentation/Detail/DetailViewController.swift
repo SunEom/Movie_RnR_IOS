@@ -26,7 +26,8 @@ class DetailViewController: UIViewController {
     }
     
     func bind(_ viewModel: DetailViewModel) {
-        viewModel.cellData
+        
+        viewModel.cellList
             .drive(tableView.rx.items) { tv, row, data in
                 switch row {
                 case 0:
@@ -39,25 +40,29 @@ class DetailViewController: UIViewController {
                     let indexPath = IndexPath(row: row, section: 0)
                     let cell = tv.dequeueReusableCell(withIdentifier: "DetailTitleCell", for: indexPath) as! TitleCell
                     cell.isUserInteractionEnabled = false
-                    cell.setUp(title: viewModel.post.title)
+                    cell.bind(viewModel.titleCellViewModel)
+                    cell.setUp()
                     return cell
                 case 2:
                     let indexPath = IndexPath(row: row, section: 0)
                     let cell = tv.dequeueReusableCell(withIdentifier: "DetailTopStackViewCell", for: indexPath) as! TopStackViewCell
                     cell.isUserInteractionEnabled = false
-                    cell.setUp(genres: viewModel.post.genres, rates: viewModel.post.rates)
+                    cell.bind(viewModel.topStackViewCellViewModel)
+                    cell.setUp()
                     return cell
                 case 3:
                     let indexPath = IndexPath(row: row, section: 0)
                     let cell = tv.dequeueReusableCell(withIdentifier: "DetailOverviewCell", for: indexPath) as! OverviewCell
                     cell.isUserInteractionEnabled = false
-                    cell.setup(overview: viewModel.post.overview)
+                    cell.bind(viewModel.overviewCellViewModel)
+                    cell.setUp()
                     return cell
                 case 4:
                     let indexPath = IndexPath(row: row, section: 0)
                     let cell = tv.dequeueReusableCell(withIdentifier: "DetailBottomStackViewCell", for: indexPath) as! BottomStackViewCell
                     cell.isUserInteractionEnabled = false
-                    cell.setUp(date: viewModel.post.created, nickname: "")
+                    cell.bind(viewModel.bottomStackViewCellViewModel)
+                    cell.setUp()
                     return cell
                 case 5:
                     let cell = UITableViewCell()

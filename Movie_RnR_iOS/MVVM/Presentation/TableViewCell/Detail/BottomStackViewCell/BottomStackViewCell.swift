@@ -6,14 +6,27 @@
 //
 
 import UIKit
+import RxSwift
 
 class BottomStackViewCell: UITableViewCell {
+    let disposeBag = DisposeBag()
     
     let stackView = UIStackView()
     let dateLabel = UILabel()
     let nicknameLabel = UILabel()
     
-    func setUp(date: String, nickname: String) {
+    func bind(_ viewModel: BottomStackViewCellViewModel) {
+        viewModel.date
+            .map(dateFormat)
+            .bind(to: dateLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.nickname
+            .bind(to: nicknameLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+    
+    func setUp() {
         backgroundColor = UIColor(named: "mainColor")
         
         stackView.addArrangedSubview(dateLabel)
@@ -22,11 +35,9 @@ class BottomStackViewCell: UITableViewCell {
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         
-        dateLabel.text = dateFormat(with: date)
         dateLabel.textColor = .black
         dateLabel.font = UIFont(name: "CarterOne", size: 12)
         
-        nicknameLabel.text = nickname
         nicknameLabel.textAlignment = .right
         nicknameLabel.textColor = .black
         nicknameLabel.font = UIFont(name: "CarterOne", size: 12)
@@ -41,8 +52,13 @@ class BottomStackViewCell: UITableViewCell {
         ].forEach{ $0.isActive = true}
     }
     
-    private func dateFormat(with: String) -> String {
+    private func dateFormat(with: String?) -> String {
+        guard let with = with else {
+            return ""
+        }
+        
         return String(with.split(separator: "T")[0])
+
     }
 }
 
