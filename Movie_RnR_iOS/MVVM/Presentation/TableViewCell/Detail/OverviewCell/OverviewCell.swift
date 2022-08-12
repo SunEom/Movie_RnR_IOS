@@ -29,11 +29,11 @@ class OverviewCell: UITableViewCell {
         addSubview(textView)
         textView.translatesAutoresizingMaskIntoConstraints = false
         
-        
         [
-            textView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width-30),
+            textView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+            textView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 15),
+            textView.topAnchor.constraint(equalTo: topAnchor),
             textView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            textView.centerYAnchor.constraint(equalTo: centerYAnchor),
             heightAnchor.constraint(equalTo: textView.heightAnchor)
         ].forEach{ $0.isActive = true }
         

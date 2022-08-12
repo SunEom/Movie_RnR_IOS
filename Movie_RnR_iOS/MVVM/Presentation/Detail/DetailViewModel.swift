@@ -22,18 +22,14 @@ struct DetailViewModel {
     
     let detailData: Driver<PostDetail?>
     
-    init(_ post: Post) {
+    init(_ post: Post, _ repository: DetailRepository = DetailRepository()) {
         
         self.post = post
         
         cellList = Observable.just(["image","title","topStackView","overview","bottomStackview","comments"])
             .asDriver(onErrorJustReturn: [])
         
-        detailData = PostNetwork().fetchPostDetail(postID: post.id)
-            .map{ result -> PostDetail? in
-                guard case .success(let response) = result else { return nil }
-                return response.data
-            }
+        detailData = repository.fetchPostDetail(post: post)
             .asDriver(onErrorJustReturn: nil)
         
         let postDetail = detailData
