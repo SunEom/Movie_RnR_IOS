@@ -20,6 +20,8 @@
 		BF49D97928A4CB2B008C93B9 /* OverviewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D97828A4CB2B008C93B9 /* OverviewCellViewModel.swift */; };
 		BF49D97B28A4CC60008C93B9 /* BottomStackvViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D97A28A4CC60008C93B9 /* BottomStackvViewCellViewModel.swift */; };
 		BF49D97D28A5FF0B008C93B9 /* DetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D97C28A5FF0B008C93B9 /* DetailRepository.swift */; };
+		BF49D98028A60189008C93B9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D97F28A60189008C93B9 /* LoginViewController.swift */; };
+		BF49D98228A601CD008C93B9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D98128A601CD008C93B9 /* LoginViewModel.swift */; };
 		BF56AAE12888035F001D74C8 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56AAE02888035F001D74C8 /* UserData.swift */; };
 		BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6A3F4A2885AF0400D33C6D /* PostingDetail.swift */; };
 		BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DA09128807C3200177714 /* AppDelegate.swift */; };
@@ -80,6 +82,8 @@
 		BF49D97828A4CB2B008C93B9 /* OverviewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCellViewModel.swift; sourceTree = "<group>"; };
 		BF49D97A28A4CC60008C93B9 /* BottomStackvViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomStackvViewCellViewModel.swift; sourceTree = "<group>"; };
 		BF49D97C28A5FF0B008C93B9 /* DetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRepository.swift; sourceTree = "<group>"; };
+		BF49D97F28A60189008C93B9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		BF49D98128A601CD008C93B9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		BF56AADE288801C7001D74C8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BF56AAE02888035F001D74C8 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		BF56AAE228881B0B001D74C8 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -192,6 +196,15 @@
 			path = CommentTableViewCell;
 			sourceTree = "<group>";
 		};
+		BF49D97E28A6017C008C93B9 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				BF49D97F28A60189008C93B9 /* LoginViewController.swift */,
+				BF49D98128A601CD008C93B9 /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		BF6DA08528807C3200177714 = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +306,7 @@
 		BF9095B428A0A3DF00DA01B1 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				BF49D97E28A6017C008C93B9 /* Login */,
 				BF9095C628A1001F00DA01B1 /* TableViewCell */,
 				BF98ED5D28A2D296001E65F6 /* Comment */,
 				BF9095DE28A1389200DA01B1 /* Detail */,
@@ -592,9 +606,11 @@
 				BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */,
 				BF98ED6328A2D5DE001E65F6 /* CommentNetwork.swift in Sources */,
 				BF9095C128A0BE6D00DA01B1 /* PostNetwork.swift in Sources */,
+				BF49D98028A60189008C93B9 /* LoginViewController.swift in Sources */,
 				BF49D97328A4A787008C93B9 /* PostDetail.swift in Sources */,
 				BF9095CF28A124AE00DA01B1 /* SearchViewController.swift in Sources */,
 				BF49D97B28A4CC60008C93B9 /* BottomStackvViewCellViewModel.swift in Sources */,
+				BF49D98228A601CD008C93B9 /* LoginViewModel.swift in Sources */,
 				BF0DE870288316E80048905C /* K.swift in Sources */,
 				BF98ED4B28A2B853001E65F6 /* ImageCell.swift in Sources */,
 				BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */,

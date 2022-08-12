@@ -9,6 +9,8 @@ import RxSwift
 import RxCocoa
 
 struct HomeViewModel {
+    let loginViewModel = LoginViewModel()
+    
     let cellData: Driver<[Post]>
     let itemSelected = PublishSubject<Int>()
     let selectedItem: Driver<Post?>

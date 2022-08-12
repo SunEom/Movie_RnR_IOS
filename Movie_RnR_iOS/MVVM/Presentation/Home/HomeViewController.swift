@@ -85,6 +85,13 @@ class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        leftBarButtonItem.rx.tap
+            .subscribe(onNext: {
+                let vc = LoginViewController()
+                vc.bind(viewModel.loginViewModel)
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func layout() {
