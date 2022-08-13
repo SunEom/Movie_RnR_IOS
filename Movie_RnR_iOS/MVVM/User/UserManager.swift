@@ -7,18 +7,20 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
-class User {
+class UserManager {
     static let disposeBag = DisposeBag()
     
     private static var user: Login?
+    static var logined = PublishSubject<Bool>()
     
     private init() {
-        User.user = nil
+        UserManager.user = nil
     }
     
     static func getInstance() -> Login? {
-        return User.user
+        return UserManager.user
     }
     
     static func requestPostLogin(id: String, password: String) {
@@ -28,9 +30,11 @@ class User {
                 return response.data
             }
             .asObservable()
-            .subscribe { userData in
+            .subscribe (onNext: { userData in
                 self.user = userData
-            }
+                self.logined
+                    .onNext(true)
+            })
             .disposed(by: disposeBag)
     }
 }

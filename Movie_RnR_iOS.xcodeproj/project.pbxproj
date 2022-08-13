@@ -23,7 +23,7 @@
 		BF49D98028A60189008C93B9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D97F28A60189008C93B9 /* LoginViewController.swift */; };
 		BF49D98228A601CD008C93B9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D98128A601CD008C93B9 /* LoginViewModel.swift */; };
 		BF49D98428A76404008C93B9 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D98328A76404008C93B9 /* Login.swift */; };
-		BF49D98628A764CC008C93B9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D98528A764CC008C93B9 /* User.swift */; };
+		BF49D98628A764CC008C93B9 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D98528A764CC008C93B9 /* UserManager.swift */; };
 		BF49D98828A76888008C93B9 /* LoginNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D98728A76888008C93B9 /* LoginNetwork.swift */; };
 		BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6A3F4A2885AF0400D33C6D /* PostingDetail.swift */; };
 		BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DA09128807C3200177714 /* AppDelegate.swift */; };
@@ -87,7 +87,7 @@
 		BF49D97F28A60189008C93B9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BF49D98128A601CD008C93B9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		BF49D98328A76404008C93B9 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
-		BF49D98528A764CC008C93B9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		BF49D98528A764CC008C93B9 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		BF49D98728A76888008C93B9 /* LoginNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginNetwork.swift; sourceTree = "<group>"; };
 		BF56AADE288801C7001D74C8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BF56AAE02888035F001D74C8 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -210,6 +210,14 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		BF49D98928A802DB008C93B9 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				BF49D98528A764CC008C93B9 /* UserManager.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		BF6DA08528807C3200177714 = {
 			isa = PBXGroup;
 			children = (
@@ -300,6 +308,7 @@
 		BF9095B328A0A3D700DA01B1 /* MVVM */ = {
 			isa = PBXGroup;
 			children = (
+				BF49D98928A802DB008C93B9 /* User */,
 				BF9095D228A1325E00DA01B1 /* Repository */,
 				BF9095BD28A0BD6200DA01B1 /* Entity */,
 				BF9095BC28A0AFF100DA01B1 /* Network */,
@@ -356,7 +365,6 @@
 				BF98ED6428A2D672001E65F6 /* Comment.swift */,
 				BF49D97228A4A787008C93B9 /* PostDetail.swift */,
 				BF49D98328A76404008C93B9 /* Login.swift */,
-				BF49D98528A764CC008C93B9 /* User.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -639,7 +647,7 @@
 				BF49D98828A76888008C93B9 /* LoginNetwork.swift in Sources */,
 				BF9095BA28A0ADF300DA01B1 /* HomeViewModel.swift in Sources */,
 				BF49D98428A76404008C93B9 /* Login.swift in Sources */,
-				BF49D98628A764CC008C93B9 /* User.swift in Sources */,
+				BF49D98628A764CC008C93B9 /* UserManager.swift in Sources */,
 				BF9095B728A0A40E00DA01B1 /* HomeViewController.swift in Sources */,
 				BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */,
 				BF9095CB28A1155900DA01B1 /* TitleCell.swift in Sources */,

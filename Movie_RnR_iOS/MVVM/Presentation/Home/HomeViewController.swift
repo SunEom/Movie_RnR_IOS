@@ -87,9 +87,13 @@ class HomeViewController: UIViewController {
         
         leftBarButtonItem.rx.tap
             .subscribe(onNext: {
-                let vc = LoginViewController()
-                vc.bind(viewModel.loginViewModel)
-                self.navigationController?.pushViewController(vc, animated: true)
+                if UserManager.getInstance() == nil {
+                    let vc = LoginViewController()
+                    vc.bind(viewModel.loginViewModel)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    print("Login Already")
+                }
             })
             .disposed(by: disposeBag)
     }

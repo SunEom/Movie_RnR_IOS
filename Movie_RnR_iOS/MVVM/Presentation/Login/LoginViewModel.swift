@@ -22,11 +22,9 @@ struct LoginViewModel {
         loginPressed
             .withLatestFrom(loginData)
             .subscribe(onNext: {
-                User.requestPostLogin(id: $0.0 ?? "", password: $0.1 ?? "")
+                UserManager.requestPostLogin(id: $0.0 ?? "", password: $0.1 ?? "")
             })
             .disposed(by: disposeBag)
-            
-        
         
     }
 }

@@ -38,6 +38,15 @@ class LoginViewController: UIViewController {
         loginButton.rx.tap
             .bind(to: viewModel.loginPressed)
             .disposed(by: disposeBag)
+        
+        UserManager.logined
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                if $0 {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func layout() {
