@@ -46,6 +46,22 @@ class SearchViewController: UIViewController {
                 self.tableView.cellForRow(at: $0)?.isSelected = false
             })
             .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .map { indexPath -> Int in
+                indexPath.row
+            }
+            .bind(to: viewModel.itemSelected)
+            .disposed(by: disposeBag)
+        
+        viewModel.selectedItem
+            .drive(onNext: { post in
+                let vc = DetailViewController()
+                let vm = DetailViewModel(post!)
+                vc.bind(vm)
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func layout() {

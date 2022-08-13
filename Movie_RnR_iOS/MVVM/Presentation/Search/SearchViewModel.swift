@@ -12,6 +12,8 @@ struct SearchViewModel {
     let keyword = PublishSubject<String?>()
     
     let cellData: Driver<[Post]>
+    let itemSelected = PublishSubject<Int>()
+    let selectedItem: Driver<Post?>
     
     init(_ repository: SearchRepository = SearchRepository()) {
         
@@ -22,5 +24,10 @@ struct SearchViewModel {
             .flatMapLatest(repository.searchPostings)
             .asDriver(onErrorJustReturn: [])
             
+        selectedItem = itemSelected
+            .withLatestFrom(cellData) { idx, list in
+                list[idx]
+            }
+            .asDriver(onErrorJustReturn: nil)
     }
 }

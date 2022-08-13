@@ -10,6 +10,7 @@ import RxCocoa
 
 struct HomeViewModel {
     let loginViewModel = LoginViewModel()
+    let searchViewModel = SearchViewModel()
     
     let cellData: Driver<[Post]>
     let itemSelected = PublishSubject<Int>()

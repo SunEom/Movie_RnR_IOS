@@ -63,8 +63,7 @@ class HomeViewController: UIViewController {
         rightBarButtonItem.rx.tap
             .subscribe(onNext: {_ in
                 let vc = SearchViewController()
-                let vm = SearchViewModel()
-                vc.bind(vm)
+                vc.bind(viewModel.searchViewModel)
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
