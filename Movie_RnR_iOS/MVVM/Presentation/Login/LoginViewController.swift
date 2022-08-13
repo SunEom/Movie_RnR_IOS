@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import RxSwift
 
 class LoginViewController: UIViewController {
+    
+    let disposeBag = DisposeBag()
     
     let stackView = UIStackView()
     let titleLabel = UILabel()
@@ -24,7 +27,17 @@ class LoginViewController: UIViewController {
     }
     
     func bind(_ viewModel: LoginViewModel) {
+        idTextField.rx.text
+            .bind(to: viewModel.id)
+            .disposed(by: disposeBag)
         
+        passwordTextField.rx.text
+            .bind(to: viewModel.password)
+            .disposed(by: disposeBag)
+        
+        loginButton.rx.tap
+            .bind(to: viewModel.loginPressed)
+            .disposed(by: disposeBag)
     }
     
     private func layout() {
