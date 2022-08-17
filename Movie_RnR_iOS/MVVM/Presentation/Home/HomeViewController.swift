@@ -91,7 +91,9 @@ class HomeViewController: UIViewController {
                     vc.bind(viewModel.loginViewModel)
                     self.navigationController?.pushViewController(vc, animated: true)
                 } else {
-                    print("Login Already")
+                    let vc = ProfileViewController()
+                    vc.bind(viewModel.profileViewModel)
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
             })
             .disposed(by: disposeBag)
