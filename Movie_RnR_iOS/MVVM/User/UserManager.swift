@@ -13,7 +13,7 @@ class UserManager {
     static let disposeBag = DisposeBag()
     
     private static var user: Login?
-    static var logined = PublishSubject<Bool>()
+    static let isLoggedIn = PublishSubject<Bool>()
     
     private init() {
         UserManager.user = nil
@@ -25,15 +25,10 @@ class UserManager {
     
     static func requestPostLogin(id: String, password: String) {
         LoginNetwork().requestPostLogin(id: id, password: password)
-            .map { result -> Login? in
-                guard case .success(let response) = result else { return nil }
-                return response.data
-            }
-            .asObservable()
-            .subscribe (onNext: { userData in
-                self.user = userData
-                self.logined
-                    .onNext(true)
+            .subscribe(onSuccess: { result in
+                guard case .success(let response) = result else { return isLoggedIn.onNext(false) }
+                self.user = response.data
+                isLoggedIn.onNext(true)
             })
             .disposed(by: disposeBag)
     }

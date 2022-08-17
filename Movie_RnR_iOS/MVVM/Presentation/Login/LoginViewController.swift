@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
             .bind(to: viewModel.loginPressed)
             .disposed(by: disposeBag)
         
-        UserManager.logined
+        UserManager.isLoggedIn
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
                 if $0 {

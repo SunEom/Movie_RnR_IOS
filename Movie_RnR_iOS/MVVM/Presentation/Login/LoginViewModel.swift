@@ -18,13 +18,13 @@ struct LoginViewModel {
     init() {
         let loginData = Observable
             .combineLatest(id, password)
-        
+            
         loginPressed
             .withLatestFrom(loginData)
             .subscribe(onNext: {
-                UserManager.requestPostLogin(id: $0.0 ?? "", password: $0.1 ?? "")
+                UserManager.requestPostLogin(id:$0.0 ?? "", password: $0.1 ?? "" )
             })
             .disposed(by: disposeBag)
-        
+            
     }
 }
