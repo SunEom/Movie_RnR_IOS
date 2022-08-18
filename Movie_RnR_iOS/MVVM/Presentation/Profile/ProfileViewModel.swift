@@ -10,6 +10,20 @@ import RxSwift
 import RxCocoa
 
 struct ProfileViewModel {
-    
+    let disposeBag = DisposeBag()
     let menuList = Observable<[String]>.just(["Edit Profile", "Change Password", "View Postings", "Danger Zone"]).asDriver(onErrorJustReturn: [])
+    
+    let userID = PublishSubject<Int>()
+    let profile = PublishSubject<[Profile]>()
+    
+    init() {
+        userID
+            .flatMapLatest(ProfileNetwork().fetchProfile)
+            .map { result -> [Profile] in
+                guard case .success(let response) = result else { return [] }
+                return response.data
+            }
+            .bind(to: profile)
+            .disposed(by: disposeBag)
+    }
 }

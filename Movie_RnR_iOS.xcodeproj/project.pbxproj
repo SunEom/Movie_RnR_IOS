@@ -12,6 +12,7 @@
 		BF0DE870288316E80048905C /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DE86F288316E80048905C /* K.swift */; };
 		BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DE8712883181A0048905C /* PostingTableViewCell.swift */; };
 		BF0DE8742883181A0048905C /* PostingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF0DE8722883181A0048905C /* PostingTableViewCell.xib */; };
+		BF2F118828AE8EBC00082C96 /* ProfileNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F118728AE8EBC00082C96 /* ProfileNetwork.swift */; };
 		BF3708A1288D99F100A99482 /* JoinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3708A0288D99F100A99482 /* JoinData.swift */; };
 		BF395F2028AD454200C5F11F /* ProfileVieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F1F28AD454200C5F11F /* ProfileVieController.swift */; };
 		BF395F2228AD454B00C5F11F /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F2128AD454B00C5F11F /* ProfileViewModel.swift */; };
@@ -74,6 +75,7 @@
 		BF1530EA288FA79F009569D1 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		BF1530EC2890477E009569D1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		BF187343288592D8003BAF16 /* PostingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingManager.swift; sourceTree = "<group>"; };
+		BF2F118728AE8EBC00082C96 /* ProfileNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetwork.swift; sourceTree = "<group>"; };
 		BF37089C288D539C00A99482 /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
 		BF37089E288D94A400A99482 /* JoinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinManager.swift; sourceTree = "<group>"; };
 		BF3708A0288D99F100A99482 /* JoinData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinData.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				BF9095C028A0BE6D00DA01B1 /* PostNetwork.swift */,
+				BF2F118728AE8EBC00082C96 /* ProfileNetwork.swift */,
 				BF98ED6228A2D5DE001E65F6 /* CommentNetwork.swift */,
 				BF49D98728A76888008C93B9 /* LoginNetwork.swift */,
 			);
@@ -677,6 +680,7 @@
 				BF98ED6128A2D2CA001E65F6 /* CommentViewModel.swift in Sources */,
 				BF9095C928A1004300DA01B1 /* PostCell.swift in Sources */,
 				BF395F2428AD4B0600C5F11F /* Profile.swift in Sources */,
+				BF2F118828AE8EBC00082C96 /* ProfileNetwork.swift in Sources */,
 				BF98ED5328A2C80E001E65F6 /* CommentViewController.swift in Sources */,
 				BF49D97528A4BFD9008C93B9 /* TitleCellViewModel.swift in Sources */,
 			);

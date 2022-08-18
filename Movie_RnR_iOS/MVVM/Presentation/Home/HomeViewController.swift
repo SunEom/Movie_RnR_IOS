@@ -93,6 +93,7 @@ class HomeViewController: UIViewController {
                 } else {
                     let vc = ProfileViewController()
                     vc.bind(viewModel.profileViewModel)
+                    viewModel.profileViewModel.userID.onNext(UserManager.getInstance()!.id)
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             })
