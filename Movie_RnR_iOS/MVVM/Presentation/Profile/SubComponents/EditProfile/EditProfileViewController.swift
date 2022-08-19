@@ -43,6 +43,14 @@ class EditProfileViewController: UIViewController {
         layout()
     }
     
+    func bind(_ viewModel: EditProfileViewModel) {
+        viewModel.genderList
+            .drive(genderPicker.rx.itemTitles) { idx, title in
+                return title
+            }
+            .disposed(by: disposeBag)
+    }
+    
     private func attribute() {
         view.backgroundColor = UIColor(named: "mainColor")
         
@@ -87,7 +95,7 @@ class EditProfileViewController: UIViewController {
         biographyTextView.textColor = .black
         biographyTextView.backgroundColor = .white
         
-        genderPicker.tintColor = .black
+        genderPicker.setValue(UIColor.black, forKeyPath: "textColor")
     }
     
     private func layout() {

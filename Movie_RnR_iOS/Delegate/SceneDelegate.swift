@@ -16,10 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
         
-//        let rootVC = HomeViewController()
-//        rootVC.bind(rootVM)
-        
-        let rootVC = EditProfileViewController()
+        let rootVC = HomeViewController()
+        rootVC.bind(rootVM)
         
         window?.rootViewController = UINavigationController(rootViewController: rootVC)
         window?.makeKeyAndVisible()

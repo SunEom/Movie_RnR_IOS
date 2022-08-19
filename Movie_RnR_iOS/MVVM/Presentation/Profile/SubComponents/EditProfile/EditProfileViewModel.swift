@@ -10,4 +10,5 @@ import RxCocoa
 
 struct EditProfileViewModel {
     
+    let genderList = Driver.just(["None","Man","Woman"])
 }

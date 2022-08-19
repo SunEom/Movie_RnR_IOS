@@ -11,6 +11,9 @@ import RxCocoa
 
 struct ProfileViewModel {
     let disposeBag = DisposeBag()
+    
+    let editProfileViewModel = EditProfileViewModel()
+    
     let menuList = Observable<[String]>.just(["Edit Profile", "Change Password", "View Postings", "Danger Zone"]).asDriver(onErrorJustReturn: [])
     
     let userID = PublishSubject<Int>()

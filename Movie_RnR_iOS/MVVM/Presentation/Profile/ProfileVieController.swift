@@ -71,6 +71,7 @@ class ProfileViewController: UIViewController {
                 switch indexPath.row {
                 case 0:
                     let vc = EditProfileViewController()
+                    vc.bind(viewModel.editProfileViewModel)
                     self.navigationController?.pushViewController(vc, animated: true)
                 default:
                     print(indexPath.row)
