@@ -66,6 +66,18 @@ class ProfileViewController: UIViewController {
             .bind(to: biographyTextView.rx.text)
             .disposed(by: disposeBag)
         
+        menuTableView.rx.itemSelected
+            .subscribe(onNext: { indexPath in
+                switch indexPath.row {
+                case 0:
+                    let vc = EditProfileViewController()
+                    self.navigationController?.pushViewController(vc, animated: true)
+                default:
+                    print(indexPath.row)
+                }
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func layout() {

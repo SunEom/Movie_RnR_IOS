@@ -58,6 +58,8 @@
 		BF98ED6128A2D2CA001E65F6 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED6028A2D2CA001E65F6 /* CommentViewModel.swift */; };
 		BF98ED6328A2D5DE001E65F6 /* CommentNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED6228A2D5DE001E65F6 /* CommentNetwork.swift */; };
 		BF98ED6528A2D672001E65F6 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED6428A2D672001E65F6 /* Comment.swift */; };
+		BF9F1E7C28AF29F1003C6993 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F1E7B28AF29F1003C6993 /* EditProfileViewController.swift */; };
+		BF9F1E7E28AF29FD003C6993 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F1E7D28AF29FD003C6993 /* EditProfileViewModel.swift */; };
 		BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */; };
 		BFAC2C7C28832F3600CF3E49 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */; };
 		BFFE98462884660A003B5AF8 /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */; };
@@ -131,6 +133,8 @@
 		BF98ED6028A2D2CA001E65F6 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		BF98ED6228A2D5DE001E65F6 /* CommentNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentNetwork.swift; sourceTree = "<group>"; };
 		BF98ED6428A2D672001E65F6 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		BF9F1E7B28AF29F1003C6993 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		BF9F1E7D28AF29FD003C6993 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		BFA71BED288A944200782C86 /* ViewPostingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPostingsViewController.swift; sourceTree = "<group>"; };
 		BFA71BEF288A99A500782C86 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 		BF395F1E28AD452800C5F11F /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				BF9F1E7928AF29C7003C6993 /* SubComponents */,
 				BF395F1F28AD454200C5F11F /* ProfileVieController.swift */,
 				BF395F2128AD454B00C5F11F /* ProfileViewModel.swift */,
 			);
@@ -509,6 +514,23 @@
 			path = Detail;
 			sourceTree = "<group>";
 		};
+		BF9F1E7928AF29C7003C6993 /* SubComponents */ = {
+			isa = PBXGroup;
+			children = (
+				BF9F1E7A28AF29E3003C6993 /* EditProfile */,
+			);
+			path = SubComponents;
+			sourceTree = "<group>";
+		};
+		BF9F1E7A28AF29E3003C6993 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				BF9F1E7B28AF29F1003C6993 /* EditProfileViewController.swift */,
+				BF9F1E7D28AF29FD003C6993 /* EditProfileViewModel.swift */,
+			);
+			path = EditProfile;
+			sourceTree = "<group>";
+		};
 		D816FA1394C55BBEDB57F896 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -648,6 +670,7 @@
 				BF9095CF28A124AE00DA01B1 /* SearchViewController.swift in Sources */,
 				BF49D97B28A4CC60008C93B9 /* BottomStackvViewCellViewModel.swift in Sources */,
 				BF49D98228A601CD008C93B9 /* LoginViewModel.swift in Sources */,
+				BF9F1E7C28AF29F1003C6993 /* EditProfileViewController.swift in Sources */,
 				BF0DE870288316E80048905C /* K.swift in Sources */,
 				BF98ED4B28A2B853001E65F6 /* ImageCell.swift in Sources */,
 				BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */,
@@ -661,6 +684,7 @@
 				BF9095BF28A0BDCA00DA01B1 /* Post.swift in Sources */,
 				BF98ED5128A2C4C1001E65F6 /* BottomStackViewCell.swift in Sources */,
 				BF49D97928A4CB2B008C93B9 /* OverviewCellViewModel.swift in Sources */,
+				BF9F1E7E28AF29FD003C6993 /* EditProfileViewModel.swift in Sources */,
 				BF6DA09428807C3200177714 /* SceneDelegate.swift in Sources */,
 				BF0DE86A288311960048905C /* Posting.swift in Sources */,
 				BF98ED4D28A2BF80001E65F6 /* TopStackViewCell.swift in Sources */,
