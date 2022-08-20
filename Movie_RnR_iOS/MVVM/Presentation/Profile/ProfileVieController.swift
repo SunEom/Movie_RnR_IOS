@@ -73,9 +73,23 @@ class ProfileViewController: UIViewController {
                     let vc = EditProfileViewController()
                     vc.bind(viewModel.editProfileViewModel)
                     self.navigationController?.pushViewController(vc, animated: true)
+                    
+                case 1:
+                    let vc = ChangePasswordViewController()
+                    self.navigationController?.pushViewController(vc, animated: true)
                 default:
                     print(indexPath.row)
                 }
+            })
+            .disposed(by: disposeBag)
+        
+        fbButton.rx.tap
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                let webVM = WebViewModel(urlString: "https://www.naver.com")
+                let webVC = WebViewController()
+                webVC.viewModel = webVM
+                self.navigationController?.pushViewController(webVC, animated: true)
             })
             .disposed(by: disposeBag)
         

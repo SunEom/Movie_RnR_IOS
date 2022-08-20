@@ -11,6 +11,7 @@ import RxCocoa
 
 struct ProfileViewModel {
     let disposeBag = DisposeBag()
+    var str = ""
     
     let editProfileViewModel = EditProfileViewModel()
     
@@ -28,5 +29,6 @@ struct ProfileViewModel {
             }
             .bind(to: profile)
             .disposed(by: disposeBag)
+    
     }
 }
