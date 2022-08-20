@@ -9,6 +9,8 @@ import RxSwift
 import UIKit
 
 class ProfileViewController: UIViewController {
+    var viewModel: ProfileViewModel!
+    
     let disposeBag = DisposeBag()
     
     let scrollView = UIScrollView()
@@ -38,9 +40,10 @@ class ProfileViewController: UIViewController {
         
         layout()
         attribute()
+        bind()
     }
 
-    func bind(_ viewModel: ProfileViewModel) {
+    private func bind() {
         viewModel.menuList
             .drive(menuTableView.rx.items) { tv, row, data in
                 let cell = UITableViewCell()
@@ -66,12 +69,27 @@ class ProfileViewController: UIViewController {
             .bind(to: biographyTextView.rx.text)
             .disposed(by: disposeBag)
         
+        UserManager.getInstance()
+            .map { $0?.nickname ?? "" }
+            .bind(to: nicknameLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        UserManager.getInstance()
+            .map { $0?.gender ?? "" }
+            .bind(to: genderLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        UserManager.getInstance()
+            .map { $0?.biography ?? "" }
+            .bind(to: biographyTextView.rx.text)
+            .disposed(by: disposeBag)
+        
         menuTableView.rx.itemSelected
             .subscribe(onNext: { indexPath in
                 switch indexPath.row {
                 case 0:
                     let vc = EditProfileViewController()
-                    vc.bind(viewModel.editProfileViewModel)
+                    vc.bind(self.viewModel.editProfileViewModel)
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                 case 1:
@@ -217,7 +235,6 @@ class ProfileViewController: UIViewController {
         subtitleLabel.textColor = .black
         subtitleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         
-        nicknameLabel.text = UserManager.getInstance()!.nickname
         nicknameLabel.textColor = .black
         nicknameLabel.font = .systemFont(ofSize: 15)
         
@@ -225,7 +242,6 @@ class ProfileViewController: UIViewController {
         subtitleLabel2.textColor = .black
         subtitleLabel2.font = .systemFont(ofSize: 15, weight: .semibold)
         
-        genderLabel.text = UserManager.getInstance()!.gender
         genderLabel.textColor = .black
         genderLabel.font = .systemFont(ofSize: 15)
         
@@ -233,7 +249,6 @@ class ProfileViewController: UIViewController {
         titleLabel2.textColor = .black
         titleLabel2.font = .systemFont(ofSize: 20, weight: .bold)
         
-        biographyTextView.text = UserManager.getInstance()!.biography
         biographyTextView.textColor = .black
         biographyTextView.font = .systemFont(ofSize: 15)
         biographyTextView.backgroundColor = .white

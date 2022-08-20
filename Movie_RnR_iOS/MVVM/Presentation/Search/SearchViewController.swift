@@ -9,6 +9,8 @@ import UIKit
 import RxSwift
 
 class SearchViewController: UIViewController {
+    var viewModel: SearchViewModel!
+    
     let disposeBag = DisposeBag()
     let tableView = UITableView()
     let searchBar = UISearchBar()
@@ -21,10 +23,10 @@ class SearchViewController: UIViewController {
         searchBarSetting()
         layout()
         attribute()
-        
+        bind()
     }
     
-    func bind(_ viewModel: SearchViewModel) {
+    private func bind() {
         searchBar.searchTextField.rx.text
             .bind(to: viewModel.keyword)
             .disposed(by: disposeBag)
@@ -57,8 +59,7 @@ class SearchViewController: UIViewController {
         viewModel.selectedItem
             .drive(onNext: { post in
                 let vc = DetailViewController()
-                let vm = DetailViewModel(post!)
-                vc.bind(vm)
+                vc.viewModel = DetailViewModel(post!)
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)

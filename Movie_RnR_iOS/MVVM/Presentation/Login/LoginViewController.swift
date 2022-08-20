@@ -10,6 +10,8 @@ import RxSwift
 
 class LoginViewController: UIViewController {
     
+    var viewModel: LoginViewModel!
+    
     let disposeBag = DisposeBag()
     
     let stackView = UIStackView()
@@ -17,16 +19,16 @@ class LoginViewController: UIViewController {
     let idTextField = UITextField()
     let passwordTextField = UITextField()
     let loginButton = UIButton()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         attribute()
         layout()
-        
+        bind()
     }
     
-    func bind(_ viewModel: LoginViewModel) {
+    private func bind() {
         idTextField.rx.text
             .bind(to: viewModel.id)
             .disposed(by: disposeBag)
@@ -39,14 +41,15 @@ class LoginViewController: UIViewController {
             .bind(to: viewModel.loginPressed)
             .disposed(by: disposeBag)
         
-        UserManager.isLoggedIn
+        UserManager.getInstance()
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
-                if $0 {
+                if $0 != nil {
                     self.navigationController?.popViewController(animated: true)
                 }
             })
             .disposed(by: disposeBag)
+        
     }
     
     private func layout() {
@@ -64,6 +67,7 @@ class LoginViewController: UIViewController {
             idTextField.heightAnchor.constraint(equalToConstant: 45),
             passwordTextField.heightAnchor.constraint(equalToConstant: 45),
             loginButton.heightAnchor.constraint(equalToConstant: 40),
+            
         ].forEach { $0.isActive = true }
     }
     

@@ -12,23 +12,21 @@ import RxCocoa
 class UserManager {
     static let disposeBag = DisposeBag()
     
-    private static var user: Login?
-    static let isLoggedIn = PublishSubject<Bool>()
+    private static var user = BehaviorSubject<Login?>(value: nil)
     
     private init() {
-        UserManager.user = nil
+        
     }
     
-    static func getInstance() -> Login? {
+    static func getInstance() -> BehaviorSubject<Login?> {
         return UserManager.user
     }
     
     static func requestPostLogin(id: String, password: String) {
         LoginNetwork().requestPostLogin(id: id, password: password)
             .subscribe(onSuccess: { result in
-                guard case .success(let response) = result else { return isLoggedIn.onNext(false) }
-                self.user = response.data
-                isLoggedIn.onNext(true)
+                guard case .success(let response) = result else { return }
+                user.onNext(response.data)
             })
             .disposed(by: disposeBag)
     }

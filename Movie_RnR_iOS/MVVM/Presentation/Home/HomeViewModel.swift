@@ -9,13 +9,13 @@ import RxSwift
 import RxCocoa
 
 struct HomeViewModel {
-    let loginViewModel = LoginViewModel()
-    let searchViewModel = SearchViewModel()
-    let profileViewModel = ProfileViewModel()
+    let disposeBag = DisposeBag()
     
     let cellData: Driver<[Post]>
     let itemSelected = PublishSubject<Int>()
     let selectedItem: Driver<Post?>
+    
+    let logined = BehaviorSubject<Bool>(value: false)
 
     init(_ repository: HomeRepository = HomeRepository()) {
         cellData = repository.fetchRecentPostings()

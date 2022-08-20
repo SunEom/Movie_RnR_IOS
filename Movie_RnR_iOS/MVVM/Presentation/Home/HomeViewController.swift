@@ -14,7 +14,7 @@ class HomeViewController: UIViewController {
     
     let tableView = UITableView()
     let rightBarButtonItem = UIBarButtonItem(systemItem: .search)
-    let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: self, action: nil)
+    let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +43,7 @@ class HomeViewController: UIViewController {
                     
                     return cell
                 } else {
-                
+                    
                     let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
                     let cellVM = PostCellViewModel(post)
                     
@@ -59,11 +59,11 @@ class HomeViewController: UIViewController {
                 self.tableView.cellForRow(at: $0)?.isSelected = false
             })
             .disposed(by: disposeBag)
-            
+        
         rightBarButtonItem.rx.tap
             .subscribe(onNext: {_ in
                 let vc = SearchViewController()
-                vc.bind(viewModel.searchViewModel)
+                vc.viewModel = SearchViewModel()
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
@@ -78,26 +78,27 @@ class HomeViewController: UIViewController {
         viewModel.selectedItem
             .drive(onNext: { post in
                 let vc = DetailViewController()
-                let vm = DetailViewModel(post!)
-                vc.bind(vm)
+                vc.viewModel = DetailViewModel(post!)
+                
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
         leftBarButtonItem.rx.tap
+            .withLatestFrom(UserManager.getInstance())
             .subscribe(onNext: {
-                if UserManager.getInstance() == nil {
+                if $0 == nil {
                     let vc = LoginViewController()
-                    vc.bind(viewModel.loginViewModel)
+                    vc.viewModel = LoginViewModel()
                     self.navigationController?.pushViewController(vc, animated: true)
                 } else {
                     let vc = ProfileViewController()
-                    vc.bind(viewModel.profileViewModel)
-                    viewModel.profileViewModel.userID.onNext(UserManager.getInstance()!.id)
+                    vc.viewModel = ProfileViewModel()
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             })
             .disposed(by: disposeBag)
+        
     }
     
     private func layout() {
@@ -115,7 +116,7 @@ class HomeViewController: UIViewController {
     }
     
     private func attribute() {
-     
+        
         let appearance = UINavigationBarAppearance()
         
         appearance.configureWithOpaqueBackground()

@@ -9,6 +9,8 @@ import UIKit
 import RxSwift
 
 class CommentViewController: UIViewController {
+    var viewModel: CommentViewModel!
+    
     let disposeBag = DisposeBag()
     let commentInputStackView = UIStackView()
     let commentTextView = UITextView()
@@ -20,9 +22,10 @@ class CommentViewController: UIViewController {
         
         attribute()
         layout()
+        bind()
     }
     
-    func bind(_ viewModel: CommentViewModel){
+    private func bind(){
         viewModel.cellData
             .drive(tableView.rx.items) { tv, row, comment in
                 let indexPath = IndexPath(row: row, section: 0)
