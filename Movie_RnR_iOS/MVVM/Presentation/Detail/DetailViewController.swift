@@ -86,8 +86,7 @@ class DetailViewController: UIViewController {
         tableView.rx.itemSelected
             .subscribe(onNext: { indexPath in
                 self.tableView.cellForRow(at: indexPath)?.isSelected = false
-                let vc = CommentViewController()
-                vc.viewModel = CommentViewModel(postID: self.viewModel.post.id)
+                let vc = CommentFactory().getInstance(postID: self.viewModel.post.id)
                 
                 self.navigationController?.pushViewController(vc, animated: true)
             })

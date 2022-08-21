@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 
 class HomeViewController: UIViewController {
+    var viewModel: HomeViewModel!
+    
     let disposeBag = DisposeBag()
     
     let tableView = UITableView()
@@ -24,9 +26,10 @@ class HomeViewController: UIViewController {
         
         layout()
         attribute()
+        bind()
     }
     
-    func bind(_ viewModel: HomeViewModel) {
+    private func bind() {
         
         viewModel.cellData
             .drive(tableView.rx.items) { tv, row, post in
@@ -62,8 +65,7 @@ class HomeViewController: UIViewController {
         
         rightBarButtonItem.rx.tap
             .subscribe(onNext: {_ in
-                let vc = SearchViewController()
-                vc.viewModel = SearchViewModel()
+                let vc = SearchFactory().getInstance()
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
@@ -77,9 +79,7 @@ class HomeViewController: UIViewController {
         
         viewModel.selectedItem
             .drive(onNext: { post in
-                let vc = DetailViewController()
-                vc.viewModel = DetailViewModel(post!)
-                
+                let vc = DetailFactory().getInstance(post: post!)
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
@@ -88,12 +88,10 @@ class HomeViewController: UIViewController {
             .withLatestFrom(UserManager.getInstance())
             .subscribe(onNext: {
                 if $0 == nil {
-                    let vc = LoginViewController()
-                    vc.viewModel = LoginViewModel()
+                    let vc = LoginFactory().getInstance()
                     self.navigationController?.pushViewController(vc, animated: true)
                 } else {
-                    let vc = ProfileViewController()
-                    vc.viewModel = ProfileViewModel()
+                    let vc = ProfileFactory().getInstance()
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             })

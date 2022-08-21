@@ -101,12 +101,29 @@ class ProfileViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        fbButton.rx.tap
+        igButton.rx.tap
+            .withLatestFrom(UserManager.getInstance())
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
-                let webVM = WebViewModel(urlString: "https://www.naver.com")
-                let webVC = WebViewController()
-                webVC.viewModel = webVM
+                let webVC = WebFactory().getInstance(url: $0!.instagram)
+                self.navigationController?.pushViewController(webVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        fbButton.rx.tap
+            .withLatestFrom(UserManager.getInstance())
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                let webVC = WebFactory().getInstance(url: $0!.facebook)
+                self.navigationController?.pushViewController(webVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        ttButton.rx.tap
+            .withLatestFrom(UserManager.getInstance())
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                let webVC = WebFactory().getInstance(url: $0!.twitter)
                 self.navigationController?.pushViewController(webVC, animated: true)
             })
             .disposed(by: disposeBag)
