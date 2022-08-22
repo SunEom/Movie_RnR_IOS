@@ -42,7 +42,7 @@ class ProfileViewController: UIViewController {
         attribute()
         bind()
     }
-
+    
     private func bind() {
         viewModel.menuList
             .drive(menuTableView.rx.items) { tv, row, data in
@@ -85,18 +85,30 @@ class ProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         menuTableView.rx.itemSelected
-            .subscribe(onNext: { indexPath in
+            .withLatestFrom(UserManager.getInstance()) { indexPath, userData in
+                return (indexPath, userData)
+            }
+            .subscribe(onNext: { (indexPath, userData) in
+                self.menuTableView.cellForRow(at: indexPath)?.isSelected = false
                 switch indexPath.row {
                 case 0:
-                    let vc = EditProfileViewController()
-                    vc.bind(self.viewModel.editProfileViewModel)
+                    let vc = EditProfileFactory().getInstance()
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                 case 1:
-                    let vc = ChangePasswordViewController()
+                    let vc = ChangePasswordFactory().getInstance()
                     self.navigationController?.pushViewController(vc, animated: true)
+                    
+                case 2:
+                    let vc = UserPostingFactory().getInstance(userID: userData!.id)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                    
+                case 3:
+                    let vc = DangerZoneFactory().getInstance()
+                    self.navigationController?.pushViewController(vc, animated: true)
+                    
                 default:
-                    print(indexPath.row)
+                    return
                 }
             })
             .disposed(by: disposeBag)

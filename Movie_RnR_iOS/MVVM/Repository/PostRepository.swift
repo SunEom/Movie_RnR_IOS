@@ -9,17 +9,29 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct HomeRepository {
+struct PostRepository {
     
     func fetchRecentPostings() -> Driver<[Post]> {
         return PostNetwork().fetchRecentPosts()
+            .asObservable()
+            .compactMap(parseDataWithTitleCell)
+            .asDriver(onErrorJustReturn: [])
+    }
+    
+    func fetchUserPostings(userID: Int) -> Driver<[Post]> {
+        return PostNetwork().fetchUserPostings(userID: userID)
             .asObservable()
             .compactMap(parseData)
             .asDriver(onErrorJustReturn: [])
     }
     
-    private func parseData(result: Result<PostResponse, PostNetworkError>) -> [Post] {
+    private func parseDataWithTitleCell(result: Result<PostResponse, PostNetworkError>) -> [Post] {
         guard case .success(let response) = result else { return [] }
         return [Post(id: 0, title: "", overview: "", created: "", genres: "", rates: 0, updated: "", user_id: 0, commentCount: 0)] + response.data
+    }
+    
+    private func parseData(result: Result<PostResponse, PostNetworkError>) -> [Post] {
+        guard case .success(let response) = result else { return [] }
+        return response.data
     }
 }

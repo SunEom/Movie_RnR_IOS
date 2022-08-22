@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import RxSwift
 
 class ChangePasswordViewController: UIViewController {
+    
+    var viewModel: ChangePasswordViewModel!
+    
+    let disposeBag = DisposeBag()
     
     let subtitleLabel = UILabel()
     let currentTextField = UITextField()

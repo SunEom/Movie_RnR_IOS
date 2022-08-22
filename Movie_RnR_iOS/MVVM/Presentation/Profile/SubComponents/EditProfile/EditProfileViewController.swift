@@ -10,6 +10,9 @@ import RxSwift
 import RxCocoa
 
 class EditProfileViewController: UIViewController {
+    
+    var viewModel : EditProfileViewModel!
+    
     let disposeBag = DisposeBag()
     let scrollView = UIScrollView()
     let contentView = UIView()
@@ -39,11 +42,12 @@ class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bind()
         attribute()
         layout()
     }
     
-    func bind(_ viewModel: EditProfileViewModel) {
+    private func bind() {
         viewModel.genderList
             .drive(genderPicker.rx.itemTitles) { idx, title in
                 return title

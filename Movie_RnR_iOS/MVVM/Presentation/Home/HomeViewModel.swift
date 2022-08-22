@@ -17,7 +17,7 @@ struct HomeViewModel {
     
     let logined = BehaviorSubject<Bool>(value: false)
 
-    init(_ repository: HomeRepository = HomeRepository()) {
+    init(_ repository: PostRepository = PostRepository()) {
         cellData = repository.fetchRecentPostings()
         
         selectedItem = itemSelected
