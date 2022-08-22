@@ -14,7 +14,7 @@
 		BF0DE8742883181A0048905C /* PostingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF0DE8722883181A0048905C /* PostingTableViewCell.xib */; };
 		BF2F118828AE8EBC00082C96 /* ProfileNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F118728AE8EBC00082C96 /* ProfileNetwork.swift */; };
 		BF3708A1288D99F100A99482 /* JoinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3708A0288D99F100A99482 /* JoinData.swift */; };
-		BF395F2028AD454200C5F11F /* ProfileVieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F1F28AD454200C5F11F /* ProfileVieController.swift */; };
+		BF395F2028AD454200C5F11F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F1F28AD454200C5F11F /* ProfileViewController.swift */; };
 		BF395F2228AD454B00C5F11F /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F2128AD454B00C5F11F /* ProfileViewModel.swift */; };
 		BF395F2428AD4B0600C5F11F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F2328AD4B0600C5F11F /* Profile.swift */; };
 		BF440DF42887389000DABCA5 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF440DF22887389000DABCA5 /* CommentTableViewCell.xib */; };
@@ -100,7 +100,7 @@
 		BF37089C288D539C00A99482 /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
 		BF37089E288D94A400A99482 /* JoinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinManager.swift; sourceTree = "<group>"; };
 		BF3708A0288D99F100A99482 /* JoinData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinData.swift; sourceTree = "<group>"; };
-		BF395F1F28AD454200C5F11F /* ProfileVieController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVieController.swift; sourceTree = "<group>"; };
+		BF395F1F28AD454200C5F11F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BF395F2128AD454B00C5F11F /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		BF395F2328AD4B0600C5F11F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		BF440DED28872A7000DABCA5 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -228,7 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				BF9F1E7928AF29C7003C6993 /* SubComponents */,
-				BF395F1F28AD454200C5F11F /* ProfileVieController.swift */,
+				BF395F1F28AD454200C5F11F /* ProfileViewController.swift */,
 				BF395F2128AD454B00C5F11F /* ProfileViewModel.swift */,
 			);
 			path = Profile;
@@ -833,7 +833,7 @@
 				BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */,
 				BF98ED6328A2D5DE001E65F6 /* CommentNetwork.swift in Sources */,
 				BF9095C128A0BE6D00DA01B1 /* PostNetwork.swift in Sources */,
-				BF395F2028AD454200C5F11F /* ProfileVieController.swift in Sources */,
+				BF395F2028AD454200C5F11F /* ProfileViewController.swift in Sources */,
 				BF49D98028A60189008C93B9 /* LoginViewController.swift in Sources */,
 				BF451B6A28B35C160076D3E9 /* EditProfileFactory.swift in Sources */,
 				BF49D97328A4A787008C93B9 /* PostDetail.swift in Sources */,
