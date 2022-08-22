@@ -18,6 +18,8 @@ class HomeViewController: UIViewController {
     let rightBarButtonItem = UIBarButtonItem(systemItem: .search)
     let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil)
     
+    let newPostButton = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -97,19 +99,41 @@ class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        newPostButton.rx.tap
+            .bind(to: viewModel.newPostButtonTap)
+            .disposed(by: disposeBag)
+        
+        viewModel.newPostButtonTap
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                let vc = WritePostFactory().getInstance()
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        UserManager.getInstance()
+            .map{ $0 == nil }
+            .bind(to: newPostButton.rx.isHidden)
+            .disposed(by: disposeBag)
+        
     }
     
     private func layout() {
-        [tableView].forEach {
+        [tableView, newPostButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
         
         [
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            newPostButton.heightAnchor.constraint(equalToConstant: 80),
+            newPostButton.widthAnchor.constraint(equalToConstant: 80),
+            newPostButton.trailingAnchor.constraint(equalTo: tableView.frameLayoutGuide.trailingAnchor, constant: -20),
+            newPostButton.bottomAnchor.constraint(equalTo: tableView.frameLayoutGuide.bottomAnchor),
         ].forEach{ $0.isActive = true}
     }
     
@@ -120,10 +144,11 @@ class HomeViewController: UIViewController {
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(named: "headerColor")
         appearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "CarterOne", size: 20)!]
+        
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.standardAppearance = appearance;
         navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
-        title = "MOVIE R&R"
+        title = "MOVIE R&R 🎬"
         
         navigationItem.rightBarButtonItem = rightBarButtonItem
         navigationItem.leftBarButtonItem = leftBarButtonItem
@@ -134,6 +159,18 @@ class HomeViewController: UIViewController {
         tableView.contentInset.top = 20
         tableView.contentInset.bottom = 20
         tableView.separatorStyle = .none
+        
+        newPostButton.backgroundColor = UIColor(named: "headerColor")
+        newPostButton.layer.cornerRadius = 40
+        newPostButton.setImage(UIImage(systemName: "pencil"), for: .normal)
+        newPostButton.imageView?.contentMode = .scaleToFill
+        
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20)
+        var config = UIButton.Configuration.plain()
+        config.preferredSymbolConfigurationForImage = imageConfig
+        newPostButton.configuration = config
+        newPostButton.tintColor = .white
+        
         
     }
     

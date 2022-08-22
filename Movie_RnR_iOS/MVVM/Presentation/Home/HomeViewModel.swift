@@ -14,6 +14,7 @@ struct HomeViewModel {
     let cellData: Driver<[Post]>
     let itemSelected = PublishSubject<Int>()
     let selectedItem: Driver<Post?>
+    let newPostButtonTap = PublishSubject<Void>()
     
     let logined = BehaviorSubject<Bool>(value: false)
 
