@@ -26,8 +26,17 @@ class UserManager {
         LoginNetwork().requestPostLogin(id: id, password: password)
             .subscribe(onSuccess: { result in
                 guard case .success(let response) = result else { return }
+                UserDefaults.standard.setValue(id, forKey: "id")
+                UserDefaults.standard.setValue(password, forKey: "password")
                 user.onNext(response.data)
             })
             .disposed(by: disposeBag)
+    }
+    
+    static func logout() {
+        self.user.onNext(nil)
+        
+        UserDefaults.standard.removeObject(forKey: "id")
+        UserDefaults.standard.removeObject(forKey: "password")
     }
 }

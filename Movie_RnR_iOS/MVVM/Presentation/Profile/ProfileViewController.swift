@@ -140,6 +140,29 @@ class ProfileViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        logoutButton.rx.tap
+            .subscribe(onNext: { _ in
+                UserManager.logout()
+            })
+            .disposed(by: disposeBag)
+        
+        UserManager.getInstance()
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                if $0 == nil {
+                    let alert = UIAlertController(title: "Logout", message: "You are logged out", preferredStyle: .alert)
+                    
+                    let action = UIAlertAction(title: "OK", style: .default) { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    
+                    alert.addAction(action)
+                    
+                    self.present(alert, animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func layout() {

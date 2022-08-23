@@ -84,6 +84,9 @@
 		BF9F1E8628B07F4C003C6993 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F1E8528B07F4C003C6993 /* ChangePasswordViewController.swift */; };
 		BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */; };
 		BFAC2C7C28832F3600CF3E49 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */; };
+		BFB0017028B46B2600FE6BF3 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0016F28B46B2600FE6BF3 /* StartViewController.swift */; };
+		BFB0017228B46B2D00FE6BF3 /* StartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0017128B46B2D00FE6BF3 /* StartViewModel.swift */; };
+		BFB0017528B46C6C00FE6BF3 /* StartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0017428B46C6C00FE6BF3 /* StartFactory.swift */; };
 		BFFE98462884660A003B5AF8 /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */; };
 /* End PBXBuildFile section */
 
@@ -183,6 +186,9 @@
 		BFA71BEF288A99A500782C86 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 		BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleTableViewCell.xib; sourceTree = "<group>"; };
+		BFB0016F28B46B2600FE6BF3 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		BFB0017128B46B2D00FE6BF3 /* StartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewModel.swift; sourceTree = "<group>"; };
+		BFB0017428B46C6C00FE6BF3 /* StartFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartFactory.swift; sourceTree = "<group>"; };
 		BFF4107B28899E3300DA9043 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jua-Regular.ttf"; sourceTree = "<group>"; };
 		BFFE984728846992003B5AF8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -270,7 +276,15 @@
 		BF451B4528B278C70076D3E9 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
-				BF451B5928B35A610076D3E9 /* Screen */,
+				BFB0017328B46C6500FE6BF3 /* Start */,
+				BF451B7728B374750076D3E9 /* WritePost */,
+				BF451B5B28B35AB20076D3E9 /* Home */,
+				BF451B5C28B35AB60076D3E9 /* Comment */,
+				BF451B5D28B35ABA0076D3E9 /* Login */,
+				BF451B5E28B35ABE0076D3E9 /* Profile */,
+				BF451B5F28B35AC30076D3E9 /* Detail */,
+				BF451B6028B35AC70076D3E9 /* WebView */,
+				BF451B6128B35ACC0076D3E9 /* Search */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -282,21 +296,6 @@
 				BF451B5728B358660076D3E9 /* UserPostingViewModel.swift */,
 			);
 			path = UserPosting;
-			sourceTree = "<group>";
-		};
-		BF451B5928B35A610076D3E9 /* Screen */ = {
-			isa = PBXGroup;
-			children = (
-				BF451B7728B374750076D3E9 /* WritePost */,
-				BF451B5B28B35AB20076D3E9 /* Home */,
-				BF451B5C28B35AB60076D3E9 /* Comment */,
-				BF451B5D28B35ABA0076D3E9 /* Login */,
-				BF451B5E28B35ABE0076D3E9 /* Profile */,
-				BF451B5F28B35AC30076D3E9 /* Detail */,
-				BF451B6028B35AC70076D3E9 /* WebView */,
-				BF451B6128B35ACC0076D3E9 /* Search */,
-			);
-			path = Screen;
 			sourceTree = "<group>";
 		};
 		BF451B5B28B35AB20076D3E9 /* Home */ = {
@@ -513,6 +512,7 @@
 		BF9095B428A0A3DF00DA01B1 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				BFB0016E28B46B1C00FE6BF3 /* Start */,
 				BF451B7228B36F500076D3E9 /* WritePost */,
 				BF9F1E7F28AF3A43003C6993 /* WebView */,
 				BF395F1E28AD452800C5F11F /* Profile */,
@@ -725,6 +725,23 @@
 			path = ChangePassword;
 			sourceTree = "<group>";
 		};
+		BFB0016E28B46B1C00FE6BF3 /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				BFB0016F28B46B2600FE6BF3 /* StartViewController.swift */,
+				BFB0017128B46B2D00FE6BF3 /* StartViewModel.swift */,
+			);
+			path = Start;
+			sourceTree = "<group>";
+		};
+		BFB0017328B46C6500FE6BF3 /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				BFB0017428B46C6C00FE6BF3 /* StartFactory.swift */,
+			);
+			path = Start;
+			sourceTree = "<group>";
+		};
 		D816FA1394C55BBEDB57F896 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -869,6 +886,7 @@
 				BF451B5328B27D490076D3E9 /* WebFactory.swift in Sources */,
 				BF9F1E7C28AF29F1003C6993 /* EditProfileViewController.swift in Sources */,
 				BF0DE870288316E80048905C /* K.swift in Sources */,
+				BFB0017028B46B2600FE6BF3 /* StartViewController.swift in Sources */,
 				BF451B7A28B375130076D3E9 /* WritePostFactory.swift in Sources */,
 				BF98ED4B28A2B853001E65F6 /* ImageCell.swift in Sources */,
 				BF451B5128B27B6F0076D3E9 /* CommentFactory.swift in Sources */,
@@ -901,8 +919,10 @@
 				BF451B4F28B27B060076D3E9 /* DetailFactory.swift in Sources */,
 				BF9F1E8128AF3AB0003C6993 /* WebViewController.swift in Sources */,
 				BF451B5628B357910076D3E9 /* UserPostingsViewController.swift in Sources */,
+				BFB0017228B46B2D00FE6BF3 /* StartViewModel.swift in Sources */,
 				BF9095BA28A0ADF300DA01B1 /* HomeViewModel.swift in Sources */,
 				BF49D98428A76404008C93B9 /* Login.swift in Sources */,
+				BFB0017528B46C6C00FE6BF3 /* StartFactory.swift in Sources */,
 				BF9F1E8328AF3B56003C6993 /* WebViewModel.swift in Sources */,
 				BF451B4928B279E40076D3E9 /* SearchFactory.swift in Sources */,
 				BF49D98628A764CC008C93B9 /* UserManager.swift in Sources */,
