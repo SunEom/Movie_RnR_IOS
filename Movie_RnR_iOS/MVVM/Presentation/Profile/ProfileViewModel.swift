@@ -20,11 +20,6 @@ struct ProfileViewModel {
     
     init() {
         
-//        UserManager.getInstance()
-//            .map{ $0 == nil ? -1 : $0!.id }
-//            .bind(to: userID)
-//            .disposed(by: disposeBag)
-        
         userID
             .flatMapLatest(ProfileNetwork().fetchProfile)
             .map { result -> [Profile] in
