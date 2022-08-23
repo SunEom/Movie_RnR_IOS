@@ -12,20 +12,18 @@ import RxCocoa
 struct ProfileViewModel {
     let disposeBag = DisposeBag()
     var str = ""
-    
-    let editProfileViewModel = EditProfileViewModel()
-    
+
     let menuList = Observable<[String]>.just(["Edit Profile", "Change Password", "View Postings", "Danger Zone"]).asDriver(onErrorJustReturn: [])
     
     let userID = PublishSubject<Int>()
-    let profile = PublishSubject<[Profile]>()
+    let profile = PublishSubject<[Profile?]>()
     
     init() {
         
-        UserManager.getInstance()
-            .map{ $0 == nil ? -1 : $0!.id }
-            .bind(to: userID)
-            .disposed(by: disposeBag)
+//        UserManager.getInstance()
+//            .map{ $0 == nil ? -1 : $0!.id }
+//            .bind(to: userID)
+//            .disposed(by: disposeBag)
         
         userID
             .flatMapLatest(ProfileNetwork().fetchProfile)

@@ -93,7 +93,7 @@ class HomeViewController: UIViewController {
                     let vc = LoginFactory().getInstance()
                     self.navigationController?.pushViewController(vc, animated: true)
                 } else {
-                    let vc = ProfileFactory().getInstance()
+                    let vc = ProfileFactory().getInstance(userID: $0!.id)
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             })

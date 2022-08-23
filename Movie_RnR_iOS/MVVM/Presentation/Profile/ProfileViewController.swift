@@ -55,32 +55,17 @@ class ProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.profile
-            .map{ $0[0].nickname}
+            .compactMap{ $0[0]?.nickname ?? "" }
             .bind(to: nicknameLabel.rx.text)
             .disposed(by: disposeBag)
         
         viewModel.profile
-            .map{ $0[0].gender}
+            .compactMap{ $0[0]?.gender ?? ""}
             .bind(to: genderLabel.rx.text)
             .disposed(by: disposeBag)
         
         viewModel.profile
-            .map{ $0[0].biography}
-            .bind(to: biographyTextView.rx.text)
-            .disposed(by: disposeBag)
-        
-        UserManager.getInstance()
-            .map { $0?.nickname ?? "" }
-            .bind(to: nicknameLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        UserManager.getInstance()
-            .map { $0?.gender ?? "" }
-            .bind(to: genderLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        UserManager.getInstance()
-            .map { $0?.biography ?? "" }
+            .compactMap{ $0[0]?.biography ?? ""}
             .bind(to: biographyTextView.rx.text)
             .disposed(by: disposeBag)
         
@@ -114,28 +99,28 @@ class ProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         igButton.rx.tap
-            .withLatestFrom(UserManager.getInstance())
+            .withLatestFrom(viewModel.profile)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
-                let webVC = WebFactory().getInstance(url: $0!.instagram)
+                let webVC = WebFactory().getInstance(url: $0[0]?.instagram ?? "")
                 self.navigationController?.pushViewController(webVC, animated: true)
             })
             .disposed(by: disposeBag)
         
         fbButton.rx.tap
-            .withLatestFrom(UserManager.getInstance())
+            .withLatestFrom(viewModel.profile)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
-                let webVC = WebFactory().getInstance(url: $0!.facebook)
+                let webVC = WebFactory().getInstance(url: $0[0]?.facebook ?? "")
                 self.navigationController?.pushViewController(webVC, animated: true)
             })
             .disposed(by: disposeBag)
         
         ttButton.rx.tap
-            .withLatestFrom(UserManager.getInstance())
+            .withLatestFrom(viewModel.profile)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
-                let webVC = WebFactory().getInstance(url: $0!.twitter)
+                let webVC = WebFactory().getInstance(url: $0[0]?.twitter ?? "")
                 self.navigationController?.pushViewController(webVC, animated: true)
             })
             .disposed(by: disposeBag)
