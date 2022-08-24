@@ -53,10 +53,132 @@ class EditProfileViewController: UIViewController {
                 return title
             }
             .disposed(by: disposeBag)
+        
+        saveButton.rx.tap
+            .bind(to: viewModel.saveButtonTap)
+            .disposed(by: disposeBag)
+        
+        nicknameCheckButton.rx.tap
+            .bind(to: viewModel.nicknameButtonTap)
+            .disposed(by: disposeBag)
+        
+        //TextField Initialize
+        UserManager.getInstance()
+            .map { $0?.nickname ?? "" }
+            .bind(to: nicknameTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        UserManager.getInstance()
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                var row = 0
+                
+                switch $0?.gender ?? "None" {
+                case "None":
+                    row = 0
+                case "Man":
+                    row = 1
+                case "Woman":
+                    row = 2
+                default:
+                    row = 0
+                }
+                
+                self.genderPicker.selectRow(row, inComponent: 0, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        UserManager.getInstance()
+            .map { $0?.biography ?? "" }
+            .bind(to: biographyTextView.rx.text)
+            .disposed(by: disposeBag)
+        
+        UserManager.getInstance()
+            .map { $0?.facebook ?? "" }
+            .bind(to: fbTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        UserManager.getInstance()
+            .map { $0?.instagram ?? "" }
+            .bind(to: igTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        UserManager.getInstance()
+            .map { $0?.twitter ?? "" }
+            .bind(to: ttTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        // 수정사항 bind
+        
+        nicknameTextField.rx.text
+            .compactMap { $0 ?? ""}
+            .bind(to: viewModel.nickname)
+            .disposed(by: disposeBag)
+        
+        genderPicker.rx.itemSelected
+            .compactMap { $0.row }
+            .bind(to: viewModel.genderIdx)
+            .disposed(by: disposeBag)
+        
+        biographyTextView.rx.text
+            .compactMap { $0 ?? ""}
+            .bind(to: viewModel.biography)
+            .disposed(by: disposeBag)
+        
+        fbTextField.rx.text
+            .compactMap { $0 ?? ""}
+            .bind(to: viewModel.facebook)
+            .disposed(by: disposeBag)
+        
+        igTextField.rx.text
+            .compactMap { $0 ?? ""}
+            .bind(to: viewModel.instagram)
+            .disposed(by: disposeBag)
+        
+        ttTextField.rx.text
+            .compactMap { $0 ?? ""}
+            .bind(to: viewModel.twitter)
+            .disposed(by: disposeBag)
+        
+        // 정보 변경 확인
+        
+        viewModel.saveButtonTap
+            .withLatestFrom(UserManager.getInstance())
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { _ in
+                let alert = UIAlertController(title: "Update", message: "Updated Successfully", preferredStyle: .alert)
+
+                let action = UIAlertAction(title: "OK", style: .default) { _ in
+                    self.navigationController?.popViewController(animated: true)
+                }
+
+                alert.addAction(action)
+
+                self.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
+
+        // Alert
+        
+        viewModel.nickAlert
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { (title, message) in
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                
+                let action = UIAlertAction(title: "OK", style: .default)
+                
+                alert.addAction(action)
+                
+                self.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {
         view.backgroundColor = UIColor(named: "mainColor")
+        
+        self.navigationItem.rightBarButtonItem = saveButton
+        saveButton.title = "Save"
         
         nicknameStackView.addArrangedSubview(nicknameTextField)
         nicknameStackView.addArrangedSubview(nicknameCheckButton)
@@ -104,8 +226,6 @@ class EditProfileViewController: UIViewController {
     
     private func layout() {
         
-        
-        
         // ScrollView Layout
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
@@ -144,7 +264,7 @@ class EditProfileViewController: UIViewController {
             contentView.widthAnchor.constraint(equalTo:scrollView.widthAnchor),
             
             // leading trailing 기준
-            nicknameTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            nicknameTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             nicknameTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             nicknameTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
             

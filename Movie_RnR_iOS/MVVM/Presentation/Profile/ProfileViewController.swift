@@ -43,7 +43,14 @@ class ProfileViewController: UIViewController {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.refresh.onNext(Void())
+    }
+    
     private func bind() {
+        
         viewModel.menuList
             .drive(menuTableView.rx.items) { tv, row, data in
                 let cell = UITableViewCell()
@@ -71,6 +78,7 @@ class ProfileViewController: UIViewController {
         
         menuTableView.rx.itemSelected
             .withLatestFrom(UserManager.getInstance()) { indexPath, userData in
+                
                 return (indexPath, userData)
             }
             .subscribe(onNext: { (indexPath, userData) in

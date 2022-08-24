@@ -15,7 +15,6 @@ class UserManager {
     private static var user = BehaviorSubject<Login?>(value: nil)
     
     private init() {
-        
     }
     
     static func getInstance() -> BehaviorSubject<Login?> {
@@ -33,10 +32,32 @@ class UserManager {
             .disposed(by: disposeBag)
     }
     
+    static func requestGetLogin() {
+        LoginNetwork().requestGetLogin()
+            .subscribe(onSuccess: { result in
+                guard case .success(let response) = result else { return }
+                user.onNext(response.data)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     static func logout() {
         self.user.onNext(nil)
         
         UserDefaults.standard.removeObject(forKey: "id")
         UserDefaults.standard.removeObject(forKey: "password")
+    }
+    
+    static func update(with profile: Profile) {
+        ProfileNetwork().updateProfile(with: profile)
+            .map { result -> [Profile] in
+                guard case .success(let response) = result else { return [] }
+                return response.data
+            }
+            .subscribe(onSuccess: { _ in
+                self.requestGetLogin()
+            })
+            .disposed(by: disposeBag)
+            
     }
 }

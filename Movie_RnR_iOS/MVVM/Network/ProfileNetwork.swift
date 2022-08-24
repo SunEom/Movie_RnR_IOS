@@ -13,6 +13,7 @@ enum ProfileNetworkError: Error {
     case invalidURL
     case invalidJSON
     case networkError
+    case invalidQuery
 }
 
 struct ProfileNetwork {
@@ -20,6 +21,39 @@ struct ProfileNetwork {
     
     init(_ session: URLSession = .shared) {
         self.session = session
+    }
+    
+    func requestNicknameCheck(nickname: String) -> Single<Result<NicknameResponse, ProfileNetworkError>> {
+        let urlString = "\(Constant.serverURL)/join/nick"
+        
+        guard let url = URL(string: urlString) else {
+            return .just(.failure(.invalidURL))
+        }
+        do {
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            let parameter = ["nickname": nickname]
+            
+            request.setValue("application/json", forHTTPHeaderField:"Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameter)
+            
+            return session.rx.data(request: request)
+                .map { data in
+                    do {
+                        let decodedData = try JSONDecoder().decode(NicknameResponse.self, from: data)
+                        return .success(decodedData)
+                    } catch {
+                        return .failure(ProfileNetworkError.invalidJSON)
+                    }
+                }
+                .catch { _ in
+                    return .just(.failure(ProfileNetworkError.networkError))
+                }
+                .asSingle()
+        } catch {
+            return .just(.failure(.invalidQuery))
+        }
     }
     
     func fetchProfile(userID: Int) -> Single<Result<ProfileResponse, ProfileNetworkError>> {
@@ -42,5 +76,39 @@ struct ProfileNetwork {
                 return .just(.failure(ProfileNetworkError.networkError))
             }
             .asSingle()
+    }
+    
+    func updateProfile(with profile: Profile) -> Single<Result<ProfileResponse, ProfileNetworkError>> {
+        let urlString = "\(Constant.serverURL)/user/profile"
+        
+        guard let url = URL(string: urlString) else {
+            return .just(.failure(.invalidURL))
+        }
+        do {
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            let parameter = ["nickname": profile.nickname, "gender": profile.gender, "biography": profile.biography, "facebook": profile.facebook, "instagram": profile.instagram, "twitter": profile.twitter]
+            
+            request.setValue("application/json", forHTTPHeaderField:"Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameter)
+            
+            return session.rx.data(request: request)
+                .map { data in
+                    do {
+                        let decodedData = try JSONDecoder().decode(ProfileResponse.self, from: data)
+                        print("Network", decodedData)
+                        return .success(decodedData)
+                    } catch {
+                        return .failure(ProfileNetworkError.invalidJSON)
+                    }
+                }
+                .catch { _ in
+                    return .just(.failure(ProfileNetworkError.networkError))
+                }
+                .asSingle()
+        } catch {
+            return .just(.failure(.invalidQuery))
+        }
     }
 }

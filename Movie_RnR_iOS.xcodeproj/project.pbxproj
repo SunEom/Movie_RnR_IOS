@@ -87,6 +87,7 @@
 		BFB0017028B46B2600FE6BF3 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0016F28B46B2600FE6BF3 /* StartViewController.swift */; };
 		BFB0017228B46B2D00FE6BF3 /* StartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0017128B46B2D00FE6BF3 /* StartViewModel.swift */; };
 		BFB0017528B46C6C00FE6BF3 /* StartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0017428B46C6C00FE6BF3 /* StartFactory.swift */; };
+		BFB0017728B5249F00FE6BF3 /* Nickname.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0017628B5249F00FE6BF3 /* Nickname.swift */; };
 		BFFE98462884660A003B5AF8 /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */; };
 /* End PBXBuildFile section */
 
@@ -189,6 +190,7 @@
 		BFB0016F28B46B2600FE6BF3 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		BFB0017128B46B2D00FE6BF3 /* StartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewModel.swift; sourceTree = "<group>"; };
 		BFB0017428B46C6C00FE6BF3 /* StartFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartFactory.swift; sourceTree = "<group>"; };
+		BFB0017628B5249F00FE6BF3 /* Nickname.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nickname.swift; sourceTree = "<group>"; };
 		BFF4107B28899E3300DA9043 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jua-Regular.ttf"; sourceTree = "<group>"; };
 		BFFE984728846992003B5AF8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 				BF49D97228A4A787008C93B9 /* PostDetail.swift */,
 				BF49D98328A76404008C93B9 /* Login.swift */,
 				BF395F2328AD4B0600C5F11F /* Profile.swift */,
+				BFB0017628B5249F00FE6BF3 /* Nickname.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -884,6 +887,7 @@
 				BF49D97B28A4CC60008C93B9 /* BottomStackvViewCellViewModel.swift in Sources */,
 				BF49D98228A601CD008C93B9 /* LoginViewModel.swift in Sources */,
 				BF451B5328B27D490076D3E9 /* WebFactory.swift in Sources */,
+				BFB0017728B5249F00FE6BF3 /* Nickname.swift in Sources */,
 				BF9F1E7C28AF29F1003C6993 /* EditProfileViewController.swift in Sources */,
 				BF0DE870288316E80048905C /* K.swift in Sources */,
 				BFB0017028B46B2600FE6BF3 /* StartViewController.swift in Sources */,

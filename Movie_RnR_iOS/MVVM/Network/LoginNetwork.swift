@@ -54,4 +54,26 @@ struct LoginNetwork {
             return .just(.failure(.invalidQuery))
         }
     }
+    
+    func requestGetLogin() -> Single<Result<LoginResponse, LoginNetworkError>> {
+        let urlString = "\(Constant.serverURL)/auth/login"
+        
+        guard let url = URL(string: urlString) else { return .just(.failure(.invalidURL))}
+        
+        let request = URLRequest(url: url)
+        
+        return session.rx.data(request: request)
+            .map { data in
+                do {
+                    let result = try JSONDecoder().decode(LoginResponse.self, from: data)
+                    return .success(result)
+                } catch {
+                    return .failure(LoginNetworkError.invalidJSON)
+                }
+            }
+            .catch { _ in
+                return .just(.failure(LoginNetworkError.networkError))
+            }
+            .asSingle()
+    }
 }

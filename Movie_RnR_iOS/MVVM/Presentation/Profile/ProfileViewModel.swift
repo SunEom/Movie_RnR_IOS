@@ -11,16 +11,17 @@ import RxCocoa
 
 struct ProfileViewModel {
     let disposeBag = DisposeBag()
-    var str = ""
 
+    let refresh = PublishSubject<Void>()
     let menuList = Observable<[String]>.just(["Edit Profile", "Change Password", "View Postings", "Danger Zone"]).asDriver(onErrorJustReturn: [])
     
     let userID = PublishSubject<Int>()
     let profile = PublishSubject<[Profile?]>()
     
     init() {
-        
-        userID
+    
+        refresh
+            .withLatestFrom(userID)
             .flatMapLatest(ProfileNetwork().fetchProfile)
             .map { result -> [Profile] in
                 guard case .success(let response) = result else { return [] }
@@ -28,6 +29,7 @@ struct ProfileViewModel {
             }
             .bind(to: profile)
             .disposed(by: disposeBag)
-    
+        
+        
     }
 }
