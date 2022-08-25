@@ -69,6 +69,12 @@ class EditProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         UserManager.getInstance()
+            .subscribe(onNext: {
+                self.viewModel.gender.onNext($0?.gender ?? "None")
+            })
+            .disposed(by: disposeBag)
+        
+        UserManager.getInstance()
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
                 var row = 0
@@ -146,7 +152,7 @@ class EditProfileViewController: UIViewController {
             .withLatestFrom(UserManager.getInstance())
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { _ in
-                let alert = UIAlertController(title: "Update", message: "Updated Successfully", preferredStyle: .alert)
+                let alert = UIAlertController(title: "성공", message: "정상적으로 수정되었습니다.", preferredStyle: .alert)
 
                 let action = UIAlertAction(title: "OK", style: .default) { _ in
                     self.navigationController?.popViewController(animated: true)

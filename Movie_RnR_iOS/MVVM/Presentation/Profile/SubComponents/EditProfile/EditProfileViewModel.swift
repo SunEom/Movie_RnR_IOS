@@ -36,20 +36,7 @@ struct EditProfileViewModel {
             .bind(to: gender)
             .disposed(by: disposeBag)
         
-        Observable
-            .combineLatest(UserManager.getInstance(), nickname, gender, biography, facebook, instagram, twitter)
-            .map {
-                 Profile(id: $0.0!.id , nickname: $0.1, gender: $0.2, biography: $0.3, facebook: $0.4, instagram: $0.5, twitter: $0.6)
-            }
-            .bind(to: editData)
-            .disposed(by: disposeBag)
-        
-        saveButtonTap
-            .withLatestFrom(editData)
-            .subscribe(onNext: {
-                UserManager.update(with: $0)
-            })
-            .disposed(by: disposeBag)
+        // nickname process
         
         let nickCheckResult = nicknameButtonTap
             .withLatestFrom(nickname)
@@ -57,11 +44,11 @@ struct EditProfileViewModel {
         
         nickCheckResult
             .map { result -> (title: String, message: String) in
-                guard case .success(let response) = result else { return ("Error", "Please try later") }
+                guard case .success(let response) = result else { return ("오류", "잠시후에 다시 시도해주세요") }
                 if response.already {
-                    return ("Not Available", "This nickname is already used")
+                    return ("실패", "이미 사용중인 닉네임입니다.")
                 } else {
-                    return ("Available", "This nickname can be used")
+                    return ("성공", "사용 가능한 닉네임입니다.")
                 }
             }
             .bind(to: nickAlert)
@@ -70,14 +57,51 @@ struct EditProfileViewModel {
         nickCheckResult
             .map { result -> Bool in
                 guard case .success(let response) = result else { return false }
-                if response.already {
-                    return false
-                } else {
-                    return true
-                }
+                print("response", response.already)
+                return !response.already
             }
             .bind(to: nickCheck)
             .disposed(by: disposeBag)
-            
+        
+        nickname
+            .distinctUntilChanged()
+            .map { _ in
+                return false
+            }
+            .bind(to: nickCheck)
+            .disposed(by: disposeBag)
+        
+        // save button process
+        
+        Observable
+            .combineLatest(UserManager.getInstance(), nickname, gender, biography, facebook, instagram, twitter)
+            .map {
+                Profile(id: $0.0!.id , nickname: $0.1, gender: $0.2, biography: $0.3, facebook: $0.4, instagram: $0.5, twitter: $0.6)
+            }
+            .bind(to: editData)
+            .disposed(by: disposeBag)
+        
+        saveButtonTap
+            .withLatestFrom(nickCheck)
+            .withLatestFrom(editData) { isChecked, data in
+                (isChecked, data)
+            }
+            .subscribe(onNext: { (isChecked, data) in
+                if isChecked {
+                    UserManager.update(with: data)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        
+        saveButtonTap
+            .withLatestFrom(nickCheck)
+            .filter { !$0 }
+            .map {
+                print("nick", $0)
+                return ("실패", "닉네임 확인 버튼을 눌러주세요")
+            }
+            .bind(to: nickAlert)
+            .disposed(by: disposeBag)
     }
 }
