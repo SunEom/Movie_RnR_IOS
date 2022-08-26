@@ -166,7 +166,7 @@ class EditProfileViewController: UIViewController {
 
         // Alert
         
-        viewModel.nickAlert
+        viewModel.alert
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { (title, message) in
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

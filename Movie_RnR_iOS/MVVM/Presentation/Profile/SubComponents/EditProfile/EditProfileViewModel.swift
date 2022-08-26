@@ -13,7 +13,7 @@ struct EditProfileViewModel {
     
     let genderList = Driver.just(["None","Man","Woman"])
     
-    let nickAlert = PublishSubject<(title: String, message: String)>()
+    let alert = PublishSubject<(title: String, message: String)>()
     let nickCheck = BehaviorSubject<Bool>(value: true)
     let nickname = PublishSubject<String>()
     let genderIdx = PublishSubject<Int>()
@@ -51,7 +51,7 @@ struct EditProfileViewModel {
                     return ("성공", "사용 가능한 닉네임입니다.")
                 }
             }
-            .bind(to: nickAlert)
+            .bind(to: alert)
             .disposed(by: disposeBag)
         
         nickCheckResult
@@ -65,6 +65,10 @@ struct EditProfileViewModel {
         
         nickname
             .distinctUntilChanged()
+            .withLatestFrom(UserManager.getInstance()) {
+                ($0, $1)
+            }
+            .filter { $0 != $1?.nickname }
             .map { _ in
                 return false
             }
@@ -73,8 +77,10 @@ struct EditProfileViewModel {
         
         // save button process
         
-        Observable
+        let inputData = Observable
             .combineLatest(UserManager.getInstance(), nickname, gender, biography, facebook, instagram, twitter)
+        
+        inputData
             .map {
                 Profile(id: $0.0!.id , nickname: $0.1, gender: $0.2, biography: $0.3, facebook: $0.4, instagram: $0.5, twitter: $0.6)
             }
@@ -82,26 +88,46 @@ struct EditProfileViewModel {
             .disposed(by: disposeBag)
         
         saveButtonTap
+            .withLatestFrom(inputData)
+            .filter { !($0.1 == "" || $0.2 == "" || $0.4 == "" || $0.5 == "" || $0.6 == "") }
             .withLatestFrom(nickCheck)
-            .withLatestFrom(editData) { isChecked, data in
-                (isChecked, data)
-            }
-            .subscribe(onNext: { (isChecked, data) in
-                if isChecked {
-                    UserManager.update(with: data)
-                }
+            .filter { $0 }
+            .withLatestFrom(editData)
+            .subscribe(onNext: { data in
+                UserManager.update(with: data)
             })
             .disposed(by: disposeBag)
         
         
         saveButtonTap
+            .withLatestFrom(inputData)
+            .filter { $0.1 == "" || $0.2 == "" || $0.4 == "" || $0.5 == "" || $0.6 == ""}
+            .map { data -> (title: String, message: String) in
+                if data.1 == "" {
+                    return ("알림", "닉네임을 입력해주세요")
+                } else if data.2 == "" {
+                    return("알림", "성별을 선택해주세요")
+                } else if data.4 == "" {
+                    return ("알림", "페이스북 주소를 입력해주세요")
+                } else if data.5 == "" {
+                    return ("알림", "인스타그램 주소를 입력해주세요")
+                } else if data.6 == "" {
+                    return ("알림", "트위터 주소를 입력해주세요")
+                } else {
+                    return ("오류", "처리중에 오류가 발생하였습니다.")
+                }
+            }
+            .bind(to: alert)
+            .disposed(by: disposeBag)
+        
+        saveButtonTap
             .withLatestFrom(nickCheck)
             .filter { !$0 }
-            .map {
-                print("nick", $0)
+            .map { _ in
                 return ("실패", "닉네임 확인 버튼을 눌러주세요")
             }
-            .bind(to: nickAlert)
+            .bind(to: alert)
             .disposed(by: disposeBag)
+        
     }
 }
