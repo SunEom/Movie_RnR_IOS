@@ -30,6 +30,38 @@ class ChangePasswordViewController: UIViewController {
         
         layout()
         attribute()
+        bind()
+    }
+    
+    private func bind() {
+        currentTextField.rx.text
+            .map { $0 ?? ""}
+            .bind(to: viewModel.currentPassword)
+            .disposed(by: disposeBag)
+        
+        newPasswordTextField.rx.text
+            .map { $0 ?? ""}
+            .bind(to: viewModel.newPassword)
+            .disposed(by: disposeBag)
+        
+        passwordCheckTextField.rx.text
+            .map { $0 ?? ""}
+            .bind(to: viewModel.newPasswordCheck)
+            .disposed(by: disposeBag)
+        
+        changeButton.rx.tap
+            .bind(to: viewModel.saveButtonTap)
+            .disposed(by: disposeBag)
+        
+        viewModel.alert
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                let alert = UIAlertController(title: $0.title, message: $0.messsage, preferredStyle: .alert)
+                let action = UIAlertAction(title: "확인", style: .default)
+                alert.addAction(action)
+                self.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func layout() {
@@ -74,7 +106,7 @@ class ChangePasswordViewController: UIViewController {
             changeButton.heightAnchor.constraint(equalToConstant: 40),
             
         ]
-            .forEach { $0.isActive = true}
+            .forEach { $0.isActive = true }
         
     }
     
@@ -106,10 +138,10 @@ class ChangePasswordViewController: UIViewController {
                 $0.autocorrectionType = .no
             }
         
-        changeButton.setTitle("Change password", for: .normal)
-        changeButton.setTitleColor(.white, for: .normal)
         changeButton.backgroundColor = UIColor(named: "headerColor")
-        changeButton.layer.cornerRadius = 5
+        changeButton.titleLabel?.textColor = .white
+        changeButton.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
+        changeButton.setTitle("Change Password", for: .normal)
         
     }
 }

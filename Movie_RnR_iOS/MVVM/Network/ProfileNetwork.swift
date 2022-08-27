@@ -97,7 +97,6 @@ struct ProfileNetwork {
                 .map { data in
                     do {
                         let decodedData = try JSONDecoder().decode(ProfileResponse.self, from: data)
-                        print("Network", decodedData)
                         return .success(decodedData)
                     } catch {
                         return .failure(ProfileNetworkError.invalidJSON)
@@ -111,4 +110,39 @@ struct ProfileNetwork {
             return .just(.failure(.invalidQuery))
         }
     }
+    
+    func updatePassword(password: String, newPassword: String) -> Single<Result<PasswordResponse, ProfileNetworkError>> {
+        let urlString = "\(Constant.serverURL)/user/password"
+        
+        guard let url = URL(string: urlString) else {
+            return .just(.failure(.invalidURL))
+        }
+        do {
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            let parameter = ["passowrd": password, "newPassword": newPassword]
+            
+            request.setValue("application/json", forHTTPHeaderField:"Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameter)
+            
+            return session.rx.data(request: request)
+                .map { data in
+                    do {
+                        let decodedData = try JSONDecoder().decode(PasswordResponse.self, from: data)
+                        return .success(decodedData)
+                    } catch {
+                        return .failure(ProfileNetworkError.invalidJSON)
+                    }
+                }
+                .catch { _ in
+                    return .just(.failure(ProfileNetworkError.networkError))
+                }
+                .asSingle()
+        } catch {
+            return .just(.failure(.invalidQuery))
+        }
+    }
+    
+    
 }

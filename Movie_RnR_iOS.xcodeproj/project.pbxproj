@@ -17,6 +17,7 @@
 		BF395F2028AD454200C5F11F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F1F28AD454200C5F11F /* ProfileViewController.swift */; };
 		BF395F2228AD454B00C5F11F /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F2128AD454B00C5F11F /* ProfileViewModel.swift */; };
 		BF395F2428AD4B0600C5F11F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F2328AD4B0600C5F11F /* Profile.swift */; };
+		BF3F96CA28B8CCA300422890 /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F96C928B8CCA300422890 /* Password.swift */; };
 		BF440DF42887389000DABCA5 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF440DF22887389000DABCA5 /* CommentTableViewCell.xib */; };
 		BF451B4728B278FA0076D3E9 /* HomeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF451B4628B278FA0076D3E9 /* HomeFactory.swift */; };
 		BF451B4928B279E40076D3E9 /* SearchFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF451B4828B279E40076D3E9 /* SearchFactory.swift */; };
@@ -110,6 +111,7 @@
 		BF395F1F28AD454200C5F11F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BF395F2128AD454B00C5F11F /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		BF395F2328AD4B0600C5F11F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		BF3F96C928B8CCA300422890 /* Password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
 		BF440DED28872A7000DABCA5 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		BF440DEF28872AD200DABCA5 /* CommentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentManager.swift; sourceTree = "<group>"; };
 		BF440DF12887389000DABCA5 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -565,6 +567,7 @@
 				BF49D97228A4A787008C93B9 /* PostDetail.swift */,
 				BF49D98328A76404008C93B9 /* Login.swift */,
 				BF395F2328AD4B0600C5F11F /* Profile.swift */,
+				BF3F96C928B8CCA300422890 /* Password.swift */,
 				BFB0017628B5249F00FE6BF3 /* Nickname.swift */,
 			);
 			path = Entity;
@@ -930,6 +933,7 @@
 				BF9F1E8328AF3B56003C6993 /* WebViewModel.swift in Sources */,
 				BF451B4928B279E40076D3E9 /* SearchFactory.swift in Sources */,
 				BF49D98628A764CC008C93B9 /* UserManager.swift in Sources */,
+				BF3F96CA28B8CCA300422890 /* Password.swift in Sources */,
 				BF9095B728A0A40E00DA01B1 /* HomeViewController.swift in Sources */,
 				BF451B6628B35B6F0076D3E9 /* ChangePasswordViewModel.swift in Sources */,
 				BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */,

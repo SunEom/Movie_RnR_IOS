@@ -143,9 +143,9 @@ class ProfileViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
                 if $0 == nil {
-                    let alert = UIAlertController(title: "Logout", message: "You are logged out", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "로그아웃", message: "정상적으로 로그아웃 되었습니다.", preferredStyle: .alert)
                     
-                    let action = UIAlertAction(title: "OK", style: .default) { _ in
+                    let action = UIAlertAction(title: "확인", style: .default) { _ in
                         self.navigationController?.popViewController(animated: true)
                     }
                     

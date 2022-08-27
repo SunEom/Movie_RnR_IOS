@@ -16,6 +16,8 @@ class UserPostingViewController: UIViewController {
     
     let tableView = UITableView()
     
+    let infoLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,6 +30,12 @@ class UserPostingViewController: UIViewController {
     }
     
     private func bind() {
+        
+        viewModel.cellData
+            .asObservable()
+            .map { $0.count != 0 }
+            .bind(to: infoLabel.rx.isHidden)
+            .disposed(by: disposeBag)
         
         viewModel.cellData
             .drive(tableView.rx.items) { tv, row, data in
@@ -58,7 +66,7 @@ class UserPostingViewController: UIViewController {
     }
     
     private func layout() {
-        [tableView]
+        [tableView, infoLabel]
             .forEach {
                 view.addSubview($0)
                 $0.translatesAutoresizingMaskIntoConstraints = false
@@ -68,13 +76,22 @@ class UserPostingViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            infoLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            infoLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ].forEach { $0.isActive = true }
     }
     
     private func attribute() {
         view.backgroundColor = UIColor(named: "mainColor")
         tableView.backgroundColor = UIColor(named: "mainColor")
+        
+        infoLabel.text = "작성된 게시글이 없습니다."
+        infoLabel.textColor = .black
+        infoLabel.textAlignment = .center
     }
     
     

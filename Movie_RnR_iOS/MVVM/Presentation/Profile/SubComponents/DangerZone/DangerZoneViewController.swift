@@ -32,13 +32,13 @@ class DangerZoneViewController: UIViewController {
         
         viewModel.buttonSelected
             .subscribe(onNext: {
-                let alert = UIAlertController(title: "Remove Account", message: "Are you sure?", preferredStyle: .alert)
+                let alert = UIAlertController(title: "계정 삭제", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
                 
-                let remove = UIAlertAction(title: "Remove", style: .destructive) { _ in
+                let remove = UIAlertAction(title: "삭제", style: .destructive) { _ in
                     self.viewModel.confirmSelected.onNext(Void())
                 }
                 
-                let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+                let cancel = UIAlertAction(title: "취소", style: .cancel)
                 
                 alert.addAction(remove)
                 alert.addAction(cancel)
@@ -70,14 +70,18 @@ class DangerZoneViewController: UIViewController {
         view.backgroundColor = UIColor(named: "mainColor")
         
         warnningLabel.text = """
-        Once you delete your account,
-        there is no going back. Please be certain
+        한 번 계정을 삭제한 경우,
+        더이상 되돌릴 수 없습니다.
+        신중히 선택해주시기 바랍니다.
         """
-        warnningLabel.textColor = .red
+        
+        warnningLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        warnningLabel.textColor = UIColor(red: 0.8, green: 0.2, blue: 0.2, alpha: 1)
         warnningLabel.numberOfLines = 5
         
-        removeButton.backgroundColor = .red
-        removeButton.setTitle("Remove Account", for: .normal)
+        removeButton.backgroundColor = UIColor(red: 0.8, green: 0.2, blue: 0.2, alpha: 1)
+        removeButton.setTitle("계정 삭제", for: .normal)
+        removeButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         removeButton.setTitleColor(.white, for: .normal)
     }
     
