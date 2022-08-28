@@ -57,7 +57,16 @@ class ChangePasswordViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
                 let alert = UIAlertController(title: $0.title, message: $0.messsage, preferredStyle: .alert)
-                let action = UIAlertAction(title: "확인", style: .default)
+                let action: UIAlertAction!
+                
+                if $0.title == "성공" {
+                    action = UIAlertAction(title: "확인", style: .default) {_ in
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                } else {
+                    action = UIAlertAction(title: "확인", style: .default)
+                }
+                
                 alert.addAction(action)
                 self.present(alert, animated: true)
             })

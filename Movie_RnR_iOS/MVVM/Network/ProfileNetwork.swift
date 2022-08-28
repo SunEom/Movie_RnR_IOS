@@ -120,7 +120,7 @@ struct ProfileNetwork {
         do {
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
-            let parameter = ["passowrd": password, "newPassword": newPassword]
+            let parameter = ["password": password, "newPassword": newPassword]
             
             request.setValue("application/json", forHTTPHeaderField:"Content-Type")
             request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -130,6 +130,10 @@ struct ProfileNetwork {
                 .map { data in
                     do {
                         let decodedData = try JSONDecoder().decode(PasswordResponse.self, from: data)
+                        if decodedData.code == 201 {
+                            UserManager.requestGetLogin()
+                            UserDefaults.standard.set(newPassword, forKey: "password")
+                        }
                         return .success(decodedData)
                     } catch {
                         return .failure(ProfileNetworkError.invalidJSON)

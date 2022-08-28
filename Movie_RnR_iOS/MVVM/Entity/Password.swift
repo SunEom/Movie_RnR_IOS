@@ -9,5 +9,4 @@ import Foundation
 
 struct PasswordResponse: Decodable {
     let code: Int
-    let error: String?
 }
