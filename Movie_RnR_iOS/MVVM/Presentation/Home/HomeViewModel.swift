@@ -11,20 +11,27 @@ import RxCocoa
 struct HomeViewModel {
     let disposeBag = DisposeBag()
     
-    let cellData: Driver<[Post]>
+    let cellData =  PublishSubject<[Post]>()
     let itemSelected = PublishSubject<Int>()
     let selectedItem: Driver<Post?>
     let newPostButtonTap = PublishSubject<Void>()
     
     let logined = BehaviorSubject<Bool>(value: false)
+    
+    let refresh = PublishSubject<Void>()
 
     init(_ repository: PostRepository = PostRepository()) {
-        cellData = repository.fetchRecentPostings()
+        
+        refresh
+            .flatMapLatest{ repository.fetchRecentPostings() }
+            .bind(to: cellData)
+            .disposed(by: disposeBag)
         
         selectedItem = itemSelected
             .withLatestFrom(cellData) { idx, list in
                 list[idx]
             }
             .asDriver(onErrorJustReturn: nil)
+            
     }
 }

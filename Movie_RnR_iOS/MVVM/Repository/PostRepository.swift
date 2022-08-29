@@ -11,11 +11,10 @@ import RxCocoa
 
 struct PostRepository {
     
-    func fetchRecentPostings() -> Driver<[Post]> {
+    func fetchRecentPostings() -> Observable<[Post]> {
         return PostNetwork().fetchRecentPosts()
             .asObservable()
             .compactMap(parseDataWithTitleCell)
-            .asDriver(onErrorJustReturn: [])
     }
     
     func fetchUserPostings(userID: Int) -> Driver<[Post]> {

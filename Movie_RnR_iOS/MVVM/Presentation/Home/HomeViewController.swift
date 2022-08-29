@@ -18,6 +18,8 @@ class HomeViewController: UIViewController {
     let rightBarButtonItem = UIBarButtonItem(systemItem: .search)
     let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil)
     
+    let refreshControl = UIRefreshControl()
+    
     let newPostButton = UIButton()
     
     override func viewDidLoad() {
@@ -31,10 +33,15 @@ class HomeViewController: UIViewController {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.refresh.onNext(Void())
+    }
+    
     private func bind() {
         
         viewModel.cellData
-            .drive(tableView.rx.items) { tv, row, post in
+            .observe(on: MainScheduler.instance)
+            .bind(to: tableView.rx.items) { tv, row, post in
                 let indexPath = IndexPath(row: row, section: 0)
                 if row == 0 {
                     
@@ -171,7 +178,15 @@ class HomeViewController: UIViewController {
         newPostButton.configuration = config
         newPostButton.tintColor = .white
         
+        refreshControl.tintColor = .black
+        refreshControl.addTarget(self, action: #selector(sendRefreshSignal), for: .valueChanged)
+        tableView.addSubview(refreshControl)
         
+    }
+    
+    @objc private func sendRefreshSignal() {
+        viewModel.refresh.onNext(Void())
+        refreshControl.endRefreshing()
     }
     
 }
