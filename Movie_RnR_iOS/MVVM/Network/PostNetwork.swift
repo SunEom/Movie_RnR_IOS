@@ -129,5 +129,38 @@ struct PostNetwork {
             .asSingle()
     }
     
+    func createNewPost(with data: (title: String, genres: String, rates: Double, overview: String) ) -> Single<Result<PostResponse, PostNetworkError>> {
+        let urlString = "\(Constant.serverURL)/post"
+        
+        guard let url = URL(string: urlString) else {
+            return .just(.failure(.invalidURL))
+        }
+        do {
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            let parameter = ["title": data.title ,"genres": data.genres, "rates": "\(data.rates)", "overview": data.overview]
+            
+            request.setValue("application/json", forHTTPHeaderField:"Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameter)
+            
+            return session.rx.data(request: request)
+                .map { data in
+                    do {
+                        let decodedData = try JSONDecoder().decode(PostResponse.self, from: data)
+                        return .success(decodedData)
+                    } catch {
+                        return .failure(PostNetworkError.invalidJSON)
+                    }
+                }
+                .catch { _ in
+                    return .just(.failure(PostNetworkError.networkError))
+                }
+                .asSingle()
+        } catch {
+            return .just(.failure(.invalidQuery))
+        }
+        
+    }
     
 }

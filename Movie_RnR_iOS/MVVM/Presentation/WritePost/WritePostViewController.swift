@@ -57,6 +57,12 @@ class WritePostViewController: UIViewController {
     
     private func bind() {
         
+        titleTextField.rx.text
+            .map { $0 ?? "" }
+            .bind(to: viewModel.title)
+            .disposed(by: disposeBag)
+        
+        //genre buttons
         romanceButton.rx.tap
             .map {self.genreButtonTap(btn: self.romanceButton)}
             .bind(to: viewModel.romance)
@@ -107,6 +113,40 @@ class WritePostViewController: UIViewController {
             .bind(to: viewModel.drama)
             .disposed(by: disposeBag)
         
+        rateTextField.rx.text
+            .map { Double($0!) ?? 0.0 }
+            .bind(to: viewModel.rate)
+            .disposed(by: disposeBag)
+    
+        overviewTextView.rx.text
+            .map { $0 ?? "" }
+            .bind(to: viewModel.overview)
+            .disposed(by: disposeBag)
+        
+        saveButton.rx.tap
+            .bind(to: viewModel.saveButtonTap)
+            .disposed(by: disposeBag)
+        
+        viewModel.alert
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { (title, message) in
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                
+                var action: UIAlertAction!
+                
+                if title == "성공" {
+                    action = UIAlertAction(title: "확인", style: .default) { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                } else {
+                    action = UIAlertAction(title: "확인", style: .default)
+                }
+                
+                alert.addAction(action)
+                
+                self.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
         
     }
     
@@ -237,6 +277,9 @@ class WritePostViewController: UIViewController {
         rateLabel.text = "Rate"
         overviewLabel.text = "Overview"
         
+        rateTextField.keyboardType = .numberPad
+        rateTextField.delegate = self
+        
         romanceButton.setTitle("Romance", for: .normal)
         actionButton.setTitle("Action", for: .normal)
         comedyButton.setTitle("Comedy", for: .normal)
@@ -279,7 +322,16 @@ class WritePostViewController: UIViewController {
     
     private func genreButtonTap(btn: UIButton) -> Bool {
         btn.isSelected.toggle()
-        btn.backgroundColor = self.romanceButton.isSelected ? UIColor(named: "headerColor") : UIColor(named: "mainColor")
+        btn.backgroundColor = btn.isSelected ? UIColor(named: "headerColor") : UIColor(named: "mainColor")
         return btn.isSelected
+    }
+}
+
+extension WritePostViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let allowedCharacters = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: "."))
+        let characterSet = CharacterSet(charactersIn: string)
+        
+        return allowedCharacters.isSuperset(of: characterSet) && !(string == "." && rateTextField.text!.contains(".")) && (rateTextField.text! == "" || Double(rateTextField.text! + string)! <= 10 && (rateTextField.text!.count <= 2 || strcmp(string, "\\b") == -92 ))
     }
 }
