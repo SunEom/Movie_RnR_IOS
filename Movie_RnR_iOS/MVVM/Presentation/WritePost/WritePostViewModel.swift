@@ -12,7 +12,7 @@ import CoreText
 struct WritePostViewModel {
     let disposeBag = DisposeBag()
     
-    var post: Post?
+    var post: Post? = nil
     
     let title = BehaviorSubject<String>(value: "")
     
@@ -34,7 +34,30 @@ struct WritePostViewModel {
 
     let alert = PublishSubject<(title: String, message: String)>()
     
-    init() {
+    init(post: Post? = nil) {
+        
+        // 게시글 수정의 경우 기존 값 초기화
+        if post != nil {
+            self.post = post
+            
+            title.onNext(post!.title)
+        
+            romance.onNext(post!.genres.lowercased().contains("romance"))
+            action.onNext(post!.genres.lowercased().contains("cction"))
+            comedy.onNext(post!.genres.lowercased().contains("comedy"))
+            historical.onNext(post!.genres.lowercased().contains("historical"))
+            horror.onNext(post!.genres.lowercased().contains("horror"))
+            sf.onNext(post!.genres.lowercased().contains("sci-fi"))
+            thriller.onNext(post!.genres.lowercased().contains("thriller"))
+            mystery.onNext(post!.genres.lowercased().contains("mystery"))
+            animation.onNext(post!.genres.lowercased().contains("animation"))
+            drama.onNext(post!.genres.lowercased().contains("drama"))
+            
+            rate.onNext(post!.rates)
+            overview.onNext(post!.overview)
+        }
+        
+        
         let genres1 = Observable
             .combineLatest(romance, action, comedy, historical, horror, sf)
     
@@ -104,6 +127,8 @@ struct WritePostViewModel {
             .combineLatest(title, genreString, rate, overview )
 
         
+        
+        // 입력 값 확인 결과 - 실패
         saveButtonTap
             .withLatestFrom(inputData)
             .filter { (title, genre, rate, overview) in
@@ -129,19 +154,40 @@ struct WritePostViewModel {
             .bind(to: alert)
             .disposed(by: disposeBag)
         
-        saveButtonTap
+        
+        // 입력값 확인 결과 - 성공
+        
+        let inputCheckSuccess = saveButtonTap
             .withLatestFrom(inputData)
             .filter { (title, genre, rate, overview) in
                 return !(title == "" || genre == "" || rate == 0.0 || overview == "")
             }
+        
+        // 게시글 작성의 경우
+        inputCheckSuccess
+            .filter { _ in
+                return post == nil
+            }
             .flatMapLatest(PostNetwork().createNewPost)
             .map { result -> (String, String) in
-                guard case .success(let _) = result else { return ("실패", "게시글 작성에 실패하였습니다.") }
+                guard case .success( _) = result else { return ("실패", "게시글 작성에 실패하였습니다.") }
                 return ("성공", "게시글이 저장되었습니다.")
             }
             .bind(to: alert)
             .disposed(by: disposeBag)
-            
+        
+        //게시글 수정의 경우
+        inputCheckSuccess
+            .filter { _ in
+                return post != nil
+            }
+            .flatMapLatest(PostNetwork().createNewPost)
+            .map { result -> (String, String) in
+                guard case .success( _) = result else { return ("실패", "게시글 작성에 실패하였습니다.") }
+                return ("성공", "게시글이 수정되었습니다.")
+            }
+            .bind(to: alert)
+            .disposed(by: disposeBag)
     }
     
 }

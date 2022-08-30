@@ -8,9 +8,9 @@
 import Foundation
 
 struct WritePostFactory {
-    func getInstance() -> WritePostViewController {
+    func getInstance(post: Post? = nil) -> WritePostViewController {
         let vc = WritePostViewController()
-        vc.viewModel = WritePostViewModel()
+        vc.viewModel = WritePostViewModel(post: post)
         return vc
     }
 }

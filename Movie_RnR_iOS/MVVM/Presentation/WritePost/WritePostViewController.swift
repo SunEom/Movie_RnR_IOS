@@ -56,6 +56,113 @@ class WritePostViewController: UIViewController {
     }
     
     private func bind() {
+        // 게시글 수정인 경우 입력값을 기존값으로 초기화
+        viewModel.title
+            .take(1)
+            .bind(to: titleTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.romance
+            .take(1)
+            .subscribe(onNext:{
+                if $0 {
+                    _ = self.genreButtonTap(btn: self.romanceButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.action
+            .take(1)
+            .subscribe(onNext:{
+                if $0 {
+                    _ = self.genreButtonTap(btn: self.actionButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.comedy
+            .take(1)
+            .subscribe(onNext:{
+                if $0 {
+                    _ = self.genreButtonTap(btn: self.comedyButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.historical
+            .take(1)
+            .subscribe(onNext:{
+                if $0 {
+                    _ = self.genreButtonTap(btn: self.historicalButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.horror
+            .take(1)
+            .subscribe(onNext:{
+                if $0 {
+                    _ = self.genreButtonTap(btn: self.horrorButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.sf
+            .take(1)
+            .subscribe(onNext:{
+                if $0 {
+                    _ = self.genreButtonTap(btn: self.sfButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.thriller
+            .take(1)
+            .subscribe(onNext:{
+                if $0 {
+                    _ = self.genreButtonTap(btn: self.thrillerButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.mystery
+            .take(1)
+            .subscribe(onNext:{
+                if $0 {
+                    _ = self.genreButtonTap(btn: self.mysteryButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.animation
+            .take(1)
+            .subscribe(onNext:{
+                if $0 {
+                    _ = self.genreButtonTap(btn: self.animationButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.drama
+            .take(1)
+            .subscribe(onNext:{
+                if $0 {
+                    _ = self.genreButtonTap(btn: self.dramaButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.rate
+            .take(1)
+            .map { "\($0)" }
+            .bind(to: rateTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.overview
+            .take(1)
+            .bind(to: overviewTextView.rx.text)
+            .disposed(by: disposeBag)
+        
         
         titleTextField.rx.text
             .map { $0 ?? "" }
@@ -117,7 +224,7 @@ class WritePostViewController: UIViewController {
             .map { Double($0!) ?? 0.0 }
             .bind(to: viewModel.rate)
             .disposed(by: disposeBag)
-    
+        
         overviewTextView.rx.text
             .map { $0 ?? "" }
             .bind(to: viewModel.overview)

@@ -14,6 +14,8 @@ class DetailViewController: UIViewController {
     let disposeBag = DisposeBag()
     let tableView = UITableView()
     
+    let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -91,6 +93,13 @@ class DetailViewController: UIViewController {
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
+        
+        editButton.rx.tap
+            .subscribe(onNext:{
+                let vc = WritePostFactory().getInstance(post: self.viewModel.post)
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {
@@ -98,6 +107,15 @@ class DetailViewController: UIViewController {
         
         tableView.backgroundColor = UIColor(named: "mainColor")
         tableView.separatorStyle = .none
+        
+        UserManager.getInstance()
+            .subscribe(onNext: { 
+                if $0?.id == self.viewModel.post.user_id {
+                    self.navigationItem.rightBarButtonItem = self.editButton
+                }
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func layout() {
