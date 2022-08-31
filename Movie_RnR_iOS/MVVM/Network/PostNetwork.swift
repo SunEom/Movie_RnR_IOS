@@ -164,7 +164,7 @@ struct PostNetwork {
     }
     
     func updatePost(with data: (id: Int, title: String, genres: String, rates: Double, overview: String) ) -> Single<Result<PostResponse, PostNetworkError>> {
-        let urlString = "\(Constant.serverURL)/post"
+        let urlString = "\(Constant.serverURL)/post/update"
         
         guard let url = URL(string: urlString) else {
             return .just(.failure(.invalidURL))

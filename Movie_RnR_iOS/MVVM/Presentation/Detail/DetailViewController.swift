@@ -14,16 +14,20 @@ class DetailViewController: UIViewController {
     let disposeBag = DisposeBag()
     let tableView = UITableView()
     
-    let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: nil)
+    let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: nil, action: nil)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.refresh.onNext(Void())
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(ImageCell.self, forCellReuseIdentifier: "DetailImageCell")
-        tableView.register(TitleCell.self, forCellReuseIdentifier: "DetailTitleCell")
-        tableView.register(TopStackViewCell.self, forCellReuseIdentifier: "DetailTopStackViewCell")
-        tableView.register(OverviewCell.self, forCellReuseIdentifier: "DetailOverviewCell")
-        tableView.register(BottomStackViewCell.self, forCellReuseIdentifier: "DetailBottomStackViewCell")
+        tableView.register(TitleCell.self, forCellReuseIdentifier: "TitleCell")
+        tableView.register(TopStackViewCell.self, forCellReuseIdentifier: "TopStackViewCell")
+        tableView.register(OverviewCell.self, forCellReuseIdentifier: "OverviewCell")
+        tableView.register(BottomStackViewCell.self, forCellReuseIdentifier: "BottomStackViewCell")
         
         attribute()
         layout()
@@ -35,52 +39,84 @@ class DetailViewController: UIViewController {
         viewModel.cellList
             .drive(tableView.rx.items) { tv, row, data in
                 switch row {
-                case 0:
-                    let indexPath = IndexPath(row: row, section: 0)
-                    let cell = tv.dequeueReusableCell(withIdentifier: "DetailImageCell", for: indexPath) as! ImageCell
-                    cell.isUserInteractionEnabled = false
-                    cell.setUp(imageName: "postImage1")
-                    return cell
-                case 1:
-                    let indexPath = IndexPath(row: row, section: 0)
-                    let cell = tv.dequeueReusableCell(withIdentifier: "DetailTitleCell", for: indexPath) as! TitleCell
-                    cell.isUserInteractionEnabled = false
-                    cell.bind(self.viewModel.titleCellViewModel)
-                    cell.setUp()
-                    return cell
-                case 2:
-                    let indexPath = IndexPath(row: row, section: 0)
-                    let cell = tv.dequeueReusableCell(withIdentifier: "DetailTopStackViewCell", for: indexPath) as! TopStackViewCell
-                    cell.isUserInteractionEnabled = false
-                    cell.bind(self.viewModel.topStackViewCellViewModel)
-                    cell.setUp()
-                    return cell
-                case 3:
-                    let indexPath = IndexPath(row: row, section: 0)
-                    let cell = tv.dequeueReusableCell(withIdentifier: "DetailOverviewCell", for: indexPath) as! OverviewCell
-                    cell.isUserInteractionEnabled = false
-                    cell.bind(self.viewModel.overviewCellViewModel)
-                    cell.setUp()
-                    return cell
-                case 4:
-                    let indexPath = IndexPath(row: row, section: 0)
-                    let cell = tv.dequeueReusableCell(withIdentifier: "DetailBottomStackViewCell", for: indexPath) as! BottomStackViewCell
-                    cell.isUserInteractionEnabled = false
-                    cell.bind(self.viewModel.bottomStackViewCellViewModel)
-                    cell.setUp()
-                    return cell
-                case 5:
-                    let cell = UITableViewCell()
-                    cell.backgroundColor = .clear
-                    cell.textLabel?.text = "Comments (\(self.viewModel.post.commentCount ?? 0))"
-                    cell.textLabel?.font = UIFont(name: "CarterOne", size: 18)
-                    cell.textLabel?.textColor = .black
-                    cell.accessoryView = UIImageView(image: UIImage(systemName: "chevron.right"))
-                    cell.tintColor = .black
-                    
-                    return cell
-                default:
-                    return UITableViewCell()
+                    case 0:
+                        let indexPath = IndexPath(row: row, section: 0)
+                        let cell = tv.dequeueReusableCell(withIdentifier: "DetailImageCell", for: indexPath) as! ImageCell
+                        cell.selectionStyle = .none
+                        cell.setUp(imageName: "postImage1")
+                        return cell
+                        
+                    case 1:
+                        let indexPath = IndexPath(row: row, section: 0)
+                        let cell = TitleCellFactory().getInstance(tableView: tv, indexPath: indexPath)
+                        cell.selectionStyle = .none
+                        
+                        self.viewModel.detailData
+                            .map { $0?.movie.title }
+                            .bind(to: cell.viewModel.title)
+                            .disposed(by: self.disposeBag)
+                        
+                        return cell
+                        
+                    case 2:
+                        let indexPath = IndexPath(row: row, section: 0)
+                        let cell = TopStackViewCellFactory().getInstance(tableView: tv, indexPath: indexPath)
+                        cell.selectionStyle = .none
+                        
+                        self.viewModel.detailData
+                            .map { $0?.movie.genres }
+                            .bind(to: cell.viewModel.genres)
+                            .disposed(by: self.disposeBag)
+                        
+                        self.viewModel.detailData
+                            .map { "\($0?.movie.rates ?? 0.0)" }
+                            .bind(to: cell.viewModel.rates)
+                            .disposed(by: self.disposeBag)
+                        
+                        return cell
+                        
+                    case 3:
+                        let indexPath = IndexPath(row: row, section: 0)
+                        let cell = OverviewCellFactory().getInstance(tableView: tv, indexPath: indexPath)
+                        cell.selectionStyle = .none
+                        
+                        self.viewModel.detailData
+                            .map { $0?.movie.overview }
+                            .bind(to: cell.viewModel.overview)
+                            .disposed(by: self.disposeBag)
+                        
+                        return cell
+                        
+                    case 4:
+                        let indexPath = IndexPath(row: row, section: 0)
+                        let cell = BottomStackViewCellFactory().getInstance(tableView: tv, indexPath: indexPath)
+                        cell.selectionStyle = .none
+                        
+                        self.viewModel.detailData
+                            .map { $0?.user.nickname }
+                            .bind(to: cell.viewModel.nickname)
+                            .disposed(by: self.disposeBag)
+                        
+                        self.viewModel.detailData
+                            .map { $0?.movie.created }
+                            .bind(to: cell.viewModel.date)
+                            .disposed(by: self.disposeBag)
+                        
+                        return cell
+                        
+                    case 5:
+                        let cell = UITableViewCell()
+                        cell.backgroundColor = .clear
+                        cell.textLabel?.text = "Comments (\(self.viewModel.post.commentCount ?? 0))"
+                        cell.textLabel?.font = UIFont(name: "CarterOne", size: 18)
+                        cell.textLabel?.textColor = .black
+                        cell.accessoryView = UIImageView(image: UIImage(systemName: "chevron.right"))
+                        cell.tintColor = .black
+                        
+                        return cell
+                        
+                    default:
+                        return UITableViewCell()
                 }
             }
             .disposed(by:disposeBag)
@@ -109,7 +145,7 @@ class DetailViewController: UIViewController {
         tableView.separatorStyle = .none
         
         UserManager.getInstance()
-            .subscribe(onNext: { 
+            .subscribe(onNext: {
                 if $0?.id == self.viewModel.post.user_id {
                     self.navigationItem.rightBarButtonItem = self.editButton
                 }

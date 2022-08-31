@@ -11,11 +11,13 @@ import RxSwift
 class BottomStackViewCell: UITableViewCell {
     let disposeBag = DisposeBag()
     
+    var viewModel: BottomStackViewCellViewModel!
+    
     let stackView = UIStackView()
     let dateLabel = UILabel()
     let nicknameLabel = UILabel()
     
-    func bind(_ viewModel: BottomStackViewCellViewModel) {
+    func bind() {
         viewModel.date
             .map(dateFormat)
             .bind(to: dateLabel.rx.text)

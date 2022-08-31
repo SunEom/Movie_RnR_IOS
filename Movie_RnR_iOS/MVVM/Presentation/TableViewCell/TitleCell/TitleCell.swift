@@ -12,7 +12,9 @@ class TitleCell: UITableViewCell {
     let disposeBag = DisposeBag()
     let titleLabel = UILabel()
     
-    func bind(_ viewModel: TitleCellViewModel) {
+    var viewModel: TitleCellViewModel!
+    
+    func bind() {
         viewModel.title
             .bind(to: titleLabel.rx.text)
             .disposed(by: disposeBag)

@@ -12,11 +12,13 @@ class TopStackViewCell: UITableViewCell {
     
     let disposeBag = DisposeBag()
     
+    var viewModel: TopStackViewCellViewModel!
+    
     let stackView = UIStackView()
     let genresLabel = UILabel()
     let ratesLabel = UILabel()
     
-    func bind(_ viewModel: TopStackViewCellViewModel) {
+    func bind() {
         viewModel.genres
             .bind(to: genresLabel.rx.text)
             .disposed(by: disposeBag)

@@ -11,9 +11,11 @@ import RxSwift
 class OverviewCell: UITableViewCell {
     let disposeBag = DisposeBag()
     
+    var viewModel: OverviewCellViewModel!
+    
     let textView = UITextView()
     
-    func bind(_ viewModel: OverviewCellViewModel) {
+    func bind() {
         viewModel.overview
             .bind(to: textView.rx.text)
             .disposed(by: disposeBag)

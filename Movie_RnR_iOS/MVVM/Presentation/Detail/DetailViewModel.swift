@@ -20,7 +20,9 @@ struct DetailViewModel {
     
     let cellList: Driver<[String]>
     
-    let detailData: Driver<PostDetail?>
+    let detailData = PublishSubject<PostDetail?>()
+    
+    let refresh = PublishSubject<Void>()
     
     init(_ post: Post, _ repository: DetailRepository = DetailRepository()) {
         
@@ -29,11 +31,13 @@ struct DetailViewModel {
         cellList = Observable.just(["image","title","topStackView","overview","bottomStackview","comments"])
             .asDriver(onErrorJustReturn: [])
         
-        detailData = repository.fetchPostDetail(post: post)
-            .asDriver(onErrorJustReturn: nil)
+        refresh
+            .flatMapLatest { repository.fetchPostDetail(post: post) }
+            .asObservable()
+            .bind(to: detailData)
+            .disposed(by: disposeBag)
         
         let postDetail = detailData
-            .asObservable()
             
         postDetail.compactMap { $0?.movie.title }
             .bind(to: titleCellViewModel.title)

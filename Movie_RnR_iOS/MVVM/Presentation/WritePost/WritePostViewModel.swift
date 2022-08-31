@@ -181,7 +181,8 @@ struct WritePostViewModel {
             .filter { _ in
                 return post != nil
             }
-            .flatMapLatest(PostNetwork().createNewPost)
+            .map { (post!.id, $0.0, $0.1, $0.2, $0.3) }
+            .flatMapLatest(PostNetwork().updatePost)
             .map { result -> (String, String) in
                 guard case .success( _) = result else { return ("실패", "게시글 작성에 실패하였습니다.") }
                 return ("성공", "게시글이 수정되었습니다.")

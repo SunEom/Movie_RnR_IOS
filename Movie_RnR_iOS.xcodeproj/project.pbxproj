@@ -89,6 +89,10 @@
 		BFB0017228B46B2D00FE6BF3 /* StartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0017128B46B2D00FE6BF3 /* StartViewModel.swift */; };
 		BFB0017528B46C6C00FE6BF3 /* StartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0017428B46C6C00FE6BF3 /* StartFactory.swift */; };
 		BFB0017728B5249F00FE6BF3 /* Nickname.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0017628B5249F00FE6BF3 /* Nickname.swift */; };
+		BFB53E3F28BF08D10007BABA /* TitleCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB53E3E28BF08D10007BABA /* TitleCellFactory.swift */; };
+		BFB53E4128BF0C320007BABA /* TopStackViewCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB53E4028BF0C320007BABA /* TopStackViewCellFactory.swift */; };
+		BFB53E4328BF0D840007BABA /* OverviewCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB53E4228BF0D840007BABA /* OverviewCellFactory.swift */; };
+		BFB53E4528BF0E780007BABA /* BottomStackViewCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB53E4428BF0E780007BABA /* BottomStackViewCellFactory.swift */; };
 		BFFE98462884660A003B5AF8 /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */; };
 /* End PBXBuildFile section */
 
@@ -193,6 +197,10 @@
 		BFB0017128B46B2D00FE6BF3 /* StartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewModel.swift; sourceTree = "<group>"; };
 		BFB0017428B46C6C00FE6BF3 /* StartFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartFactory.swift; sourceTree = "<group>"; };
 		BFB0017628B5249F00FE6BF3 /* Nickname.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nickname.swift; sourceTree = "<group>"; };
+		BFB53E3E28BF08D10007BABA /* TitleCellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCellFactory.swift; sourceTree = "<group>"; };
+		BFB53E4028BF0C320007BABA /* TopStackViewCellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStackViewCellFactory.swift; sourceTree = "<group>"; };
+		BFB53E4228BF0D840007BABA /* OverviewCellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCellFactory.swift; sourceTree = "<group>"; };
+		BFB53E4428BF0E780007BABA /* BottomStackViewCellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomStackViewCellFactory.swift; sourceTree = "<group>"; };
 		BFF4107B28899E3300DA9043 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jua-Regular.ttf"; sourceTree = "<group>"; };
 		BFFE984728846992003B5AF8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -339,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				BF451B4E28B27B060076D3E9 /* DetailFactory.swift */,
+				BFB53E3D28BF08740007BABA /* SubComponents */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -748,6 +757,17 @@
 			path = Start;
 			sourceTree = "<group>";
 		};
+		BFB53E3D28BF08740007BABA /* SubComponents */ = {
+			isa = PBXGroup;
+			children = (
+				BFB53E3E28BF08D10007BABA /* TitleCellFactory.swift */,
+				BFB53E4028BF0C320007BABA /* TopStackViewCellFactory.swift */,
+				BFB53E4228BF0D840007BABA /* OverviewCellFactory.swift */,
+				BFB53E4428BF0E780007BABA /* BottomStackViewCellFactory.swift */,
+			);
+			path = SubComponents;
+			sourceTree = "<group>";
+		};
 		D816FA1394C55BBEDB57F896 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -877,6 +897,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFB53E4528BF0E780007BABA /* BottomStackViewCellFactory.swift in Sources */,
 				BF451B7628B36F680076D3E9 /* WritePostViewModel.swift in Sources */,
 				BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */,
 				BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */,
@@ -892,12 +913,14 @@
 				BF451B5328B27D490076D3E9 /* WebFactory.swift in Sources */,
 				BFB0017728B5249F00FE6BF3 /* Nickname.swift in Sources */,
 				BF9F1E7C28AF29F1003C6993 /* EditProfileViewController.swift in Sources */,
+				BFB53E4328BF0D840007BABA /* OverviewCellFactory.swift in Sources */,
 				BF0DE870288316E80048905C /* K.swift in Sources */,
 				BFB0017028B46B2600FE6BF3 /* StartViewController.swift in Sources */,
 				BF451B7A28B375130076D3E9 /* WritePostFactory.swift in Sources */,
 				BF98ED4B28A2B853001E65F6 /* ImageCell.swift in Sources */,
 				BF451B5128B27B6F0076D3E9 /* CommentFactory.swift in Sources */,
 				BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */,
+				BFB53E3F28BF08D10007BABA /* TitleCellFactory.swift in Sources */,
 				BF9095E028A1389800DA01B1 /* DetailViewController.swift in Sources */,
 				BF49D97728A4C610008C93B9 /* TopStackViewCellViewModel.swift in Sources */,
 				BF9095E428A15F8200DA01B1 /* PostCellViewModel.swift in Sources */,
@@ -932,6 +955,7 @@
 				BFB0017528B46C6C00FE6BF3 /* StartFactory.swift in Sources */,
 				BF9F1E8328AF3B56003C6993 /* WebViewModel.swift in Sources */,
 				BF451B4928B279E40076D3E9 /* SearchFactory.swift in Sources */,
+				BFB53E4128BF0C320007BABA /* TopStackViewCellFactory.swift in Sources */,
 				BF49D98628A764CC008C93B9 /* UserManager.swift in Sources */,
 				BF3F96CA28B8CCA300422890 /* Password.swift in Sources */,
 				BF9095B728A0A40E00DA01B1 /* HomeViewController.swift in Sources */,
