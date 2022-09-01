@@ -12,6 +12,7 @@ enum CommentNetworkError: Error {
     case invalidURL
     case invalidJSON
     case networkError
+    case invalidQuery
 }
 
 struct CommentNetwork {
@@ -43,4 +44,39 @@ struct CommentNetwork {
             }
             .asSingle()
     }
+    
+    func createNewComment(with data: (id: Int, contents: String) ) -> Single<Result<CommentResponse, CommentNetworkError>> {
+        let urlString = "\(Constant.serverURL)/comment"
+        
+        guard let url = URL(string: urlString) else {
+            return .just(.failure(.invalidURL))
+        }
+        do {
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            let parameter = ["movie_id": "\(data.id)", "contents": data.contents]
+            
+            request.setValue("application/json", forHTTPHeaderField:"Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameter)
+            
+            return session.rx.data(request: request)
+                .map { data in
+                    do {
+                        let decodedData = try JSONDecoder().decode(CommentResponse.self, from: data)
+                        return .success(decodedData)
+                    } catch {
+                        return .failure(CommentNetworkError.invalidJSON)
+                    }
+                }
+                .catch { _ in
+                    return .just(.failure(CommentNetworkError.networkError))
+                }
+                .asSingle()
+        } catch {
+            return .just(.failure(.invalidQuery))
+        }
+        
+    }
+    
 }

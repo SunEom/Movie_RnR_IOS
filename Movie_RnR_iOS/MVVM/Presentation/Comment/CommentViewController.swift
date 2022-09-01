@@ -20,6 +20,8 @@ class CommentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.refresh.onNext(Void())
+        
         attribute()
         layout()
         bind()
@@ -27,7 +29,7 @@ class CommentViewController: UIViewController {
     
     private func bind(){
         viewModel.cellData
-            .drive(tableView.rx.items) { tv, row, comment in
+            .bind(to: tableView.rx.items) { tv, row, comment in
                 let indexPath = IndexPath(row: row, section: 0)
                 let cell = tv.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CommentCell
                 cell.setUp(comment: comment)
@@ -35,6 +37,31 @@ class CommentViewController: UIViewController {
                 return cell
             }
             .disposed(by: disposeBag)
+        
+        commentTextView.rx.text
+            .map { $0 ?? ""}
+            .bind(to: viewModel.content)
+            .disposed(by: disposeBag)
+        
+        commentButton.rx.tap
+            .bind(to: viewModel.saveButotnTap)
+            .disposed(by: disposeBag)
+        
+        viewModel.refresh
+            .map { "" }
+            .bind(to: commentTextView.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.alert
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { (title, message) in
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                let action = UIAlertAction(title: "확인", style: .default)
+                alert.addAction(action)
+                self.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     
