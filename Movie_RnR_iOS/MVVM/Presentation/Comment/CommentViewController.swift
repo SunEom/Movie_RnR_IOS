@@ -31,8 +31,7 @@ class CommentViewController: UIViewController {
         viewModel.cellData
             .bind(to: tableView.rx.items) { tv, row, comment in
                 let indexPath = IndexPath(row: row, section: 0)
-                let cell = tv.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CommentCell
-                cell.setUp(comment: comment)
+                let cell = CommentCellFactory().getInstance(tableView: tv, indexPath: indexPath, comment: comment)
                 cell.selectionStyle = .none
                 return cell
             }
@@ -85,7 +84,7 @@ class CommentViewController: UIViewController {
         
         tableView.backgroundColor = UIColor(named: "mainColor")
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
+        tableView.register(CommentCellViewController.self, forCellReuseIdentifier: "CommentCell")
         
     }
     

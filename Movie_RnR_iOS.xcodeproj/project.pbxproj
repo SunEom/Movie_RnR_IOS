@@ -74,7 +74,7 @@
 		BF98ED4F28A2C244001E65F6 /* OverviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED4E28A2C244001E65F6 /* OverviewCell.swift */; };
 		BF98ED5128A2C4C1001E65F6 /* BottomStackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED5028A2C4C1001E65F6 /* BottomStackViewCell.swift */; };
 		BF98ED5328A2C80E001E65F6 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED5228A2C80E001E65F6 /* CommentViewController.swift */; };
-		BF98ED5828A2D161001E65F6 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED5728A2D161001E65F6 /* CommentCell.swift */; };
+		BF98ED5828A2D161001E65F6 /* CommentCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED5728A2D161001E65F6 /* CommentCellViewController.swift */; };
 		BF98ED6128A2D2CA001E65F6 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED6028A2D2CA001E65F6 /* CommentViewModel.swift */; };
 		BF98ED6328A2D5DE001E65F6 /* CommentNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED6228A2D5DE001E65F6 /* CommentNetwork.swift */; };
 		BF98ED6528A2D672001E65F6 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED6428A2D672001E65F6 /* Comment.swift */; };
@@ -93,6 +93,8 @@
 		BFB53E4128BF0C320007BABA /* TopStackViewCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB53E4028BF0C320007BABA /* TopStackViewCellFactory.swift */; };
 		BFB53E4328BF0D840007BABA /* OverviewCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB53E4228BF0D840007BABA /* OverviewCellFactory.swift */; };
 		BFB53E4528BF0E780007BABA /* BottomStackViewCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB53E4428BF0E780007BABA /* BottomStackViewCellFactory.swift */; };
+		BFB53E4728C05B810007BABA /* CommentCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB53E4628C05B810007BABA /* CommentCellViewModel.swift */; };
+		BFB53E4A28C05CD10007BABA /* CommentCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB53E4928C05CD10007BABA /* CommentCellFactory.swift */; };
 		BFFE98462884660A003B5AF8 /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */; };
 /* End PBXBuildFile section */
 
@@ -180,7 +182,7 @@
 		BF98ED4E28A2C244001E65F6 /* OverviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCell.swift; sourceTree = "<group>"; };
 		BF98ED5028A2C4C1001E65F6 /* BottomStackViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomStackViewCell.swift; sourceTree = "<group>"; };
 		BF98ED5228A2C80E001E65F6 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
-		BF98ED5728A2D161001E65F6 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		BF98ED5728A2D161001E65F6 /* CommentCellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCellViewController.swift; sourceTree = "<group>"; };
 		BF98ED6028A2D2CA001E65F6 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		BF98ED6228A2D5DE001E65F6 /* CommentNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentNetwork.swift; sourceTree = "<group>"; };
 		BF98ED6428A2D672001E65F6 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -201,6 +203,8 @@
 		BFB53E4028BF0C320007BABA /* TopStackViewCellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStackViewCellFactory.swift; sourceTree = "<group>"; };
 		BFB53E4228BF0D840007BABA /* OverviewCellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCellFactory.swift; sourceTree = "<group>"; };
 		BFB53E4428BF0E780007BABA /* BottomStackViewCellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomStackViewCellFactory.swift; sourceTree = "<group>"; };
+		BFB53E4628C05B810007BABA /* CommentCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCellViewModel.swift; sourceTree = "<group>"; };
+		BFB53E4928C05CD10007BABA /* CommentCellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCellFactory.swift; sourceTree = "<group>"; };
 		BFF4107B28899E3300DA9043 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		BFFE98452884660A003B5AF8 /* Jua-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jua-Regular.ttf"; sourceTree = "<group>"; };
 		BFFE984728846992003B5AF8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -321,6 +325,7 @@
 		BF451B5C28B35AB60076D3E9 /* Comment */ = {
 			isa = PBXGroup;
 			children = (
+				BFB53E4828C05CC60007BABA /* SubComponents */,
 				BF451B5028B27B6F0076D3E9 /* CommentFactory.swift */,
 			);
 			path = Comment;
@@ -685,7 +690,8 @@
 		BF98ED5E28A2D29D001E65F6 /* CommentCell */ = {
 			isa = PBXGroup;
 			children = (
-				BF98ED5728A2D161001E65F6 /* CommentCell.swift */,
+				BF98ED5728A2D161001E65F6 /* CommentCellViewController.swift */,
+				BFB53E4628C05B810007BABA /* CommentCellViewModel.swift */,
 			);
 			path = CommentCell;
 			sourceTree = "<group>";
@@ -764,6 +770,14 @@
 				BFB53E4028BF0C320007BABA /* TopStackViewCellFactory.swift */,
 				BFB53E4228BF0D840007BABA /* OverviewCellFactory.swift */,
 				BFB53E4428BF0E780007BABA /* BottomStackViewCellFactory.swift */,
+			);
+			path = SubComponents;
+			sourceTree = "<group>";
+		};
+		BFB53E4828C05CC60007BABA /* SubComponents */ = {
+			isa = PBXGroup;
+			children = (
+				BFB53E4928C05CD10007BABA /* CommentCellFactory.swift */,
 			);
 			path = SubComponents;
 			sourceTree = "<group>";
@@ -900,6 +914,7 @@
 				BFB53E4528BF0E780007BABA /* BottomStackViewCellFactory.swift in Sources */,
 				BF451B7628B36F680076D3E9 /* WritePostViewModel.swift in Sources */,
 				BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */,
+				BFB53E4728C05B810007BABA /* CommentCellViewModel.swift in Sources */,
 				BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */,
 				BF98ED6328A2D5DE001E65F6 /* CommentNetwork.swift in Sources */,
 				BF9095C128A0BE6D00DA01B1 /* PostNetwork.swift in Sources */,
@@ -910,6 +925,7 @@
 				BF9095CF28A124AE00DA01B1 /* SearchViewController.swift in Sources */,
 				BF49D97B28A4CC60008C93B9 /* BottomStackvViewCellViewModel.swift in Sources */,
 				BF49D98228A601CD008C93B9 /* LoginViewModel.swift in Sources */,
+				BFB53E4A28C05CD10007BABA /* CommentCellFactory.swift in Sources */,
 				BF451B5328B27D490076D3E9 /* WebFactory.swift in Sources */,
 				BFB0017728B5249F00FE6BF3 /* Nickname.swift in Sources */,
 				BF9F1E7C28AF29F1003C6993 /* EditProfileViewController.swift in Sources */,
@@ -962,7 +978,7 @@
 				BF451B6628B35B6F0076D3E9 /* ChangePasswordViewModel.swift in Sources */,
 				BF6A3F4B2885AF0500D33C6D /* PostingDetail.swift in Sources */,
 				BF9095CB28A1155900DA01B1 /* TitleCell.swift in Sources */,
-				BF98ED5828A2D161001E65F6 /* CommentCell.swift in Sources */,
+				BF98ED5828A2D161001E65F6 /* CommentCellViewController.swift in Sources */,
 				BF451B7128B35DFD0076D3E9 /* DangerZoneFactory.swift in Sources */,
 				BF9095D428A1327800DA01B1 /* PostRepository.swift in Sources */,
 				BF3708A1288D99F100A99482 /* JoinData.swift in Sources */,
