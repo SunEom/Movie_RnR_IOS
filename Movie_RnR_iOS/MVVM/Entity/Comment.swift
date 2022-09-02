@@ -22,3 +22,8 @@ struct Comment: Decodable {
     let nickname: String
     
 }
+
+struct CommentDeleteResponse: Decodable {
+    let code: Int
+    let error: String?
+}

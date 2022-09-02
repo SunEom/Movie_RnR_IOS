@@ -19,6 +19,7 @@ class CommentCellViewController: UITableViewCell {
     let buttonStackView = UIStackView()
     let editButton = UIButton()
     let deleteButton = UIButton()
+    
     let contentsTextView = UITextView()
     let dateLabel = UILabel()
     
@@ -48,6 +49,23 @@ class CommentCellViewController: UITableViewCell {
                 }
             }
             .bind(to: buttonStackView.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        deleteButton.rx.tap
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { _ in
+                let alert = UIAlertController(title: "주의", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
+                let confirm = UIAlertAction(title: "삭제", style: .destructive) { _ in
+                    self.viewModel.deleteRequest.onNext(Void())
+                }
+                let cancel = UIAlertAction(title: "취소", style: .cancel)
+                
+                alert.addAction(confirm)
+                alert.addAction(cancel)
+                
+                self.viewModel.parentViewController.present(alert, animated: true)
+                
+            })
             .disposed(by: disposeBag)
         
     }

@@ -25,6 +25,13 @@ struct CommentViewModel {
     init(postID: Int) {
         self.postID = postID
         
+        alert
+            .map { _ in
+                Void()
+            }
+            .bind(to: refresh)
+            .disposed(by: disposeBag)
+        
         refresh
             .flatMapLatest {
                 CommentNetwork().fetchComments(postID: postID)

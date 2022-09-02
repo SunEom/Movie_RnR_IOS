@@ -79,4 +79,28 @@ struct CommentNetwork {
         
     }
     
+    func deleteComment(commentID: Int) -> Single<Result<CommentDeleteResponse, CommentNetworkError>> {
+        let urlString = "\(Constant.serverURL)/comment/\(commentID)"
+        
+        guard let url = URL(string: urlString) else { return .just(.failure(.invalidURL)) }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        return session.rx.data(request: request)
+            .map { data in
+                do {
+                    let response = try JSONDecoder().decode(CommentDeleteResponse.self, from: data)
+                    return .success(response)
+                } catch {
+                    return .failure(.invalidJSON)
+                }
+                
+            }
+            .catch { _ in
+                return .just(.failure(.networkError))
+            }
+            .asSingle()
+    }
+    
 }
