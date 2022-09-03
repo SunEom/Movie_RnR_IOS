@@ -7,6 +7,7 @@
 
 import Foundation
 
-struct PasswordResponse: Decodable {
+struct DefaultResponse: Decodable {
     let code: Int
+    let error: String?
 }

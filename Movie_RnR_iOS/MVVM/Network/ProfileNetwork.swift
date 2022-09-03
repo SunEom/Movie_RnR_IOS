@@ -111,7 +111,7 @@ struct ProfileNetwork {
         }
     }
     
-    func updatePassword(password: String, newPassword: String) -> Single<Result<PasswordResponse, ProfileNetworkError>> {
+    func updatePassword(password: String, newPassword: String) -> Single<Result<DefaultResponse, ProfileNetworkError>> {
         let urlString = "\(Constant.serverURL)/user/password"
         
         guard let url = URL(string: urlString) else {
@@ -129,7 +129,7 @@ struct ProfileNetwork {
             return session.rx.data(request: request)
                 .map { data in
                     do {
-                        let decodedData = try JSONDecoder().decode(PasswordResponse.self, from: data)
+                        let decodedData = try JSONDecoder().decode(DefaultResponse.self, from: data)
                         if decodedData.code == 201 {
                             UserManager.requestGetLogin()
                             UserDefaults.standard.set(newPassword, forKey: "password")
@@ -148,5 +148,34 @@ struct ProfileNetwork {
         }
     }
     
-    
+
+    func deleteAccount() -> Single<Result<DefaultResponse, ProfileNetworkError>> {
+        let urlString = "\(Constant.serverURL)/user"
+        
+        guard let url = URL(string: urlString) else { return .just(.failure(.invalidURL)) }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        return session.rx.data(request: request)
+            .map { data in
+                do {
+                    let response = try JSONDecoder().decode(DefaultResponse.self, from: data)
+                    
+                    if response.code == 200 {
+                        UserDefaults.standard.removeObject(forKey: "id")
+                        UserDefaults.standard.removeObject(forKey: "password")
+                    }
+                    
+                    return .success(response)
+                } catch {
+                    return .failure(.invalidJSON)
+                }
+                
+            }
+            .catch { _ in
+                return .just(.failure(.networkError))
+            }
+            .asSingle()
+    }
 }

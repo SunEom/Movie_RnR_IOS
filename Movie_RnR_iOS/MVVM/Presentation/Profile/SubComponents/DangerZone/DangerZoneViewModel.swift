@@ -15,11 +15,17 @@ struct DangerZoneViewModel {
     let buttonSelected = PublishSubject<Void>()
     let confirmSelected = PublishSubject<Void>()
     
+    let alert = PublishSubject<(String, String)>()
+    
     init() {
-        confirmSelected.subscribe(onNext: { _ in
-            print("Removed!")
-        })
-        .disposed(by: diseposetBag)
+        confirmSelected
+            .flatMapLatest { ProfileNetwork().deleteAccount() }
+            .map { result -> (String, String) in
+                guard case .success(_) = result else { return ("실패", "잠시후 다시 시도해주세요.")}
+                return ("성공", "그 동안 이용해주셔서 감사합니다.")
+            }
+            .bind(to: alert)
+            .disposed(by: diseposetBag)
     }
     
 }
