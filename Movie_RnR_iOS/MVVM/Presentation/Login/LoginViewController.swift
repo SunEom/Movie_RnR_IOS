@@ -19,6 +19,7 @@ class LoginViewController: UIViewController {
     let idTextField = UITextField()
     let passwordTextField = UITextField()
     let loginButton = UIButton()
+    let joinButton = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,14 +51,25 @@ class LoginViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        joinButton.rx.tap
+            .asDriver()
+            .drive(onNext: { _ in
+                let joinVC = JoinFactory().getInstance()
+                self.navigationController?.pushViewController(joinVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func layout() {
         [titleLabel, idTextField, passwordTextField, loginButton]
             .forEach { self.stackView.addArrangedSubview($0) }
         
-        view.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        [stackView, joinButton].forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
         
         [
             stackView.widthAnchor.constraint(equalToConstant: 300),
@@ -68,12 +80,17 @@ class LoginViewController: UIViewController {
             passwordTextField.heightAnchor.constraint(equalToConstant: 45),
             loginButton.heightAnchor.constraint(equalToConstant: 40),
             
+            joinButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            joinButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 5),
+            joinButton.heightAnchor.constraint(equalToConstant: 30),
+            joinButton.widthAnchor.constraint(equalToConstant: 50),
+            
         ].forEach { $0.isActive = true }
     }
     
     private func attribute() {
         view.backgroundColor = UIColor(named: "mainColor")
-        
+    
         stackView.alignment = .fill
         stackView.axis = .vertical
         stackView.spacing = 10
@@ -106,6 +123,11 @@ class LoginViewController: UIViewController {
         idTextField.placeholder = "ID"
         passwordTextField.placeholder = "Password"
         passwordTextField.isSecureTextEntry = true
+        
+        
+        joinButton.setTitle("Join >", for: .normal)
+        joinButton.setTitleColor(.black, for: .normal)
+        joinButton.titleLabel?.font = .systemFont(ofSize: 15)
         
         loginButton.backgroundColor = UIColor(named: "headerColor")
         loginButton.setTitle("Login", for: .normal)

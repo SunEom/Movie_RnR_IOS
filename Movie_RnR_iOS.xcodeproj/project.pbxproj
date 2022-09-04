@@ -55,6 +55,9 @@
 		BF6DA09928807C3200177714 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF6DA09728807C3200177714 /* Main.storyboard */; };
 		BF6DA09B28807C3300177714 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF6DA09A28807C3300177714 /* Assets.xcassets */; };
 		BF6DA09E28807C3300177714 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF6DA09C28807C3300177714 /* LaunchScreen.storyboard */; };
+		BF6ED81728C44E140003BD60 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6ED81628C44E140003BD60 /* JoinViewController.swift */; };
+		BF6ED81928C44E190003BD60 /* JoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6ED81828C44E190003BD60 /* JoinViewModel.swift */; };
+		BF6ED81C28C44F1E0003BD60 /* JoinFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6ED81B28C44F1E0003BD60 /* JoinFactory.swift */; };
 		BF9095B728A0A40E00DA01B1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9095B628A0A40E00DA01B1 /* HomeViewController.swift */; };
 		BF9095BA28A0ADF300DA01B1 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9095B928A0ADF300DA01B1 /* HomeViewModel.swift */; };
 		BF9095BF28A0BDCA00DA01B1 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9095BE28A0BDCA00DA01B1 /* Post.swift */; };
@@ -164,6 +167,9 @@
 		BF6DA09A28807C3300177714 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF6DA09D28807C3300177714 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BF6DA09F28807C3300177714 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF6ED81628C44E140003BD60 /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
+		BF6ED81828C44E190003BD60 /* JoinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewModel.swift; sourceTree = "<group>"; };
+		BF6ED81B28C44F1E0003BD60 /* JoinFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinFactory.swift; sourceTree = "<group>"; };
 		BF9095B628A0A40E00DA01B1 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BF9095B928A0ADF300DA01B1 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		BF9095BE28A0BDCA00DA01B1 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -292,6 +298,7 @@
 		BF451B4528B278C70076D3E9 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
+				BF6ED81A28C44F0C0003BD60 /* Join */,
 				BFB0017328B46C6500FE6BF3 /* Start */,
 				BF451B7728B374750076D3E9 /* WritePost */,
 				BF451B5B28B35AB20076D3E9 /* Home */,
@@ -504,6 +511,23 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		BF6ED81528C44E0C0003BD60 /* Join */ = {
+			isa = PBXGroup;
+			children = (
+				BF6ED81628C44E140003BD60 /* JoinViewController.swift */,
+				BF6ED81828C44E190003BD60 /* JoinViewModel.swift */,
+			);
+			path = Join;
+			sourceTree = "<group>";
+		};
+		BF6ED81A28C44F0C0003BD60 /* Join */ = {
+			isa = PBXGroup;
+			children = (
+				BF6ED81B28C44F1E0003BD60 /* JoinFactory.swift */,
+			);
+			path = Join;
+			sourceTree = "<group>";
+		};
 		BF9095B228A0A3CE00DA01B1 /* MVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -530,6 +554,7 @@
 		BF9095B428A0A3DF00DA01B1 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				BF6ED81528C44E0C0003BD60 /* Join */,
 				BFB0016E28B46B1C00FE6BF3 /* Start */,
 				BF451B7228B36F500076D3E9 /* WritePost */,
 				BF9F1E7F28AF3A43003C6993 /* WebView */,
@@ -913,6 +938,7 @@
 			files = (
 				BFB53E4528BF0E780007BABA /* BottomStackViewCellFactory.swift in Sources */,
 				BF451B7628B36F680076D3E9 /* WritePostViewModel.swift in Sources */,
+				BF6ED81928C44E190003BD60 /* JoinViewModel.swift in Sources */,
 				BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */,
 				BFB53E4728C05B810007BABA /* CommentCellViewModel.swift in Sources */,
 				BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */,
@@ -927,6 +953,7 @@
 				BF49D98228A601CD008C93B9 /* LoginViewModel.swift in Sources */,
 				BFB53E4A28C05CD10007BABA /* CommentCellFactory.swift in Sources */,
 				BF451B5328B27D490076D3E9 /* WebFactory.swift in Sources */,
+				BF6ED81C28C44F1E0003BD60 /* JoinFactory.swift in Sources */,
 				BFB0017728B5249F00FE6BF3 /* Nickname.swift in Sources */,
 				BF9F1E7C28AF29F1003C6993 /* EditProfileViewController.swift in Sources */,
 				BFB53E4328BF0D840007BABA /* OverviewCellFactory.swift in Sources */,
@@ -951,6 +978,7 @@
 				BF98ED5128A2C4C1001E65F6 /* BottomStackViewCell.swift in Sources */,
 				BF49D97928A4CB2B008C93B9 /* OverviewCellViewModel.swift in Sources */,
 				BF9F1E7E28AF29FD003C6993 /* EditProfileViewModel.swift in Sources */,
+				BF6ED81728C44E140003BD60 /* JoinViewController.swift in Sources */,
 				BF6DA09428807C3200177714 /* SceneDelegate.swift in Sources */,
 				BF451B4728B278FA0076D3E9 /* HomeFactory.swift in Sources */,
 				BF0DE86A288311960048905C /* Posting.swift in Sources */,
