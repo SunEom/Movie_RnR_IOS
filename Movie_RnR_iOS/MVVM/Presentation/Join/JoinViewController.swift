@@ -48,11 +48,59 @@ class JoinViewController : UIViewController {
     }
     
     private func bind() {
+        saveButton.rx.tap
+            .bind(to: viewModel.saveButtonTap)
+            .disposed(by: disposeBag)
         
         viewModel.genderList
             .drive(genderPicker.rx.itemTitles) { idx, title in
                 return title
             }
+            .disposed(by: disposeBag)
+        
+        viewModel.alert
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { (title, message) in
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                let action = title == "성공" ? UIAlertAction(title: "확인", style: .default) { _ in
+                    self.navigationController?.popViewController(animated: true)
+                } : UIAlertAction(title: "확인", style: .default)
+                alert.addAction(action)
+                self.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        idTextField.rx.text
+            .map { $0 ?? "" }
+            .bind(to: viewModel.id)
+            .disposed(by: disposeBag)
+        
+        pwdTextField.rx.text
+            .map { $0 ?? "" }
+            .bind(to: viewModel.password)
+            .disposed(by: disposeBag)
+        
+        pwdCheckTextField.rx.text
+            .map { $0 ?? "" }
+            .bind(to: viewModel.passwordCheck)
+            .disposed(by: disposeBag)
+        
+        nicknameTextField.rx.text
+            .map { $0 ?? "" }
+            .bind(to: viewModel.nickname)
+            .disposed(by: disposeBag)
+        
+        genderPicker.rx.itemSelected
+            .compactMap { $0.row }
+            .bind(to: viewModel.genderIdx)
+            .disposed(by: disposeBag)
+        
+        idCheckButton.rx.tap
+            .bind(to: viewModel.idButtonTap)
+            .disposed(by: disposeBag)
+        
+        nicknameCheckButton.rx.tap
+            .bind(to: viewModel.nickButtonTap)
             .disposed(by: disposeBag)
         
     }
@@ -108,6 +156,8 @@ class JoinViewController : UIViewController {
                 $0.autocapitalizationType = .none
                 $0.autocorrectionType = .no
             }
+        [pwdTextField, pwdCheckTextField]
+        .forEach { $0.isSecureTextEntry = true } 
         
         genderPicker.setValue(UIColor.black, forKeyPath: "textColor")
     }

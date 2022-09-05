@@ -23,7 +23,7 @@ struct ProfileNetwork {
         self.session = session
     }
     
-    func requestNicknameCheck(nickname: String) -> Single<Result<NicknameResponse, ProfileNetworkError>> {
+    func requestNicknameCheck(nickname: String) -> Single<Result<DuplicateCheckResponse, ProfileNetworkError>> {
         let urlString = "\(Constant.serverURL)/join/nick"
         
         guard let url = URL(string: urlString) else {
@@ -41,7 +41,40 @@ struct ProfileNetwork {
             return session.rx.data(request: request)
                 .map { data in
                     do {
-                        let decodedData = try JSONDecoder().decode(NicknameResponse.self, from: data)
+                        let decodedData = try JSONDecoder().decode(DuplicateCheckResponse.self, from: data)
+                        return .success(decodedData)
+                    } catch {
+                        return .failure(ProfileNetworkError.invalidJSON)
+                    }
+                }
+                .catch { _ in
+                    return .just(.failure(ProfileNetworkError.networkError))
+                }
+                .asSingle()
+        } catch {
+            return .just(.failure(.invalidQuery))
+        }
+    }
+    
+    func requestIdCheck(id: String) -> Single<Result<DuplicateCheckResponse, ProfileNetworkError>> {
+        let urlString = "\(Constant.serverURL)/join/id"
+        
+        guard let url = URL(string: urlString) else {
+            return .just(.failure(.invalidURL))
+        }
+        do {
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            let parameter = ["id": id]
+            
+            request.setValue("application/json", forHTTPHeaderField:"Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameter)
+            
+            return session.rx.data(request: request)
+                .map { data in
+                    do {
+                        let decodedData = try JSONDecoder().decode(DuplicateCheckResponse.self, from: data)
                         return .success(decodedData)
                     } catch {
                         return .failure(ProfileNetworkError.invalidJSON)

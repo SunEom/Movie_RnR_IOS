@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct NicknameResponse: Decodable {
+struct DuplicateCheckResponse: Decodable {
     let already: Bool
 }

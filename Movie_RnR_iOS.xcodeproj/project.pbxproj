@@ -71,6 +71,7 @@
 		BF9095E028A1389800DA01B1 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9095DF28A1389800DA01B1 /* DetailViewController.swift */; };
 		BF9095E228A138B300DA01B1 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9095E128A138B300DA01B1 /* DetailViewModel.swift */; };
 		BF9095E428A15F8200DA01B1 /* PostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9095E328A15F8200DA01B1 /* PostCellViewModel.swift */; };
+		BF909EA728C4FD8A0005511A /* JoinNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF909EA628C4FD8A0005511A /* JoinNetwork.swift */; };
 		BF90A60A28894CDC0077E479 /* Pods_Movie_RnR_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FFDBC937D660670ED9197C /* Pods_Movie_RnR_iOS.framework */; };
 		BF98ED4B28A2B853001E65F6 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED4A28A2B853001E65F6 /* ImageCell.swift */; };
 		BF98ED4D28A2BF80001E65F6 /* TopStackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98ED4C28A2BF80001E65F6 /* TopStackViewCell.swift */; };
@@ -183,6 +184,7 @@
 		BF9095DF28A1389800DA01B1 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		BF9095E128A138B300DA01B1 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		BF9095E328A15F8200DA01B1 /* PostCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCellViewModel.swift; sourceTree = "<group>"; };
+		BF909EA628C4FD8A0005511A /* JoinNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinNetwork.swift; sourceTree = "<group>"; };
 		BF98ED4A28A2B853001E65F6 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		BF98ED4C28A2BF80001E65F6 /* TopStackViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStackViewCell.swift; sourceTree = "<group>"; };
 		BF98ED4E28A2C244001E65F6 /* OverviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCell.swift; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 				BF2F118728AE8EBC00082C96 /* ProfileNetwork.swift */,
 				BF98ED6228A2D5DE001E65F6 /* CommentNetwork.swift */,
 				BF49D98728A76888008C93B9 /* LoginNetwork.swift */,
+				BF909EA628C4FD8A0005511A /* JoinNetwork.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -962,6 +965,7 @@
 				BF451B7A28B375130076D3E9 /* WritePostFactory.swift in Sources */,
 				BF98ED4B28A2B853001E65F6 /* ImageCell.swift in Sources */,
 				BF451B5128B27B6F0076D3E9 /* CommentFactory.swift in Sources */,
+				BF909EA728C4FD8A0005511A /* JoinNetwork.swift in Sources */,
 				BF6DA09228807C3200177714 /* AppDelegate.swift in Sources */,
 				BFB53E3F28BF08D10007BABA /* TitleCellFactory.swift in Sources */,
 				BF9095E028A1389800DA01B1 /* DetailViewController.swift in Sources */,

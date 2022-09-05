@@ -56,7 +56,7 @@ struct ChangePasswordViewModel {
             .asObservable()
             .map { result -> (String, String) in
                 print(result)
-                guard case .success(let response) = result else { return ("실패", "잠시후에 다시 시도해주세요.")}
+                guard case .success(_) = result else { return ("실패", "잠시후에 다시 시도해주세요.")}
                 
                 return ("성공", "정상적으로 비밀번호가 변경되었습니다.")
             }
