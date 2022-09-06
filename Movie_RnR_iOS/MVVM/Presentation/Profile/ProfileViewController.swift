@@ -62,16 +62,19 @@ class ProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.profile
+            .filter { $0.count > 0 }
             .compactMap{ $0[0]?.nickname ?? "" }
             .bind(to: nicknameLabel.rx.text)
             .disposed(by: disposeBag)
         
         viewModel.profile
+            .filter { $0.count > 0 }
             .compactMap{ $0[0]?.gender ?? ""}
             .bind(to: genderLabel.rx.text)
             .disposed(by: disposeBag)
         
         viewModel.profile
+            .filter { $0.count > 0 }
             .compactMap{ $0[0]?.biography ?? ""}
             .bind(to: biographyTextView.rx.text)
             .disposed(by: disposeBag)

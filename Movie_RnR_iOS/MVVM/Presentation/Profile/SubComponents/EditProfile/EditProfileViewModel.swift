@@ -82,7 +82,7 @@ struct EditProfileViewModel {
         
         inputData
             .map {
-                Profile(id: $0.0!.id , nickname: $0.1, gender: $0.2, biography: $0.3, facebook: $0.4, instagram: $0.5, twitter: $0.6)
+                Profile(id: $0.0?.id ?? -1 , nickname: $0.1, gender: $0.2, biography: $0.3, facebook: $0.4, instagram: $0.5, twitter: $0.6)
             }
             .bind(to: editData)
             .disposed(by: disposeBag)

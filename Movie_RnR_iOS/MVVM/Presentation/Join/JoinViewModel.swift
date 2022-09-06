@@ -141,7 +141,6 @@ struct JoinViewModel {
             .flatMapLatest(JoinNetwork().requestJoin)
             .map { result -> (String, String) in
                 guard case .success(let response) = result else { return ("오류", "잠시후 다시 시도해주세요.") }
-                print(response)
                 UserManager.getInstance().onNext(response.data)
                 return ("성공", "회원가입을 환영합니다.")
             }
