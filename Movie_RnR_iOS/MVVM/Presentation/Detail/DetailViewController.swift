@@ -123,10 +123,12 @@ class DetailViewController: UIViewController {
         
         tableView.rx.itemSelected
             .subscribe(onNext: { indexPath in
-                self.tableView.cellForRow(at: indexPath)?.isSelected = false
-                let vc = CommentFactory().getInstance(postID: self.viewModel.post.id)
-                
-                self.navigationController?.pushViewController(vc, animated: true)
+                if indexPath.row == 5 {
+                    self.tableView.cellForRow(at: indexPath)?.isSelected = false
+                    let vc = CommentFactory().getInstance(postID: self.viewModel.post.id)
+                    
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             })
             .disposed(by: disposeBag)
         
