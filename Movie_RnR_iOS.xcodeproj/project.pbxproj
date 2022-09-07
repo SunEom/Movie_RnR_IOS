@@ -87,6 +87,8 @@
 		BF9F1E8128AF3AB0003C6993 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F1E8028AF3AB0003C6993 /* WebViewController.swift */; };
 		BF9F1E8328AF3B56003C6993 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F1E8228AF3B56003C6993 /* WebViewModel.swift */; };
 		BF9F1E8628B07F4C003C6993 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F1E8528B07F4C003C6993 /* ChangePasswordViewController.swift */; };
+		BFA60D6828C83A95003F5276 /* CommentEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA60D6728C83A95003F5276 /* CommentEditViewController.swift */; };
+		BFA60D6B28C8AB6E003F5276 /* CommentEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA60D6A28C8AB6E003F5276 /* CommentEditViewModel.swift */; };
 		BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */; };
 		BFAC2C7C28832F3600CF3E49 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */; };
 		BFB0017028B46B2600FE6BF3 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0016F28B46B2600FE6BF3 /* StartViewController.swift */; };
@@ -199,6 +201,8 @@
 		BF9F1E8028AF3AB0003C6993 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		BF9F1E8228AF3B56003C6993 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		BF9F1E8528B07F4C003C6993 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		BFA60D6728C83A95003F5276 /* CommentEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentEditViewController.swift; sourceTree = "<group>"; };
+		BFA60D6A28C8AB6E003F5276 /* CommentEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentEditViewModel.swift; sourceTree = "<group>"; };
 		BFA71BED288A944200782C86 /* ViewPostingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPostingsViewController.swift; sourceTree = "<group>"; };
 		BFA71BEF288A99A500782C86 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
@@ -718,6 +722,7 @@
 		BF98ED5E28A2D29D001E65F6 /* CommentCell */ = {
 			isa = PBXGroup;
 			children = (
+				BFA60D6628C83A89003F5276 /* SubComponents */,
 				BF98ED5728A2D161001E65F6 /* CommentCellViewController.swift */,
 				BFB53E4628C05B810007BABA /* CommentCellViewModel.swift */,
 			);
@@ -772,6 +777,23 @@
 				BF451B6528B35B6F0076D3E9 /* ChangePasswordViewModel.swift */,
 			);
 			path = ChangePassword;
+			sourceTree = "<group>";
+		};
+		BFA60D6628C83A89003F5276 /* SubComponents */ = {
+			isa = PBXGroup;
+			children = (
+				BFA60D6928C83B3A003F5276 /* CommentEdit */,
+			);
+			path = SubComponents;
+			sourceTree = "<group>";
+		};
+		BFA60D6928C83B3A003F5276 /* CommentEdit */ = {
+			isa = PBXGroup;
+			children = (
+				BFA60D6728C83A95003F5276 /* CommentEditViewController.swift */,
+				BFA60D6A28C8AB6E003F5276 /* CommentEditViewModel.swift */,
+			);
+			path = CommentEdit;
 			sourceTree = "<group>";
 		};
 		BFB0016E28B46B1C00FE6BF3 /* Start */ = {
@@ -983,6 +1005,7 @@
 				BF49D97928A4CB2B008C93B9 /* OverviewCellViewModel.swift in Sources */,
 				BF9F1E7E28AF29FD003C6993 /* EditProfileViewModel.swift in Sources */,
 				BF6ED81728C44E140003BD60 /* JoinViewController.swift in Sources */,
+				BFA60D6B28C8AB6E003F5276 /* CommentEditViewModel.swift in Sources */,
 				BF6DA09428807C3200177714 /* SceneDelegate.swift in Sources */,
 				BF451B4728B278FA0076D3E9 /* HomeFactory.swift in Sources */,
 				BF0DE86A288311960048905C /* Posting.swift in Sources */,
@@ -997,6 +1020,7 @@
 				BF451B4F28B27B060076D3E9 /* DetailFactory.swift in Sources */,
 				BF9F1E8128AF3AB0003C6993 /* WebViewController.swift in Sources */,
 				BF451B5628B357910076D3E9 /* UserPostingsViewController.swift in Sources */,
+				BFA60D6828C83A95003F5276 /* CommentEditViewController.swift in Sources */,
 				BFB0017228B46B2D00FE6BF3 /* StartViewModel.swift in Sources */,
 				BF9095BA28A0ADF300DA01B1 /* HomeViewModel.swift in Sources */,
 				BF49D98428A76404008C93B9 /* Login.swift in Sources */,

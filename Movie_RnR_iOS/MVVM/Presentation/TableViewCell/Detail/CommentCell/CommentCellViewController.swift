@@ -7,8 +7,17 @@
 
 import UIKit
 import RxSwift
+import Presentr
 
 class CommentCellViewController: UITableViewCell {
+    
+    let presenter: Presentr = {
+        let presenter = Presentr(presentationType: .bottomHalf)
+        presenter.keyboardTranslationType = .moveUp
+        presenter.roundCorners = true
+        presenter.cornerRadius = 20
+        return presenter
+    }()
     
     var viewModel: CommentCellViewModel!
     
@@ -65,6 +74,15 @@ class CommentCellViewController: UITableViewCell {
                 
                 self.viewModel.parentViewController.present(alert, animated: true)
                 
+            })
+            .disposed(by: disposeBag)
+        
+        
+        editButton.rx.tap
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { _ in
+                let vc = CommentEditViewController()
+                self.viewModel.parentViewController.customPresentViewController(self.presenter, viewController: vc, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
         

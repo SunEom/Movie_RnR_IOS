@@ -26,6 +26,7 @@ class DangerZoneViewController: UIViewController {
     }
     
     private func bind() {
+        
         removeButton.rx.tap
             .bind(to: viewModel.buttonSelected)
             .disposed(by: disposeBag)

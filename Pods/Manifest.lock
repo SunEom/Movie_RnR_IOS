@@ -1,4 +1,5 @@
 PODS:
+  - Presentr (1.9)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
@@ -7,20 +8,23 @@ PODS:
   - RxSwift (6.5.0)
 
 DEPENDENCIES:
+  - Presentr
   - RxCocoa (= 6.5.0)
   - RxSwift (= 6.5.0)
 
 SPEC REPOS:
   trunk:
+    - Presentr
     - RxCocoa
     - RxRelay
     - RxSwift
 
 SPEC CHECKSUMS:
+  Presentr: 7078d7eb5d1661ebeaae60c9e42a1e534de1b993
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
 
-PODFILE CHECKSUM: 598472458c66718cf26646bb032b5ea49bbcba94
+PODFILE CHECKSUM: 68ce9eea003fb8231420c9981a647834eaabfefd
 
 COCOAPODS: 1.11.3

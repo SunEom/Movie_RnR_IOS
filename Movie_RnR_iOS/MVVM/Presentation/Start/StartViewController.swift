@@ -35,7 +35,6 @@ class StartViewController: UIViewController {
         viewModel.loginChecked
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
-                print("Hello", $0)
                 if $0 {
                     let vc = UINavigationController(rootViewController: HomeFactory().getInstance())
                     vc.modalPresentationStyle = .fullScreen
