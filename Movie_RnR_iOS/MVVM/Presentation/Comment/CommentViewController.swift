@@ -16,7 +16,7 @@ class CommentViewController: UIViewController {
     let commentTextView = UITextView()
     let commentButton = UIButton()
     let tableView = UITableView()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

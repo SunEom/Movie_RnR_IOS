@@ -89,6 +89,7 @@
 		BF9F1E8628B07F4C003C6993 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F1E8528B07F4C003C6993 /* ChangePasswordViewController.swift */; };
 		BFA60D6828C83A95003F5276 /* CommentEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA60D6728C83A95003F5276 /* CommentEditViewController.swift */; };
 		BFA60D6B28C8AB6E003F5276 /* CommentEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA60D6A28C8AB6E003F5276 /* CommentEditViewModel.swift */; };
+		BFA60D6D28C8E7B3003F5276 /* CommentEditViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA60D6C28C8E7B3003F5276 /* CommentEditViewFactory.swift */; };
 		BFAC2C7B28832F3600CF3E49 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */; };
 		BFAC2C7C28832F3600CF3E49 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAC2C7A28832F3600CF3E49 /* TitleTableViewCell.xib */; };
 		BFB0017028B46B2600FE6BF3 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0016F28B46B2600FE6BF3 /* StartViewController.swift */; };
@@ -203,6 +204,7 @@
 		BF9F1E8528B07F4C003C6993 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		BFA60D6728C83A95003F5276 /* CommentEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentEditViewController.swift; sourceTree = "<group>"; };
 		BFA60D6A28C8AB6E003F5276 /* CommentEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentEditViewModel.swift; sourceTree = "<group>"; };
+		BFA60D6C28C8E7B3003F5276 /* CommentEditViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentEditViewFactory.swift; sourceTree = "<group>"; };
 		BFA71BED288A944200782C86 /* ViewPostingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPostingsViewController.swift; sourceTree = "<group>"; };
 		BFA71BEF288A99A500782C86 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		BFAC2C7928832F3600CF3E49 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
@@ -828,6 +830,7 @@
 			isa = PBXGroup;
 			children = (
 				BFB53E4928C05CD10007BABA /* CommentCellFactory.swift */,
+				BFA60D6C28C8E7B3003F5276 /* CommentEditViewFactory.swift */,
 			);
 			path = SubComponents;
 			sourceTree = "<group>";
@@ -1024,6 +1027,7 @@
 				BFB0017228B46B2D00FE6BF3 /* StartViewModel.swift in Sources */,
 				BF9095BA28A0ADF300DA01B1 /* HomeViewModel.swift in Sources */,
 				BF49D98428A76404008C93B9 /* Login.swift in Sources */,
+				BFA60D6D28C8E7B3003F5276 /* CommentEditViewFactory.swift in Sources */,
 				BFB0017528B46C6C00FE6BF3 /* StartFactory.swift in Sources */,
 				BF9F1E8328AF3B56003C6993 /* WebViewModel.swift in Sources */,
 				BF451B4928B279E40076D3E9 /* SearchFactory.swift in Sources */,

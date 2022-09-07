@@ -7,11 +7,16 @@
 
 import UIKit
 import Presentr
+import RxSwift
 
 class CommentEditViewController: UIViewController {
+
+    let disposeBag = DisposeBag()
     
     var viewModel: CommentEditViewModel!
     
+    let stackView = UIStackView()
+    let titleLabel = UILabel()
     let saveButton = UIButton()
     let contentsTextView = UITextView()
     
@@ -27,31 +32,69 @@ class CommentEditViewController: UIViewController {
     
     private func bind() {
         
+        contentsTextView.rx.text
+            .map { $0 ?? "" }
+            .bind(to: viewModel.contents)
+            .disposed(by: disposeBag)
+        
+        saveButton.rx.tap
+            .bind(to: viewModel.saveButtonTap)
+            .disposed(by: disposeBag)
+        
+        viewModel.alert
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { (title, message) in
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                let action = title == "성공" ? UIAlertAction(title: "확인", style: .default) { _ in
+                    self.dismiss(animated: true)
+                } : UIAlertAction(title: "확인", style: .default)
+                alert.addAction(action)
+                self.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func attribute() {
         view.backgroundColor = UIColor(named: "mainColor")
         
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        
+        titleLabel.text = "Edit Comment"
+        titleLabel.font = UIFont(name: "CarterOne", size: 23)
+        titleLabel.textColor = .black
+        
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(.black, for: .normal)
+        saveButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
+        saveButton.backgroundColor = UIColor(named: "headerColor")
+        saveButton.layer.cornerRadius = 5
         
         contentsTextView.backgroundColor = .white
         contentsTextView.textColor = .black
         contentsTextView.font = .systemFont(ofSize: 16)
+        
+        contentsTextView.text = viewModel.comment.contents
     }
     
     private func layout() {
     
-        [saveButton, contentsTextView]
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(saveButton)
+        
+        [stackView, contentsTextView]
             .forEach {
                 view.addSubview($0)
                 $0.translatesAutoresizingMaskIntoConstraints = false
             }
         
         [
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            
             saveButton.widthAnchor.constraint(equalToConstant: 80),
-            saveButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
-            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
             
             contentsTextView.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 15),
             contentsTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),

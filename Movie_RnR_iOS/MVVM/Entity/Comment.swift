@@ -27,3 +27,17 @@ struct CommentDeleteResponse: Decodable {
     let code: Int
     let error: String?
 }
+
+struct CommentEditResponse: Decodable {
+    let code : Int
+    let data : [EditedCommment]
+    
+    struct EditedCommment: Decodable {
+        let id : Int
+        let contents: String
+        let created: String
+        let updated: String
+        let commenter: Int
+        let movie_id: Int
+    }
+}

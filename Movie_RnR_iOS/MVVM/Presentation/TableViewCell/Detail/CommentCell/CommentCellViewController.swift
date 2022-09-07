@@ -32,6 +32,7 @@ class CommentCellViewController: UITableViewCell {
     let contentsTextView = UITextView()
     let dateLabel = UILabel()
     
+    
     func bind() {
         
         viewModel.data
@@ -79,9 +80,10 @@ class CommentCellViewController: UITableViewCell {
         
         
         editButton.rx.tap
+            .withLatestFrom(viewModel.data)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { _ in
-                let vc = CommentEditViewController()
+            .subscribe(onNext: {
+                let vc = CommentEditViewFactory().getInstance(comment: $0)
                 self.viewModel.parentViewController.customPresentViewController(self.presenter, viewController: vc, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
