@@ -15,13 +15,18 @@ class OverviewCell: UITableViewCell {
     
     let textView = UITextView()
     
-    func bind() {
+    func cellInit() {
+        bind()
+        setUp()
+    }
+    
+    private func bind() {
         viewModel.overview
             .bind(to: textView.rx.text)
             .disposed(by: disposeBag)
     }
     
-    func setUp() {
+    private func setUp() {
         backgroundColor = UIColor(named: "mainColor")
         textView.font = UIFont(name: "CarterOne", size: 15)
         textView.textColor = .black

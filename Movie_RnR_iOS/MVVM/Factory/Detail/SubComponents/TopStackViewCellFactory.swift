@@ -12,8 +12,7 @@ struct TopStackViewCellFactory {
     func getInstance(tableView: UITableView, indexPath: IndexPath) -> TopStackViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TopStackViewCell", for: indexPath) as! TopStackViewCell
         cell.viewModel = TopStackViewCellViewModel()
-        cell.setUp()
-        cell.bind()
+        cell.cellInit()
         
         return cell
         

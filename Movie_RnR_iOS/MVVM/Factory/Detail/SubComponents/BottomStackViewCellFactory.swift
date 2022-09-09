@@ -12,8 +12,7 @@ struct BottomStackViewCellFactory {
     func getInstance(tableView: UITableView, indexPath: IndexPath) -> BottomStackViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BottomStackViewCell", for: indexPath) as! BottomStackViewCell
         cell.viewModel = BottomStackViewCellViewModel()
-        cell.setUp()
-        cell.bind()
+        cell.cellInit()
         
         return cell
         

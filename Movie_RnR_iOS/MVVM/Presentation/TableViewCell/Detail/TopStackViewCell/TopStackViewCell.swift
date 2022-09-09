@@ -18,7 +18,12 @@ class TopStackViewCell: UITableViewCell {
     let genresLabel = UILabel()
     let ratesLabel = UILabel()
     
-    func bind() {
+    func cellInit() {
+        bind()
+        setUp()
+    }
+    
+    private func bind() {
         viewModel.genres
             .bind(to: genresLabel.rx.text)
             .disposed(by: disposeBag)
@@ -29,7 +34,7 @@ class TopStackViewCell: UITableViewCell {
             .disposed(by: disposeBag)
     }
     
-    func setUp() {
+    private func setUp() {
         backgroundColor = UIColor(named: "mainColor")
         
         stackView.addArrangedSubview(genresLabel)

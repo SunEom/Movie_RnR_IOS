@@ -11,7 +11,11 @@ class ImageCell: UITableViewCell {
     
     let postImageView = UIImageView()
     
-    func setUp(imageName: String) {
+    func cellInit(imageName: String) {
+        setUp(imageName: imageName)
+    }
+    
+    private func setUp(imageName: String) {
         
         backgroundColor = UIColor(named: "mainColor")
         

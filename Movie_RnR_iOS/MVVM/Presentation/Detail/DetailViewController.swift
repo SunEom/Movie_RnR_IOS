@@ -43,7 +43,7 @@ class DetailViewController: UIViewController {
                         let indexPath = IndexPath(row: row, section: 0)
                         let cell = tv.dequeueReusableCell(withIdentifier: "DetailImageCell", for: indexPath) as! ImageCell
                         cell.selectionStyle = .none
-                        cell.setUp(imageName: "postImage1")
+                        cell.cellInit(imageName: "postImage1")
                         return cell
                         
                     case 1:

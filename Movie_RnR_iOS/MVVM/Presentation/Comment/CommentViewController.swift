@@ -29,10 +29,10 @@ class CommentViewController: UIViewController {
     
     private func bind(){
         viewModel.cellData
+            .observe(on: MainScheduler.instance)
             .bind(to: tableView.rx.items) { tv, row, comment in
                 let indexPath = IndexPath(row: row, section: 0)
                 let cell = CommentCellFactory().getInstance(viewController: self, tableView: tv, indexPath: indexPath, comment: comment)
-                cell.isUserInteractionEnabled = true
                 cell.selectionStyle = .none
                 return cell
             }

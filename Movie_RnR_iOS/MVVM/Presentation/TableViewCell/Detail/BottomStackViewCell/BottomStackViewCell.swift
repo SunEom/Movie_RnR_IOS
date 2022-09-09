@@ -11,13 +11,18 @@ import RxSwift
 class BottomStackViewCell: UITableViewCell {
     let disposeBag = DisposeBag()
     
-    var viewModel: BottomStackViewCellViewModel!
+    var viewModel: BottomStackViewCellViewModel! 
     
     let stackView = UIStackView()
     let dateLabel = UILabel()
     let nicknameLabel = UILabel()
     
-    func bind() {
+    func cellInit() {
+        bind()
+        setUp()
+    }
+    
+    private func bind() {
         viewModel.date
             .map(dateFormat)
             .bind(to: dateLabel.rx.text)
@@ -28,7 +33,7 @@ class BottomStackViewCell: UITableViewCell {
             .disposed(by: disposeBag)
     }
     
-    func setUp() {
+    private func setUp() {
         backgroundColor = UIColor(named: "mainColor")
         
         stackView.addArrangedSubview(dateLabel)

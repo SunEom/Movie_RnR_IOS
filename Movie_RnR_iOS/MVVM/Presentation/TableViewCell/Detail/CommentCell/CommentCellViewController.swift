@@ -32,8 +32,12 @@ class CommentCellViewController: UITableViewCell {
     let contentsTextView = UITextView()
     let dateLabel = UILabel()
     
+    func cellInit() {
+        bind()
+        setUp()
+    }
     
-    func bind() {
+    private func bind() {
         
         viewModel.data
             .map { $0.nickname }
@@ -62,7 +66,6 @@ class CommentCellViewController: UITableViewCell {
             .disposed(by: disposeBag)
         
         deleteButton.rx.tap
-            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { _ in
                 let alert = UIAlertController(title: "주의", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
                 let confirm = UIAlertAction(title: "삭제", style: .destructive) { _ in
@@ -78,10 +81,8 @@ class CommentCellViewController: UITableViewCell {
             })
             .disposed(by: disposeBag)
         
-        
         editButton.rx.tap
             .withLatestFrom(viewModel.data)
-            .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
                 let vc = CommentEditViewFactory().getInstance(comment: $0)
                 self.viewModel.parentViewController.customPresentViewController(self.presenter, viewController: vc, animated: true, completion: nil)
@@ -90,7 +91,7 @@ class CommentCellViewController: UITableViewCell {
         
     }
     
-    func setUp() {
+    private func setUp() {
         // attribute
         backgroundColor = UIColor(named: "mainColor")
         

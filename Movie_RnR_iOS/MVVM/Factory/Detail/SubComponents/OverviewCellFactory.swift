@@ -12,8 +12,7 @@ struct OverviewCellFactory {
     func getInstance(tableView: UITableView, indexPath: IndexPath) -> OverviewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OverviewCell", for: indexPath) as! OverviewCell
         cell.viewModel = OverviewCellViewModel()
-        cell.bind()
-        cell.setUp()
+        cell.cellInit()
         return cell
     }
 }
