@@ -19,9 +19,6 @@ class CommentViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel.refresh.onNext(Void())
-        
         attribute()
         layout()
         bind()
@@ -47,18 +44,25 @@ class CommentViewController: UIViewController {
             .bind(to: viewModel.saveButotnTap)
             .disposed(by: disposeBag)
         
-        viewModel.refresh
-            .map { "" }
-            .bind(to: commentTextView.rx.text)
+        viewModel.createCommentRequestResult
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                if $0.isSuccess {
+                    self.commentTextView.text = ""
+                }
+            })
             .disposed(by: disposeBag)
         
-        viewModel.alert
+        viewModel.createCommentRequestResult
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { (title, message) in
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                let action = UIAlertAction(title: "확인", style: .default)
-                alert.addAction(action)
-                self.present(alert, animated: true)
+            .subscribe(onNext: { result in
+                if !result.isSuccess {
+                    let alert = UIAlertController(title: "실패", message: result.message!, preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .default)
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                }
+                
             })
             .disposed(by: disposeBag)
     }

@@ -8,7 +8,7 @@
 import RxCocoa
 import RxSwift
 
-struct CommentViewModel {
+class CommentViewModel {
     let disposeBag = DisposeBag()
     
     let postID: Int!
@@ -16,23 +16,19 @@ struct CommentViewModel {
     let cellData = PublishSubject<[Comment]>()
     
     let content = BehaviorSubject<String>(value: "")
+    
     let saveButotnTap = PublishSubject<Void>()
     
-    let alert = PublishSubject<(title: String, message: String)>()
+    let createCommentRequestResult = PublishSubject<CommentNetworkResult>()
+    let deleteCommentRequestResult = PublishSubject<CommentNetworkResult>()
     
-    let refresh = PublishSubject<Void>()
+    let fetchComment = PublishSubject<Void>()
     
     init(postID: Int) {
+        
         self.postID = postID
         
-        alert
-            .map { _ in
-                Void()
-            }
-            .bind(to: refresh)
-            .disposed(by: disposeBag)
-        
-        refresh
+        fetchComment
             .flatMapLatest {
                 CommentNetwork().fetchComments(postID: postID)
             }
@@ -44,49 +40,44 @@ struct CommentViewModel {
             .bind(to: cellData)
             .disposed(by: disposeBag)
         
+        fetchComment.onNext(Void()) // 최초 댓글 조회
+        
         saveButotnTap
             .withLatestFrom(content.asObservable())
             .filter { $0 == "" }
             .map { _ in
-                return ("실패", "댓글의 내용을 입력해주세요")
+                return CommentNetworkResult(isSuccess: false, message: "댓글의 내용을 입력해주세요.")
             }
-            .bind(to: alert)
+            .bind(to: createCommentRequestResult)
             .disposed(by: disposeBag)
         
-        let sendCommentRequest = saveButotnTap
+        saveButotnTap
             .withLatestFrom(content.asObservable())
             .filter { $0 != "" }
             .map { (postID, $0) }
             .flatMapLatest({ (id, contents) in
                 CommentNetwork().createNewComment(with: (id, contents))
             })
-        
-        
-        // 댓글 작성 실패시에만 알림 발생
-//        sendCommentRequest
-//            .filter { result in
-//                guard case .success(_) = result else { return true }
-//                return false
-//            }
-//            .map { _ in
-//                ("실패" , "댓글 작성에 실패하였습니다.")
-//            }
-//            .bind(to: alert)
-//            .disposed(by: disposeBag)
-        
-        
-        sendCommentRequest
-            .filter { result in
-                guard case .success(_) = result else { return false }
-                return true
-            }
-            .map { _ in
-                Void()
-            }
-            .bind(to: refresh)
+            .subscribe(onNext: { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                    case .success(_):
+                        self.createCommentRequestResult
+                            .onNext(CommentNetworkResult(isSuccess: true, message: nil))
+                        
+                        self.fetchComment.onNext(Void())
+                        
+                    case .failure(let error):
+                        self.createCommentRequestResult
+                            .onNext(CommentNetworkResult(isSuccess: false, message: error.rawValue))
+                }
+            })
             .disposed(by: disposeBag)
         
-        
-        
     }
+}
+
+struct CommentNetworkResult {
+    let isSuccess: Bool
+    let message: String?
 }

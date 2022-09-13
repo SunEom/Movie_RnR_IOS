@@ -8,11 +8,11 @@
 import Foundation
 import RxSwift
 
-enum CommentNetworkError: Error {
-    case invalidURL
-    case invalidJSON
-    case networkError
-    case invalidQuery
+enum CommentNetworkError: String, Error {
+    case invalidURL = "잘못된 URL 입니다."
+    case invalidJSON = "잘못된 JSON 형식입니다."
+    case networkError = "네트워크 에러입니다."
+    case invalidQuery = "잘못된 Parameter 입니다."
 }
 
 struct CommentNetwork {
