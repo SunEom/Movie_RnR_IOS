@@ -22,6 +22,7 @@ class UserManager {
     }
     
     static func requestPostLogin(id: String, password: String) {
+
         LoginNetwork().requestPostLogin(id: id, password: password)
             .subscribe(onSuccess: { result in
                 guard case .success(let response) = result else { return }
@@ -30,6 +31,8 @@ class UserManager {
                 user.onNext(response.data)
             })
             .disposed(by: disposeBag)
+        
+        
     }
     
     static func requestGetLogin() {
