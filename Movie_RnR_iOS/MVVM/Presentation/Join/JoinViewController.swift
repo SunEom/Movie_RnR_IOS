@@ -58,15 +58,56 @@ class JoinViewController : UIViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.alert
+        viewModel.idCheckRequestResult
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { (title, message) in
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                let action = title == "성공" ? UIAlertAction(title: "확인", style: .default) { _ in
-                    self.navigationController?.popViewController(animated: true)
-                } : UIAlertAction(title: "확인", style: .default)
-                alert.addAction(action)
-                self.present(alert, animated: true)
+            .subscribe(onNext: { result in
+                if result.isSuccess {
+                    let alert = UIAlertController(title: "성공", message: "사용 가능한 아이디입니다.", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .default)
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                } else {
+                    let alert = UIAlertController(title: "실패", message: result.message ?? "", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .default)
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.nickCheckRequestResult
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { result in
+                if result.isSuccess {
+                    let alert = UIAlertController(title: "성공", message: "사용 가능한 닉네임입니다.", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .default)
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                } else {
+                    let alert = UIAlertController(title: "실패", message: result.message ?? "", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .default)
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.joinRequestResult
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { result in
+                if result.isSuccess {
+                    let alert = UIAlertController(title: "성공", message: "정상적으로 회원가입 되었습니다!", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .default) { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                } else {
+                    let alert = UIAlertController(title: "실패", message: result.message ?? "", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .default)
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                }
             })
             .disposed(by: disposeBag)
         

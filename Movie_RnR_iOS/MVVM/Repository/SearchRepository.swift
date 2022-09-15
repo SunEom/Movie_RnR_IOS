@@ -17,7 +17,7 @@ struct SearchRepository {
             .compactMap(parseData)
     }
     
-    private func parseData(result: Result<PostResponse, PostNetworkError>) -> [Post] {
+    private func parseData(result: Result<PostResponse, NetworkError>) -> [Post] {
         guard case .success(let response) = result else { return [] }
         return response.data
     }

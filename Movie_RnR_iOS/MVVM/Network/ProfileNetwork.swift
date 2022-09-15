@@ -9,13 +9,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-enum ProfileNetworkError: Error {
-    case invalidURL
-    case invalidJSON
-    case networkError
-    case invalidQuery
-}
-
 struct ProfileNetwork {
     let session: URLSession
     
@@ -23,7 +16,7 @@ struct ProfileNetwork {
         self.session = session
     }
     
-    func requestNicknameCheck(nickname: String) -> Single<Result<DuplicateCheckResponse, ProfileNetworkError>> {
+    func requestNicknameCheck(nickname: String) -> Single<Result<DuplicateCheckResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/join/nick"
         
         guard let url = URL(string: urlString) else {
@@ -44,11 +37,11 @@ struct ProfileNetwork {
                         let decodedData = try JSONDecoder().decode(DuplicateCheckResponse.self, from: data)
                         return .success(decodedData)
                     } catch {
-                        return .failure(ProfileNetworkError.invalidJSON)
+                        return .failure(NetworkError.invalidJSON)
                     }
                 }
                 .catch { _ in
-                    return .just(.failure(ProfileNetworkError.networkError))
+                    return .just(.failure(NetworkError.networkError))
                 }
                 .asSingle()
         } catch {
@@ -56,7 +49,7 @@ struct ProfileNetwork {
         }
     }
     
-    func requestIdCheck(id: String) -> Single<Result<DuplicateCheckResponse, ProfileNetworkError>> {
+    func requestIdCheck(id: String) -> Single<Result<DuplicateCheckResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/join/id"
         
         guard let url = URL(string: urlString) else {
@@ -77,11 +70,11 @@ struct ProfileNetwork {
                         let decodedData = try JSONDecoder().decode(DuplicateCheckResponse.self, from: data)
                         return .success(decodedData)
                     } catch {
-                        return .failure(ProfileNetworkError.invalidJSON)
+                        return .failure(NetworkError.invalidJSON)
                     }
                 }
                 .catch { _ in
-                    return .just(.failure(ProfileNetworkError.networkError))
+                    return .just(.failure(NetworkError.networkError))
                 }
                 .asSingle()
         } catch {
@@ -89,7 +82,7 @@ struct ProfileNetwork {
         }
     }
     
-    func fetchProfile(userID: Int) -> Single<Result<ProfileResponse, ProfileNetworkError>> {
+    func fetchProfile(userID: Int) -> Single<Result<ProfileResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/user/\(userID)"
         
         guard let url = URL(string: urlString) else { return .just(.failure(.invalidURL))}
@@ -102,16 +95,16 @@ struct ProfileNetwork {
                     let result = try JSONDecoder().decode(ProfileResponse.self, from: data)
                     return .success(result)
                 } catch {
-                    return .failure(ProfileNetworkError.invalidJSON)
+                    return .failure(NetworkError.invalidJSON)
                 }
             }
             .catch { _ in
-                return .just(.failure(ProfileNetworkError.networkError))
+                return .just(.failure(NetworkError.networkError))
             }
             .asSingle()
     }
     
-    func updateProfile(with profile: Profile) -> Single<Result<ProfileResponse, ProfileNetworkError>> {
+    func updateProfile(with profile: Profile) -> Single<Result<ProfileResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/user/profile"
         
         guard let url = URL(string: urlString) else {
@@ -132,11 +125,11 @@ struct ProfileNetwork {
                         let decodedData = try JSONDecoder().decode(ProfileResponse.self, from: data)
                         return .success(decodedData)
                     } catch {
-                        return .failure(ProfileNetworkError.invalidJSON)
+                        return .failure(NetworkError.invalidJSON)
                     }
                 }
                 .catch { _ in
-                    return .just(.failure(ProfileNetworkError.networkError))
+                    return .just(.failure(NetworkError.networkError))
                 }
                 .asSingle()
         } catch {
@@ -144,7 +137,7 @@ struct ProfileNetwork {
         }
     }
     
-    func updatePassword(password: String, newPassword: String) -> Single<Result<DefaultResponse, ProfileNetworkError>> {
+    func updatePassword(password: String, newPassword: String) -> Single<Result<DefaultResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/user/password"
         
         guard let url = URL(string: urlString) else {
@@ -169,11 +162,11 @@ struct ProfileNetwork {
                         }
                         return .success(decodedData)
                     } catch {
-                        return .failure(ProfileNetworkError.invalidJSON)
+                        return .failure(NetworkError.invalidJSON)
                     }
                 }
                 .catch { _ in
-                    return .just(.failure(ProfileNetworkError.networkError))
+                    return .just(.failure(NetworkError.networkError))
                 }
                 .asSingle()
         } catch {
@@ -182,7 +175,7 @@ struct ProfileNetwork {
     }
     
 
-    func deleteAccount() -> Single<Result<DefaultResponse, ProfileNetworkError>> {
+    func deleteAccount() -> Single<Result<DefaultResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/user"
         
         guard let url = URL(string: urlString) else { return .just(.failure(.invalidURL)) }

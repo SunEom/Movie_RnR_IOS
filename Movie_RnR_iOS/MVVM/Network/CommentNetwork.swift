@@ -8,13 +8,6 @@
 import Foundation
 import RxSwift
 
-enum CommentNetworkError: String, Error {
-    case invalidURL = "잘못된 URL 입니다."
-    case invalidJSON = "잘못된 JSON 형식입니다."
-    case networkError = "네트워크 에러입니다."
-    case invalidQuery = "잘못된 Parameter 입니다."
-}
-
 struct CommentNetwork {
     let session: URLSession
     
@@ -22,7 +15,7 @@ struct CommentNetwork {
         self.session = session
     }
     
-    func fetchComments(postID: Int) -> Single<Result<CommentResponse, CommentNetworkError>> {
+    func fetchComments(postID: Int) -> Single<Result<CommentResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/comment/\(postID)"
         
         guard let url = URL(string: urlString) else { return .just(.failure(.invalidURL)) }
@@ -45,7 +38,7 @@ struct CommentNetwork {
             .asSingle()
     }
     
-    func createNewComment(with data: (id: Int, contents: String) ) -> Single<Result<CommentResponse, CommentNetworkError>> {
+    func createNewComment(with data: (id: Int, contents: String) ) -> Single<Result<CommentResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/comment"
         
         guard let url = URL(string: urlString) else {
@@ -66,11 +59,11 @@ struct CommentNetwork {
                         let decodedData = try JSONDecoder().decode(CommentResponse.self, from: data)
                         return .success(decodedData)
                     } catch {
-                        return .failure(CommentNetworkError.invalidJSON)
+                        return .failure(NetworkError.invalidJSON)
                     }
                 }
                 .catch { _ in
-                    return .just(.failure(CommentNetworkError.networkError))
+                    return .just(.failure(NetworkError.networkError))
                 }
                 .asSingle()
         } catch {
@@ -79,7 +72,7 @@ struct CommentNetwork {
         
     }
     
-    func deleteComment(commentID: Int) -> Single<Result<CommentDeleteResponse, CommentNetworkError>> {
+    func deleteComment(commentID: Int) -> Single<Result<CommentDeleteResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/comment/\(commentID)"
         
         guard let url = URL(string: urlString) else { return .just(.failure(.invalidURL)) }
@@ -103,7 +96,7 @@ struct CommentNetwork {
             .asSingle()
     }
     
-    func updateComment(with data: (CommentId: Int, contents: String) ) -> Single<Result<CommentEditResponse, CommentNetworkError>> {
+    func updateComment(with data: (CommentId: Int, contents: String) ) -> Single<Result<CommentEditResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/comment/update"
         
         guard let url = URL(string: urlString) else {
@@ -124,11 +117,11 @@ struct CommentNetwork {
                         let decodedData = try JSONDecoder().decode(CommentEditResponse.self, from: data)
                         return .success(decodedData)
                     } catch {
-                        return .failure(CommentNetworkError.invalidJSON)
+                        return .failure(NetworkError.invalidJSON)
                     }
                 }
                 .catch { _ in
-                    return .just(.failure(CommentNetworkError.networkError))
+                    return .just(.failure(NetworkError.networkError))
                 }
                 .asSingle()
         } catch {

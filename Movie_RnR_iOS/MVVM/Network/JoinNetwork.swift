@@ -8,13 +8,6 @@
 import Foundation
 import RxSwift
 
-enum JoinNetworkError: Error {
-    case networkError
-    case invalidJSON
-    case invalidQuery
-    case invalidURL
-}
-
 struct JoinNetwork {
     let session: URLSession
     
@@ -22,7 +15,7 @@ struct JoinNetwork {
         self.session = session
     }
     
-    func requestJoin(with data : (id: String, password: String, nickname: String, gender: String)) -> Single<Result< LoginResponse ,JoinNetworkError>> {
+    func requestJoin(with data : (id: String, password: String, nickname: String, gender: String)) -> Single<Result< LoginResponse ,NetworkError>> {
         
         let urlString = "\(Constant.serverURL)/join"
         
@@ -44,11 +37,11 @@ struct JoinNetwork {
                         let decodedData = try JSONDecoder().decode(LoginResponse.self, from: data)
                         return .success(decodedData)
                     } catch {
-                        return .failure(JoinNetworkError.invalidJSON)
+                        return .failure(NetworkError.invalidJSON)
                     }
                 }
                 .catch { _ in
-                    return .just(.failure(JoinNetworkError.networkError))
+                    return .just(.failure(NetworkError.networkError))
                 }
                 .asSingle()
         } catch {

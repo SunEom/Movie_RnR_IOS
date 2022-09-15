@@ -7,13 +7,6 @@
 
 import RxSwift
 
-enum PostNetworkError: Error {
-    case invalidURL
-    case invalidJSON
-    case networkError
-    case invalidQuery
-}
-
 struct PostNetwork {
     
     let session: URLSession
@@ -22,7 +15,7 @@ struct PostNetwork {
         self.session = session
     }
     
-    func fetchRecentPosts() -> Single<Result<PostResponse, PostNetworkError>> {
+    func fetchRecentPosts() -> Single<Result<PostResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/post"
         
         guard let url = URL(string: urlString) else {
@@ -37,16 +30,16 @@ struct PostNetwork {
                     let decodedData = try JSONDecoder().decode(PostResponse.self, from: data)
                     return .success(decodedData)
                 } catch {
-                    return .failure(PostNetworkError.invalidJSON)
+                    return .failure(NetworkError.invalidJSON)
                 }
             }
             .catch { _ in
-                return .just(.failure(PostNetworkError.networkError))
+                return .just(.failure(NetworkError.networkError))
             }
             .asSingle()
     }
     
-    func searchPosts(query: String) -> Single<Result<PostResponse, PostNetworkError>> {
+    func searchPosts(query: String) -> Single<Result<PostResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/search"
         
         guard let url = URL(string: urlString) else {
@@ -67,11 +60,11 @@ struct PostNetwork {
                         let decodedData = try JSONDecoder().decode(PostResponse.self, from: data)
                         return .success(decodedData)
                     } catch {
-                        return .failure(PostNetworkError.invalidJSON)
+                        return .failure(NetworkError.invalidJSON)
                     }
                 }
                 .catch { _ in
-                    return .just(.failure(PostNetworkError.networkError))
+                    return .just(.failure(NetworkError.networkError))
                 }
                 .asSingle()
         } catch {
@@ -80,7 +73,7 @@ struct PostNetwork {
         
     }
     
-    func fetchPostDetail(postID: Int) -> Single<Result<PostDetailRepsonse, PostNetworkError>> {
+    func fetchPostDetail(postID: Int) -> Single<Result<PostDetailRepsonse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/post/\(postID)"
         
         guard let url = URL(string: urlString) else { return .just(.failure(.invalidURL)) }
@@ -95,17 +88,17 @@ struct PostNetwork {
                     
                     return .success(response)
                 } catch {
-                    return .failure(PostNetworkError.invalidJSON)
+                    return .failure(NetworkError.invalidJSON)
                 }
                 
             }
             .catch { _ in
-                return .just(.failure(PostNetworkError.networkError))
+                return .just(.failure(NetworkError.networkError))
             }
             .asSingle()
     }
     
-    func fetchUserPostings(userID: Int) -> Single<Result<PostResponse, PostNetworkError>> {
+    func fetchUserPostings(userID: Int) -> Single<Result<PostResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/post/user/\(userID)"
         
         guard let url = URL(string: urlString) else {
@@ -120,16 +113,16 @@ struct PostNetwork {
                     let decodedData = try JSONDecoder().decode(PostResponse.self, from: data)
                     return .success(decodedData)
                 } catch {
-                    return .failure(PostNetworkError.invalidJSON)
+                    return .failure(NetworkError.invalidJSON)
                 }
             }
             .catch { _ in
-                return .just(.failure(PostNetworkError.networkError))
+                return .just(.failure(NetworkError.networkError))
             }
             .asSingle()
     }
     
-    func createNewPost(with data: (title: String, genres: String, rates: Double, overview: String) ) -> Single<Result<PostResponse, PostNetworkError>> {
+    func createNewPost(with data: (title: String, genres: String, rates: Double, overview: String) ) -> Single<Result<PostResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/post"
         
         guard let url = URL(string: urlString) else {
@@ -150,11 +143,11 @@ struct PostNetwork {
                         let decodedData = try JSONDecoder().decode(PostResponse.self, from: data)
                         return .success(decodedData)
                     } catch {
-                        return .failure(PostNetworkError.invalidJSON)
+                        return .failure(NetworkError.invalidJSON)
                     }
                 }
                 .catch { _ in
-                    return .just(.failure(PostNetworkError.networkError))
+                    return .just(.failure(NetworkError.networkError))
                 }
                 .asSingle()
         } catch {
@@ -163,7 +156,7 @@ struct PostNetwork {
         
     }
     
-    func updatePost(with data: (id: Int, title: String, genres: String, rates: Double, overview: String) ) -> Single<Result<PostResponse, PostNetworkError>> {
+    func updatePost(with data: (id: Int, title: String, genres: String, rates: Double, overview: String) ) -> Single<Result<PostResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/post/update"
         
         guard let url = URL(string: urlString) else {
@@ -184,11 +177,11 @@ struct PostNetwork {
                         let decodedData = try JSONDecoder().decode(PostResponse.self, from: data)
                         return .success(decodedData)
                     } catch {
-                        return .failure(PostNetworkError.invalidJSON)
+                        return .failure(NetworkError.invalidJSON)
                     }
                 }
                 .catch { _ in
-                    return .just(.failure(PostNetworkError.networkError))
+                    return .just(.failure(NetworkError.networkError))
                 }
                 .asSingle()
         } catch {

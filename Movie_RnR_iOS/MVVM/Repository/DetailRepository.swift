@@ -14,7 +14,7 @@ struct DetailRepository {
             .map(parseData)
     }
     
-    private func parseData(result: Result<PostDetailRepsonse, PostNetworkError>) ->PostDetail? {
+    private func parseData(result: Result<PostDetailRepsonse, NetworkError>) ->PostDetail? {
         guard case .success(let response) = result else { return nil }
         return response.data
     }

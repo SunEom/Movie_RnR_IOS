@@ -12,6 +12,7 @@
 		BF0DE870288316E80048905C /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DE86F288316E80048905C /* K.swift */; };
 		BF0DE8732883181A0048905C /* PostingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DE8712883181A0048905C /* PostingTableViewCell.swift */; };
 		BF0DE8742883181A0048905C /* PostingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF0DE8722883181A0048905C /* PostingTableViewCell.xib */; };
+		BF1DA87028D2D41D00A7B20F /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1DA86F28D2D41D00A7B20F /* NetworkError.swift */; };
 		BF2F118828AE8EBC00082C96 /* ProfileNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F118728AE8EBC00082C96 /* ProfileNetwork.swift */; };
 		BF3708A1288D99F100A99482 /* JoinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3708A0288D99F100A99482 /* JoinData.swift */; };
 		BF395F2028AD454200C5F11F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F1F28AD454200C5F11F /* ProfileViewController.swift */; };
@@ -117,6 +118,7 @@
 		BF1530EA288FA79F009569D1 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		BF1530EC2890477E009569D1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		BF187343288592D8003BAF16 /* PostingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingManager.swift; sourceTree = "<group>"; };
+		BF1DA86F28D2D41D00A7B20F /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		BF2F118728AE8EBC00082C96 /* ProfileNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetwork.swift; sourceTree = "<group>"; };
 		BF37089C288D539C00A99482 /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
 		BF37089E288D94A400A99482 /* JoinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinManager.swift; sourceTree = "<group>"; };
@@ -617,6 +619,7 @@
 				BF395F2328AD4B0600C5F11F /* Profile.swift */,
 				BF3F96C928B8CCA300422890 /* Password.swift */,
 				BFB0017628B5249F00FE6BF3 /* Nickname.swift */,
+				BF1DA86F28D2D41D00A7B20F /* NetworkError.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -973,6 +976,7 @@
 				BF98ED6328A2D5DE001E65F6 /* CommentNetwork.swift in Sources */,
 				BF9095C128A0BE6D00DA01B1 /* PostNetwork.swift in Sources */,
 				BF395F2028AD454200C5F11F /* ProfileViewController.swift in Sources */,
+				BF1DA87028D2D41D00A7B20F /* NetworkError.swift in Sources */,
 				BF49D98028A60189008C93B9 /* LoginViewController.swift in Sources */,
 				BF451B6A28B35C160076D3E9 /* EditProfileFactory.swift in Sources */,
 				BF49D97328A4A787008C93B9 /* PostDetail.swift in Sources */,

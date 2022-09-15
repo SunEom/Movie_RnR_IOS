@@ -8,13 +8,6 @@
 import Foundation
 import RxSwift
 
-enum LoginNetworkError: Error {
-    case invalidURL
-    case invalidJSON
-    case networkError
-    case invalidQuery
-}
-
 struct LoginNetwork {
     let session: URLSession
     
@@ -22,7 +15,7 @@ struct LoginNetwork {
         self.session = session
     }
     
-    func requestPostLogin(id: String, password: String) -> Single<Result<LoginResponse, LoginNetworkError>> {
+    func requestPostLogin(id: String, password: String) -> Single<Result<LoginResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/auth/login"
         
         guard let url = URL(string: urlString) else {
@@ -43,11 +36,11 @@ struct LoginNetwork {
                         let decodedData = try JSONDecoder().decode(LoginResponse.self, from: data)
                         return .success(decodedData)
                     } catch {
-                        return .failure(LoginNetworkError.invalidJSON)
+                        return .failure(NetworkError.invalidJSON)
                     }
                 }
                 .catch { _ in
-                    return .just(.failure(LoginNetworkError.networkError))
+                    return .just(.failure(NetworkError.networkError))
                 }
                 .asSingle()
         } catch {
@@ -55,7 +48,7 @@ struct LoginNetwork {
         }
     }
     
-    func requestGetLogin() -> Single<Result<LoginResponse, LoginNetworkError>> {
+    func requestGetLogin() -> Single<Result<LoginResponse, NetworkError>> {
         let urlString = "\(Constant.serverURL)/auth/login"
         
         guard let url = URL(string: urlString) else { return .just(.failure(.invalidURL))}
@@ -68,11 +61,11 @@ struct LoginNetwork {
                     let result = try JSONDecoder().decode(LoginResponse.self, from: data)
                     return .success(result)
                 } catch {
-                    return .failure(LoginNetworkError.invalidJSON)
+                    return .failure(NetworkError.invalidJSON)
                 }
             }
             .catch { _ in
-                return .just(.failure(LoginNetworkError.networkError))
+                return .just(.failure(NetworkError.networkError))
             }
             .asSingle()
     }
