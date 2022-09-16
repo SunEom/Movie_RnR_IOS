@@ -234,18 +234,20 @@ class WritePostViewController: UIViewController {
             .bind(to: viewModel.saveButtonTap)
             .disposed(by: disposeBag)
         
-        viewModel.alert
+        viewModel.writePostRequestResult
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { (title, message) in
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            .subscribe(onNext: { result in
+                let alert: UIAlertController!
                 
                 var action: UIAlertAction!
                 
-                if title == "성공" {
+                if result.isSuccess {
+                    alert = UIAlertController(title: "성공", message: result.message, preferredStyle: .alert)
                     action = UIAlertAction(title: "확인", style: .default) { _ in
                         self.navigationController?.popViewController(animated: true)
                     }
                 } else {
+                    alert = UIAlertController(title: "실패", message: result.message, preferredStyle: .alert)
                     action = UIAlertAction(title: "확인", style: .default)
                 }
                 

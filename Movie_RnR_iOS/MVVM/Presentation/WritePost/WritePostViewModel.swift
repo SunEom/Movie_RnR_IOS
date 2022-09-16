@@ -32,7 +32,8 @@ struct WritePostViewModel {
     
     let saveButtonTap = PublishSubject<Void>()
 
-    let alert = PublishSubject<(title: String, message: String)>()
+//    let alert = PublishSubject<(title: String, message: String)>()
+    let writePostRequestResult = PublishSubject<WritePostRequestResult>()
     
     init(post: Post? = nil) {
         
@@ -134,24 +135,24 @@ struct WritePostViewModel {
             .filter { (title, genre, rate, overview) in
                 return title == "" || genre == "" || rate == 0.0 || overview == ""
             }
-            .map { (title, genre, rate, overview) -> (String, String) in
+            .map { (title, genre, rate, overview) -> WritePostRequestResult in
                 if title == "" {
-                    return ("실패", "제목을 입력해주세요.")
+                    return WritePostRequestResult(isSuccess: false, message: "제목을 입력해주세요.")
                 }
                 else if genre == "" {
-                    return ("실패", "1개 이상의 장르를 선택해주세요.")
+                    return WritePostRequestResult(isSuccess: false, message: "1개 이상의 장르를 선택해주세요.")
                 }
                 else if rate == 0.0 {
-                    return ("실패" ,"0.1점 이상의 평점을 입력해주세요.")
+                    return WritePostRequestResult(isSuccess: false, message: "0.1점 이상의 평점을 입력해주세요.")
                 }
                 else if overview == "" {
-                    return ("실패", "게시글 내용을 입력해주세요.")
+                    return WritePostRequestResult(isSuccess: false, message: "게시글 내용을 입력해주세요.")
                 }
                 else {
-                    return ("실패", "처리중 오류가 발생하였습니다.")
+                    return WritePostRequestResult(isSuccess: false, message: "처리중 오류가 발생하였습니다.")
                 }
             }
-            .bind(to: alert)
+            .bind(to: writePostRequestResult)
             .disposed(by: disposeBag)
         
         
@@ -169,11 +170,16 @@ struct WritePostViewModel {
                 return post == nil
             }
             .flatMapLatest(PostNetwork().createNewPost)
-            .map { result -> (String, String) in
-                guard case .success( _) = result else { return ("실패", "게시글 작성에 실패하였습니다.") }
-                return ("성공", "게시글이 저장되었습니다.")
+            .map { result -> WritePostRequestResult in
+                switch result {
+                    case .success(_):
+                        return WritePostRequestResult(isSuccess: true, message: "게시글이 저장되었습니다.")
+                        
+                    case .failure(let error):
+                        return WritePostRequestResult(isSuccess: false, message: error.rawValue)
+                }
             }
-            .bind(to: alert)
+            .bind(to: writePostRequestResult)
             .disposed(by: disposeBag)
         
         //게시글 수정의 경우
@@ -183,12 +189,22 @@ struct WritePostViewModel {
             }
             .map { (post!.id, $0.0, $0.1, $0.2, $0.3) }
             .flatMapLatest(PostNetwork().updatePost)
-            .map { result -> (String, String) in
-                guard case .success( _) = result else { return ("실패", "게시글 작성에 실패하였습니다.") }
-                return ("성공", "게시글이 수정되었습니다.")
+            .map { result -> WritePostRequestResult in
+                switch result {
+                    case .success(_):
+                        return WritePostRequestResult(isSuccess: true, message: "게시글이 수정되었습니다.")
+                        
+                    case .failure(let error):
+                        return WritePostRequestResult(isSuccess: false, message: error.rawValue)
+                }
             }
-            .bind(to: alert)
+            .bind(to: writePostRequestResult)
             .disposed(by: disposeBag)
     }
     
+}
+
+struct WritePostRequestResult {
+    let isSuccess: Bool
+    let message: String?
 }
