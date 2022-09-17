@@ -9,27 +9,42 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct ProfileViewModel {
+class ProfileViewModel {
     let disposeBag = DisposeBag()
 
     let refresh = PublishSubject<Void>()
-    let menuList = Observable<[String]>.just(["Edit Profile", "Change Password", "View Postings", "Danger Zone"]).asDriver(onErrorJustReturn: [])
+    let menuList = Driver<[String]>.just(["Edit Profile", "Change Password", "View Postings", "Danger Zone"])
     
     let userID = PublishSubject<Int>()
     let profile = PublishSubject<[Profile?]>()
+    
+    let profileFetchResult = PublishSubject<ProfileFetchResult>()
     
     init() {
     
         refresh
             .withLatestFrom(userID)
             .flatMapLatest(ProfileNetwork().fetchProfile)
-            .map { result -> [Profile] in
-                guard case .success(let response) = result else { return [] }
-                return response.data
-            }
-            .bind(to: profile)
+            .subscribe(onNext: { [weak self] result in
+                
+                guard let self = self else { return }
+                
+                switch result {
+                    case .success(let response):
+                        self.profile.onNext(response.data)
+                        
+                    case .failure(let error):
+                        self.profile.onNext([])
+                        self.profileFetchResult.onNext(ProfileFetchResult(isSuccess: false, message: error.rawValue))
+                        
+                }
+            })
             .disposed(by: disposeBag)
         
-        
     }
+}
+
+struct ProfileFetchResult {
+    let isSuccess: Bool
+    let message: String?
 }
