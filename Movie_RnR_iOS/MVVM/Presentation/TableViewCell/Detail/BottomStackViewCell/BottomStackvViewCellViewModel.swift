@@ -9,6 +9,8 @@ import RxSwift
 import RxCocoa
 
 struct BottomStackViewCellViewModel {
+    let parentViewController: DetailViewController
+    let writerID: Int
     let date = PublishSubject<String?>()
     let nickname = PublishSubject<String?>()
 }

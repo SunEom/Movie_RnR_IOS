@@ -15,7 +15,7 @@ class BottomStackViewCell: UITableViewCell {
     
     let stackView = UIStackView()
     let dateLabel = UILabel()
-    let nicknameLabel = UILabel()
+    let nicknameButton = UIButton()
     
     func cellInit() {
         bind()
@@ -29,7 +29,16 @@ class BottomStackViewCell: UITableViewCell {
             .disposed(by: disposeBag)
         
         viewModel.nickname
-            .bind(to: nicknameLabel.rx.text)
+            .bind(to: nicknameButton.rx.title())
+            .disposed(by: disposeBag)
+        
+        nicknameButton.rx.tap
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let vc = ProfileFactory().getInstance(userID: self.viewModel.writerID)
+                self.viewModel.parentViewController.navigationController?.pushViewController(vc, animated: true)
+            })
             .disposed(by: disposeBag)
     }
     
@@ -37,17 +46,17 @@ class BottomStackViewCell: UITableViewCell {
         backgroundColor = UIColor(named: "mainColor")
         
         stackView.addArrangedSubview(dateLabel)
-        stackView.addArrangedSubview(nicknameLabel)
+        stackView.addArrangedSubview(nicknameButton)
         
         stackView.alignment = .fill
-        stackView.distribution = .fillEqually
+        stackView.distribution = .equalSpacing
         
         dateLabel.textColor = .black
         dateLabel.font = UIFont(name: "CarterOne", size: 12)
-        
-        nicknameLabel.textAlignment = .right
-        nicknameLabel.textColor = .black
-        nicknameLabel.font = UIFont(name: "CarterOne", size: 12)
+    
+        nicknameButton.setTitleColor(.black, for: .normal)
+        nicknameButton.titleLabel?.font = UIFont(name: "CarterOne", size: 12)
+        nicknameButton.backgroundColor = .white
         
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false

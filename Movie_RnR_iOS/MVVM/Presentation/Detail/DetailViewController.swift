@@ -89,19 +89,19 @@ class DetailViewController: UIViewController {
                         
                     case 4:
                         let indexPath = IndexPath(row: row, section: 0)
-                        let cell = BottomStackViewCellFactory().getInstance(tableView: tv, indexPath: indexPath)
+                        let cell = BottomStackViewCellFactory().getInstance(tableView: tv, indexPath: indexPath, parentViewController: self, post: self.viewModel.post)
                         cell.selectionStyle = .none
-                        
+
                         self.viewModel.detailData
                             .map { $0?.user.nickname }
                             .bind(to: cell.viewModel.nickname)
                             .disposed(by: self.disposeBag)
-                        
+
                         self.viewModel.detailData
                             .map { $0?.movie.created }
                             .bind(to: cell.viewModel.date)
                             .disposed(by: self.disposeBag)
-                        
+
                         return cell
                         
                     case 5:
