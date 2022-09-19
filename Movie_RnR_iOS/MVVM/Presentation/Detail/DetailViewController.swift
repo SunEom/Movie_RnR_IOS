@@ -57,7 +57,7 @@ class DetailViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.detailData
-            .map { "✭ \($0?.movie.rates ?? 0)/10.0"}
+            .map { "✭ \($0?.movie.rates ?? 0)/10.0" }
             .bind(to: ratesLabel.rx.text)
             .disposed(by: disposeBag)
         

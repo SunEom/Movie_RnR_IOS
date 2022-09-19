@@ -46,6 +46,8 @@ class WritePostViewController: UIViewController {
     let overviewLabel = UILabel()
     let overviewTextView = UITextView()
     
+    let deleteButton = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -282,7 +284,7 @@ class WritePostViewController: UIViewController {
         genreStackView4.addArrangedSubview(UIView())
         genreStackView4.addArrangedSubview(UIView())
         
-        [titleLabel, titleTextField, genreLabel, rateLabel, rateTextField, overviewLabel, overviewTextView, genreStackView1, genreStackView2, genreStackView3, genreStackView4]
+        [titleLabel, titleTextField, genreLabel, rateLabel, rateTextField, overviewLabel, overviewTextView, genreStackView1, genreStackView2, genreStackView3, genreStackView4, deleteButton]
             .forEach {
                 contentView.addSubview($0)
                 $0.translatesAutoresizingMaskIntoConstraints = false
@@ -347,7 +349,11 @@ class WritePostViewController: UIViewController {
             overviewTextView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             overviewTextView.heightAnchor.constraint(equalToConstant: 200),
             
-            contentView.bottomAnchor.constraint(equalTo: overviewTextView.bottomAnchor, constant: 20 )
+            deleteButton.topAnchor.constraint(equalTo: overviewTextView.bottomAnchor,constant: 50),
+            deleteButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            deleteButton.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            
+            contentView.bottomAnchor.constraint(equalTo: deleteButton.bottomAnchor, constant: 15 )
             
         ].forEach { $0.isActive = true }
     }
@@ -427,6 +433,12 @@ class WritePostViewController: UIViewController {
                 $0.layer.cornerRadius = 3
             }
         
+        
+        deleteButton.isHidden = viewModel.post == nil
+        deleteButton.titleLabel?.font = UIFont(name: "CarterOne", size: 15)
+        deleteButton.setTitle("Delete Post", for: .normal)
+        deleteButton.setTitleColor(.white, for: .normal)
+        deleteButton.backgroundColor = .systemRed
     }
     
     private func genreButtonTap(btn: UIButton) -> Bool {
