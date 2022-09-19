@@ -12,9 +12,25 @@ class DetailViewController: UIViewController {
     var viewModel: DetailViewModel!
     
     let disposeBag = DisposeBag()
-    let tableView = UITableView()
     
     let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: nil, action: nil)
+    
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+    
+    let topStackView = UIStackView()
+    let bottomStackView = UIStackView()
+    
+    let postImageView = UIImageView()
+    
+    let titleLabel = UILabel()
+    let genresLabel = UILabel()
+    let ratesLabel = UILabel()
+    let overviewTextView = UITextView()
+    let dateLabel = UILabel()
+    let nicknameLabel = UILabel()
+    
+    let commentButton = UIButton()
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.refresh.onNext(Void())
@@ -23,12 +39,6 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(ImageCell.self, forCellReuseIdentifier: "DetailImageCell")
-        tableView.register(TitleCell.self, forCellReuseIdentifier: "TitleCell")
-        tableView.register(TopStackViewCell.self, forCellReuseIdentifier: "TopStackViewCell")
-        tableView.register(OverviewCell.self, forCellReuseIdentifier: "OverviewCell")
-        tableView.register(BottomStackViewCell.self, forCellReuseIdentifier: "BottomStackViewCell")
-        
         attribute()
         layout()
         bind()
@@ -36,100 +46,35 @@ class DetailViewController: UIViewController {
     
     private func bind() {
         
-        viewModel.cellList
-            .drive(tableView.rx.items) { tv, row, data in
-                switch row {
-                    case 0:
-                        let indexPath = IndexPath(row: row, section: 0)
-                        let cell = tv.dequeueReusableCell(withIdentifier: "DetailImageCell", for: indexPath) as! ImageCell
-                        cell.selectionStyle = .none
-                        cell.cellInit(imageName: "postImage1")
-                        return cell
-                        
-                    case 1:
-                        let indexPath = IndexPath(row: row, section: 0)
-                        let cell = TitleCellFactory().getInstance(tableView: tv, indexPath: indexPath)
-                        cell.selectionStyle = .none
-                        
-                        self.viewModel.detailData
-                            .map { $0?.movie.title }
-                            .bind(to: cell.viewModel.title)
-                            .disposed(by: self.disposeBag)
-                        
-                        return cell
-                        
-                    case 2:
-                        let indexPath = IndexPath(row: row, section: 0)
-                        let cell = TopStackViewCellFactory().getInstance(tableView: tv, indexPath: indexPath)
-                        cell.selectionStyle = .none
-                        
-                        self.viewModel.detailData
-                            .map { $0?.movie.genres }
-                            .bind(to: cell.viewModel.genres)
-                            .disposed(by: self.disposeBag)
-                        
-                        self.viewModel.detailData
-                            .map { "\($0?.movie.rates ?? 0.0)" }
-                            .bind(to: cell.viewModel.rates)
-                            .disposed(by: self.disposeBag)
-                        
-                        return cell
-                        
-                    case 3:
-                        let indexPath = IndexPath(row: row, section: 0)
-                        let cell = OverviewCellFactory().getInstance(tableView: tv, indexPath: indexPath)
-                        cell.selectionStyle = .none
-                        
-                        self.viewModel.detailData
-                            .map { $0?.movie.overview }
-                            .bind(to: cell.viewModel.overview)
-                            .disposed(by: self.disposeBag)
-                        
-                        return cell
-                        
-                    case 4:
-                        let indexPath = IndexPath(row: row, section: 0)
-                        let cell = BottomStackViewCellFactory().getInstance(tableView: tv, indexPath: indexPath, parentViewController: self, post: self.viewModel.post)
-                        cell.selectionStyle = .none
-
-                        self.viewModel.detailData
-                            .map { $0?.user.nickname }
-                            .bind(to: cell.viewModel.nickname)
-                            .disposed(by: self.disposeBag)
-
-                        self.viewModel.detailData
-                            .map { $0?.movie.created }
-                            .bind(to: cell.viewModel.date)
-                            .disposed(by: self.disposeBag)
-
-                        return cell
-                        
-                    case 5:
-                        let cell = UITableViewCell()
-                        cell.backgroundColor = .clear
-                        cell.textLabel?.text = "Comments (\(self.viewModel.post.commentCount ?? 0))"
-                        cell.textLabel?.font = UIFont(name: "CarterOne", size: 18)
-                        cell.textLabel?.textColor = .black
-                        cell.accessoryView = UIImageView(image: UIImage(systemName: "chevron.right"))
-                        cell.tintColor = .black
-                        
-                        return cell
-                        
-                    default:
-                        return UITableViewCell()
-                }
-            }
-            .disposed(by:disposeBag)
+        viewModel.detailData
+            .map { $0?.movie.title ?? "" }
+            .bind(to: titleLabel.rx.text)
+            .disposed(by: disposeBag)
         
-        tableView.rx.itemSelected
-            .subscribe(onNext: { indexPath in
-                if indexPath.row == 5 {
-                    self.tableView.cellForRow(at: indexPath)?.isSelected = false
-                    let vc = CommentFactory().getInstance(postID: self.viewModel.post.id)
-                    
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
-            })
+        viewModel.detailData
+            .map { $0?.movie.genres ?? "" }
+            .bind(to: genresLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.detailData
+            .map { "✭ \($0?.movie.rates ?? 0)/10.0"}
+            .bind(to: ratesLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.detailData
+            .map { $0?.movie.overview ?? "" }
+            .bind(to: overviewTextView.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.detailData
+            .map { $0?.movie.created ?? "" }
+            .map(dateFormat)
+            .bind(to: dateLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.detailData
+            .map { $0?.user.nickname ?? "" }
+            .bind(to: nicknameLabel.rx.text)
             .disposed(by: disposeBag)
         
         editButton.rx.tap
@@ -138,13 +83,50 @@ class DetailViewController: UIViewController {
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
+        
+        commentButton.rx.tap
+        
+            .subscribe(onNext: { _ in
+                let vc = CommentFactory().getInstance(postID: self.viewModel.post.id)
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+            })
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {
         view.backgroundColor = UIColor(named: "mainColor")
         
-        tableView.backgroundColor = UIColor(named: "mainColor")
-        tableView.separatorStyle = .none
+        // 임시 사진
+        postImageView.image = UIImage(named: "postImage1")
+        postImageView.contentMode = .scaleAspectFit
+        
+        titleLabel.font = UIFont(name: "CarterOne", size: 20)
+        
+        [
+            genresLabel,
+            ratesLabel,
+            dateLabel,
+            nicknameLabel,
+        ].forEach { $0.font = UIFont(name: "CarterOne", size: 13)}
+        
+        overviewTextView.textColor = .black
+        overviewTextView.font = .systemFont(ofSize: 15)
+        overviewTextView.backgroundColor = .white
+        overviewTextView.isEditable = false
+        overviewTextView.isScrollEnabled = false
+        overviewTextView.backgroundColor = UIColor(named: "mainColor")
+        overviewTextView.font = UIFont(name: "CarterOne", size: 15)
+        
+        commentButton.setTitle("Comment", for: .normal)
+        commentButton.setTitleColor(.black, for: .normal)
+        commentButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        commentButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        commentButton.semanticContentAttribute = .forceRightToLeft
+        commentButton.tintColor = .black
+        commentButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        commentButton.titleLabel?.font = UIFont(name: "CarterOne", size: 20)
         
         UserManager.getInstance()
             .subscribe(onNext: {
@@ -157,14 +139,78 @@ class DetailViewController: UIViewController {
     }
     
     private func layout() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(tableView)
+        
+        view.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        scrollView.addSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        [postImageView, titleLabel, topStackView, overviewTextView, bottomStackView, commentButton].forEach {
+            contentView.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        titleLabel.textAlignment = .center
+        
+        topStackView.addArrangedSubview(genresLabel)
+        topStackView.addArrangedSubview(ratesLabel)
+        topStackView.alignment = .fill
+        topStackView.distribution = .equalSpacing
+        
+        bottomStackView.addArrangedSubview(dateLabel)
+        bottomStackView.addArrangedSubview(nicknameLabel)
+        topStackView.alignment = .fill
+        topStackView.distribution = .equalSpacing
+        
         [
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo:scrollView.widthAnchor),
+            
+            postImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            postImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width-30),
+            postImageView.heightAnchor.constraint(equalToConstant:(UIScreen.main.bounds.width-30)*0.65),
+            
+            titleLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 15),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
+            topStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
+            topStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            topStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
+            overviewTextView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 15),
+            overviewTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            overviewTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
+            bottomStackView.topAnchor.constraint(equalTo: overviewTextView.bottomAnchor, constant: 15),
+            bottomStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            bottomStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
+            commentButton.topAnchor.constraint(equalTo: bottomStackView.bottomAnchor, constant: 15),
+            commentButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            commentButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
+            contentView.bottomAnchor.constraint(equalTo: commentButton.bottomAnchor)
         ].forEach{ $0.isActive = true}
     }
+    
+    private func dateFormat(with: String?) -> String {
+        guard let with = with else {
+            return ""
+        }
+        
+        return String(with.split(separator: "T")[0])
+        
+    }
 }
-
