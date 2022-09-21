@@ -26,11 +26,9 @@ struct StartViewModel {
         
         
         if let id = UserDefaults.standard.string(forKey: "id"), let password = UserDefaults.standard.string(forKey: "password") {
-            print("Login")
             UserManager.requestPostLogin(id: id, password: password)
         }
         else {
-            print("NotLogin")
             loginChecked.onNext(true)
         }
         

@@ -38,7 +38,6 @@ struct CommentEditViewModel {
             .filter { $0 != "" }
             .flatMapLatest { CommentNetwork().updateComment(with: (comment.id, $0)) }
             .map { result -> (String, String) in
-                print(result)
                 guard case .success(_) = result else { return ("실패", "댓글 수정에 실패하였습니다.\n잠시후 다시 시도해주세요.")}
                 return ("성공"," 정상적으로 수정되었습니다.")
             }

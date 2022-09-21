@@ -57,7 +57,6 @@ struct EditProfileViewModel {
         nickCheckResult
             .map { result -> Bool in
                 guard case .success(let response) = result else { return false }
-                print("response", response.already)
                 return !response.already
             }
             .bind(to: nickCheck)

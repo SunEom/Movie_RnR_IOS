@@ -63,11 +63,6 @@ struct WritePostViewModel {
         
         let genres1 = Observable
             .combineLatest(romance, action, comedy, historical, horror, sf)
-    
-        genres1.subscribe(onNext:{
-            print($0)
-        })
-        .disposed(by: disposeBag)
             
         let genres2 = Observable
             .combineLatest(sf, thriller, mystery, animation, drama)
