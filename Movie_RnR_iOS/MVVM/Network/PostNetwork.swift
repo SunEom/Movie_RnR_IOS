@@ -190,4 +190,29 @@ struct PostNetwork {
         
     }
     
+    
+    func deletePost(postID: Int) -> Single<Result<PostDeleteResponse, NetworkError>> {
+        let urlString = "\(Constant.serverURL)/post/\(postID)"
+        
+        guard let url = URL(string: urlString) else { return .just(.failure(NetworkError.invalidURL))}
+        
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        return session.rx.data(request: request)
+            .map { data in
+                do {
+                    let decodedData = try JSONDecoder().decode(PostDeleteResponse.self, from: data)
+                    return .success(decodedData)
+                } catch { 
+                    return .failure(NetworkError.invalidJSON)
+                }
+            }
+            .catch { _ in
+                return .just(.failure(NetworkError.networkError))
+            }
+            .asSingle()
+        
+    }
 }

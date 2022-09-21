@@ -32,8 +32,10 @@ struct WritePostViewModel {
     
     let saveButtonTap = PublishSubject<Void>()
 
-//    let alert = PublishSubject<(title: String, message: String)>()
-    let writePostRequestResult = PublishSubject<WritePostRequestResult>()
+    let writePostRequestResult = PublishSubject<PostRequestResult>()
+    
+    let deleteRequest = PublishSubject<Void>()
+    let deletePostRequestResult = PublishSubject<PostRequestResult>()
     
     init(post: Post? = nil) {
         
@@ -135,21 +137,21 @@ struct WritePostViewModel {
             .filter { (title, genre, rate, overview) in
                 return title == "" || genre == "" || rate == 0.0 || overview == ""
             }
-            .map { (title, genre, rate, overview) -> WritePostRequestResult in
+            .map { (title, genre, rate, overview) -> PostRequestResult in
                 if title == "" {
-                    return WritePostRequestResult(isSuccess: false, message: "제목을 입력해주세요.")
+                    return PostRequestResult(isSuccess: false, message: "제목을 입력해주세요.")
                 }
                 else if genre == "" {
-                    return WritePostRequestResult(isSuccess: false, message: "1개 이상의 장르를 선택해주세요.")
+                    return PostRequestResult(isSuccess: false, message: "1개 이상의 장르를 선택해주세요.")
                 }
                 else if rate == 0.0 {
-                    return WritePostRequestResult(isSuccess: false, message: "0.1점 이상의 평점을 입력해주세요.")
+                    return PostRequestResult(isSuccess: false, message: "0.1점 이상의 평점을 입력해주세요.")
                 }
                 else if overview == "" {
-                    return WritePostRequestResult(isSuccess: false, message: "게시글 내용을 입력해주세요.")
+                    return PostRequestResult(isSuccess: false, message: "게시글 내용을 입력해주세요.")
                 }
                 else {
-                    return WritePostRequestResult(isSuccess: false, message: "처리중 오류가 발생하였습니다.")
+                    return PostRequestResult(isSuccess: false, message: "처리중 오류가 발생하였습니다.")
                 }
             }
             .bind(to: writePostRequestResult)
@@ -170,13 +172,13 @@ struct WritePostViewModel {
                 return post == nil
             }
             .flatMapLatest(PostNetwork().createNewPost)
-            .map { result -> WritePostRequestResult in
+            .map { result -> PostRequestResult in
                 switch result {
                     case .success(_):
-                        return WritePostRequestResult(isSuccess: true, message: "게시글이 저장되었습니다.")
+                        return PostRequestResult(isSuccess: true, message: "게시글이 저장되었습니다.")
                         
                     case .failure(let error):
-                        return WritePostRequestResult(isSuccess: false, message: error.rawValue)
+                        return PostRequestResult(isSuccess: false, message: error.rawValue)
                 }
             }
             .bind(to: writePostRequestResult)
@@ -189,22 +191,37 @@ struct WritePostViewModel {
             }
             .map { (post!.id, $0.0, $0.1, $0.2, $0.3) }
             .flatMapLatest(PostNetwork().updatePost)
-            .map { result -> WritePostRequestResult in
+            .map { result -> PostRequestResult in
                 switch result {
                     case .success(_):
-                        return WritePostRequestResult(isSuccess: true, message: "게시글이 수정되었습니다.")
+                        return PostRequestResult(isSuccess: true, message: "게시글이 수정되었습니다.")
                         
                     case .failure(let error):
-                        return WritePostRequestResult(isSuccess: false, message: error.rawValue)
+                        return PostRequestResult(isSuccess: false, message: error.rawValue)
                 }
             }
             .bind(to: writePostRequestResult)
             .disposed(by: disposeBag)
+        
+        deleteRequest
+            .flatMapLatest { PostNetwork().deletePost(postID: post!.id) }
+            .map { result -> PostRequestResult in
+                switch result {
+                    case .success(_):
+                        return PostRequestResult(isSuccess: true, message: "게시글이 삭제되었습니다.")
+                        
+                    case .failure(let error):
+                        return PostRequestResult(isSuccess: false, message: error.rawValue)
+                }
+            }
+            .bind(to: deletePostRequestResult)
+            .disposed(by: disposeBag)
     }
+    
     
 }
 
-struct WritePostRequestResult {
+struct PostRequestResult {
     let isSuccess: Bool
     let message: String?
 }

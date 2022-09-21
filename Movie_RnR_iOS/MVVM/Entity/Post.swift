@@ -23,3 +23,8 @@ struct Post: Decodable {
     let user_id: Int
     let commentCount: Int?
 }
+
+struct PostDeleteResponse: Decodable {
+    let code: Int
+    let message: String?
+}

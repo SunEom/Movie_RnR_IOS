@@ -259,6 +259,50 @@ class WritePostViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        deleteButton.rx.tap
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                
+                guard let self = self else { return }
+                
+                let alert = UIAlertController(title: "경고", message: "한번 삭제하면 복구할 수 없습니다.\n정말로 지우시겠습니까?", preferredStyle: .alert)
+                
+                let confirm = UIAlertAction(title: "삭제", style: .destructive) { _ in
+                    self.viewModel.deleteRequest.onNext(Void())
+                }
+                
+                let cancel = UIAlertAction(title: "취소", style: .cancel)
+                
+                alert.addAction(confirm)
+                alert.addAction(cancel)
+                
+                self.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.deletePostRequestResult
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { result in
+                let alert: UIAlertController!
+                
+                var action: UIAlertAction!
+                
+                if result.isSuccess {
+                    alert = UIAlertController(title: "성공", message: result.message, preferredStyle: .alert)
+                    action = UIAlertAction(title: "확인", style: .default) { _ in
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
+                } else {
+                    alert = UIAlertController(title: "실패", message: result.message, preferredStyle: .alert)
+                    action = UIAlertAction(title: "확인", style: .default)
+                }
+                
+                alert.addAction(action)
+                
+                self.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func layout() {
