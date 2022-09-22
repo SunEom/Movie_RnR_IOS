@@ -103,13 +103,17 @@ class DetailViewController: UIViewController {
         postImageView.contentMode = .scaleAspectFit
         
         titleLabel.font = UIFont(name: "CarterOne", size: 20)
+        titleLabel.textColor = .black
         
         [
             genresLabel,
             ratesLabel,
             dateLabel,
             nicknameLabel,
-        ].forEach { $0.font = UIFont(name: "CarterOne", size: 13)}
+        ].forEach {
+            $0.font = UIFont(name: "CarterOne", size: 13)
+            $0.textColor = .black
+        }
         
         overviewTextView.textColor = .black
         overviewTextView.font = .systemFont(ofSize: 15)
@@ -119,7 +123,7 @@ class DetailViewController: UIViewController {
         overviewTextView.backgroundColor = UIColor(named: "mainColor")
         overviewTextView.font = UIFont(name: "CarterOne", size: 15)
         
-        commentButton.setTitle("Comment", for: .normal)
+        commentButton.setTitle("Comments", for: .normal)
         commentButton.setTitleColor(.black, for: .normal)
         commentButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         commentButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
