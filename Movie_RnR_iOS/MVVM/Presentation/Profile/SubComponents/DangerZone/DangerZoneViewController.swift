@@ -48,17 +48,26 @@ class DangerZoneViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.alert
+        viewModel.accountRemoveRequestResult
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
-                let alert = UIAlertController(title: $0.0, message: $0.1, preferredStyle: .alert)
-                let action = $0.0 == "성공" ? UIAlertAction(title: "확인", style: .default) { _ in
-                    self.navigationController?.popToRootViewController(animated: true)
-                } : UIAlertAction(title: "확인", style: .default)
-                
-                alert.addAction(action)
-                
-                self.present(alert, animated: true)
+                if $0.isSuccess {
+                    let alert = UIAlertController(title: "알림", message: "그 동안 이용해주셔서 감사합니다.", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .default) { _ in
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
+                    
+                    alert.addAction(action)
+                    
+                    self.present(alert, animated: true)
+                } else {
+                    let alert = UIAlertController(title: "실패", message: $0.message ?? "", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .default)
+                    
+                    alert.addAction(action)
+                    
+                    self.present(alert, animated: true)
+                }
             })
             .disposed(by: disposeBag)
     }

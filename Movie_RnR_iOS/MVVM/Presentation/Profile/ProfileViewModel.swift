@@ -18,7 +18,10 @@ class ProfileViewModel {
     let userID = PublishSubject<Int>()
     let profile = PublishSubject<[Profile?]>()
     
-    let profileFetchResult = PublishSubject<ProfileFetchResult>()
+    let profileFetchResult = PublishSubject<RequestResult>()
+    
+    let logoutBtnTap = PublishSubject<Void>()
+    let logoutRequestResult = PublishSubject<RequestResult>()
     
     init() {
     
@@ -35,16 +38,22 @@ class ProfileViewModel {
                         
                     case .failure(let error):
                         self.profile.onNext([])
-                        self.profileFetchResult.onNext(ProfileFetchResult(isSuccess: false, message: error.rawValue))
+                        self.profileFetchResult.onNext(RequestResult(isSuccess: false, message: error.rawValue))
                         
                 }
             })
             .disposed(by: disposeBag)
         
+        logoutBtnTap
+            .map { UserManager.logout() }
+            .map { RequestResult(isSuccess: true, message: nil) }
+            .bind(to: logoutRequestResult)
+            .disposed(by: disposeBag)
+        
     }
 }
 
-struct ProfileFetchResult {
+struct RequestResult {
     let isSuccess: Bool
     let message: String?
 }

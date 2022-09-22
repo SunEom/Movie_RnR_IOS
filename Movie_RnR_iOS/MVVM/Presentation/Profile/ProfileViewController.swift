@@ -81,7 +81,6 @@ class ProfileViewController: UIViewController {
         
         menuTableView.rx.itemSelected
             .withLatestFrom(UserManager.getInstance()) { indexPath, userData in
-                
                 return (indexPath, userData)
             }
             .subscribe(onNext: { (indexPath, userData) in
@@ -137,15 +136,13 @@ class ProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         logoutButton.rx.tap
-            .subscribe(onNext: { _ in
-                UserManager.logout()
-            })
+            .bind(to: viewModel.logoutBtnTap)
             .disposed(by: disposeBag)
         
-        UserManager.getInstance()
+        viewModel.logoutRequestResult
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
-                if $0 == nil {
+                if $0.isSuccess {
                     let alert = UIAlertController(title: "로그아웃", message: "정상적으로 로그아웃 되었습니다.", preferredStyle: .alert)
                     
                     let action = UIAlertAction(title: "확인", style: .default) { _ in

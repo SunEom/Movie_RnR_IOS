@@ -191,6 +191,7 @@ struct ProfileNetwork {
                     if response.code == 200 {
                         UserDefaults.standard.removeObject(forKey: "id")
                         UserDefaults.standard.removeObject(forKey: "password")
+                        UserManager.logout()
                     }
                     
                     return .success(response)

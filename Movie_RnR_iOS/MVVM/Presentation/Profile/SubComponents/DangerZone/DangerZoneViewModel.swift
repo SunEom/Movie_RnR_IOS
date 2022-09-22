@@ -10,23 +10,33 @@ import RxCocoa
 
 struct DangerZoneViewModel {
     
-    let diseposetBag = DisposeBag()
+    let disposeBag = DisposeBag()
     
     let buttonSelected = PublishSubject<Void>()
     let confirmSelected = PublishSubject<Void>()
     
-    let alert = PublishSubject<(String, String)>()
+    let accountRemoveRequestResult = PublishSubject<AccountRemoveRequestResult>()
     
     init() {
+        
         confirmSelected
             .flatMapLatest { ProfileNetwork().deleteAccount() }
-            .map { result -> (String, String) in
-                guard case .success(_) = result else { return ("실패", "잠시후 다시 시도해주세요.")}
-                UserManager.getInstance().onNext(nil)
-                return ("성공", "그 동안 이용해주셔서 감사합니다.")
+            .map { result in
+                switch result {
+                    case .success(_):
+                        return AccountRemoveRequestResult(isSuccess: true, message: nil)
+                    case .failure(let error):
+                        return AccountRemoveRequestResult(isSuccess: false, message: error.rawValue)
+                }
             }
-            .bind(to: alert)
-            .disposed(by: diseposetBag)
+            .bind(to: accountRemoveRequestResult)
+            .disposed(by: disposeBag)
+        
     }
     
+}
+
+struct AccountRemoveRequestResult {
+    let isSuccess: Bool
+    let message: String?
 }
