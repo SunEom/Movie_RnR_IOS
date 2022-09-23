@@ -44,25 +44,18 @@ class CommentViewController: UIViewController {
             .bind(to: viewModel.saveButotnTap)
             .disposed(by: disposeBag)
         
+        
         viewModel.createCommentRequestResult
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
                 if $0.isSuccess {
                     self.commentTextView.text = ""
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.createCommentRequestResult
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { result in
-                if !result.isSuccess {
-                    let alert = UIAlertController(title: "실패", message: result.message!, preferredStyle: .alert)
+                } else {
+                    let alert = UIAlertController(title: "실패", message: $0.message ?? "", preferredStyle: .alert)
                     let action = UIAlertAction(title: "확인", style: .default)
                     alert.addAction(action)
                     self.present(alert, animated: true)
                 }
-                
             })
             .disposed(by: disposeBag)
     }
