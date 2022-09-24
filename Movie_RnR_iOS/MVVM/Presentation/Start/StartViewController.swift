@@ -60,5 +60,6 @@ class StartViewController: UIViewController {
     
     private func attribute() {
         view.backgroundColor = UIColor(named: "mainColor")
+
     }
 }

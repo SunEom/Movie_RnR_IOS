@@ -141,16 +141,16 @@ class HomeViewController: UIViewController {
     }
     
     private func attribute() {
-        
         let appearance = UINavigationBarAppearance()
         
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(named: "headerColor")
         appearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "CarterOne", size: 20)!]
+        appearance.backButtonAppearance.normal.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "CarterOne", size: 15)!]
         
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.standardAppearance = appearance;
-        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance =  navigationController?.navigationBar.standardAppearance
         title = "MOVIE R&R 🎬"
         
         navigationItem.rightBarButtonItem = rightBarButtonItem

@@ -96,6 +96,7 @@ class DetailViewController: UIViewController {
     }
     
     private func attribute() {
+        
         view.backgroundColor = UIColor(named: "mainColor")
         
         // 임시 사진
