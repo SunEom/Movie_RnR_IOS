@@ -27,7 +27,8 @@ class CommentViewController: UIViewController {
     private func bind(){
         viewModel.cellData
             .observe(on: MainScheduler.instance)
-            .bind(to: tableView.rx.items) { tv, row, comment in
+            .asDriver(onErrorJustReturn: [])
+            .drive(tableView.rx.items) { tv, row, comment in
                 let indexPath = IndexPath(row: row, section: 0)
                 let cell = CommentCellFactory().getInstance(viewController: self, tableView: tv, indexPath: indexPath, comment: comment)
                 cell.selectionStyle = .none
@@ -43,7 +44,6 @@ class CommentViewController: UIViewController {
         commentButton.rx.tap
             .bind(to: viewModel.saveButotnTap)
             .disposed(by: disposeBag)
-        
         
         viewModel.createCommentRequestResult
             .observe(on: MainScheduler.instance)
@@ -86,6 +86,9 @@ class CommentViewController: UIViewController {
     }
     
     private func layout() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+        
         [ commentInputStackView, tableView].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -106,6 +109,10 @@ class CommentViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
         ].forEach { $0.isActive = true}
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        view.endEditing(true)
     }
     
 }
