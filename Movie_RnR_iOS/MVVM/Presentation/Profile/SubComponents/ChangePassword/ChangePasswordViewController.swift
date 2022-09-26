@@ -75,6 +75,9 @@ class ChangePasswordViewController: UIViewController {
     
     private func layout() {
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+    
         [subtitleLabel, currentTextField, subtitleLabel2, newPasswordTextField, subtitleLabel3, passwordCheckTextField, changeButton]
             .forEach {
                 view.addSubview($0)
@@ -152,5 +155,10 @@ class ChangePasswordViewController: UIViewController {
         changeButton.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
         changeButton.setTitle("Change Password", for: .normal)
         
+    }
+    
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        view.endEditing(true)
     }
 }

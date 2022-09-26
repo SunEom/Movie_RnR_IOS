@@ -67,6 +67,10 @@ class LoginViewController: UIViewController {
     }
     
     private func layout() {
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+        
         [titleLabel, idTextField, passwordTextField, loginButton]
             .forEach { self.stackView.addArrangedSubview($0) }
         
@@ -140,4 +144,9 @@ class LoginViewController: UIViewController {
         loginButton.titleLabel?.font = .systemFont(ofSize: 15)
         
     }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        view.endEditing(true)
+    }
+    
 }

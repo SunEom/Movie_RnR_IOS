@@ -32,6 +32,7 @@ class CommentViewController: UIViewController {
                 let indexPath = IndexPath(row: row, section: 0)
                 let cell = CommentCellFactory().getInstance(viewController: self, tableView: tv, indexPath: indexPath, comment: comment)
                 cell.selectionStyle = .none
+                
                 return cell
             }
             .disposed(by: disposeBag)

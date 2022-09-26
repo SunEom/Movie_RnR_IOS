@@ -232,6 +232,9 @@ class EditProfileViewController: UIViewController {
     
     private func layout() {
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+    
         // ScrollView Layout
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
@@ -333,5 +336,7 @@ class EditProfileViewController: UIViewController {
         
     }
     
-    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        view.endEditing(true)
+    }
 }

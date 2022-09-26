@@ -306,6 +306,10 @@ class WritePostViewController: UIViewController {
     }
     
     private func layout() {
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+        
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -489,6 +493,10 @@ class WritePostViewController: UIViewController {
         btn.isSelected.toggle()
         btn.backgroundColor = btn.isSelected ? UIColor(named: "headerColor") : UIColor(named: "mainColor")
         return btn.isSelected
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        view.endEditing(true)
     }
 }
 

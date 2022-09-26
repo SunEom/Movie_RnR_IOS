@@ -66,6 +66,10 @@ class SearchViewController: UIViewController {
     }
     
     private func layout() {
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+        
         [tableView].forEach{
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -99,4 +103,8 @@ class SearchViewController: UIViewController {
         tableView.tableHeaderView = searchBar
     }
     
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        view.endEditing(true)
+    }
 }

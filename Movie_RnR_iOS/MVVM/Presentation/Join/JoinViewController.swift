@@ -205,6 +205,9 @@ class JoinViewController : UIViewController {
     
     private func layout() {
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+        
         // ScrollView Layout
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
@@ -293,5 +296,9 @@ class JoinViewController : UIViewController {
             
         ].forEach { $0.isActive = true}
         
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        view.endEditing(true)
     }
 }
