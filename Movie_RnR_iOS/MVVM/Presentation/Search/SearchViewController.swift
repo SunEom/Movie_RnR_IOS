@@ -93,6 +93,7 @@ class SearchViewController: UIViewController {
         tableView.backgroundColor = UIColor(named: "mainColor")
         
         searchBar.barTintColor = UIColor(named: "mainColor")
+        searchBar.searchTextField.textColor = .black
         
         tableView.separatorStyle = .none
     }
