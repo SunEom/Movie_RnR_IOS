@@ -10,5 +10,6 @@ target 'Movie_RnR_iOS' do
   pod 'RxSwift', '6.5.0'
   pod 'RxCocoa', '6.5.0'
   pod 'Presentr'
+  pod 'IQKeyboardManager'
   
 end

@@ -147,6 +147,5 @@ class LoginViewController: UIViewController {
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
         view.endEditing(true)
-    }
-    
+    }    
 }

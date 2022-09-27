@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-Movie_RnR_iOS/Pods-Movie_RnR_iOS-frameworks.sh
+${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework
 ${BUILT_PRODUCTS_DIR}/Presentr/Presentr.framework
 ${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework
 ${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework

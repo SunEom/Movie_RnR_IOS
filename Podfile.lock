@@ -1,4 +1,5 @@
 PODS:
+  - IQKeyboardManager (6.5.10)
   - Presentr (1.9)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
@@ -8,23 +9,26 @@ PODS:
   - RxSwift (6.5.0)
 
 DEPENDENCIES:
+  - IQKeyboardManager
   - Presentr
   - RxCocoa (= 6.5.0)
   - RxSwift (= 6.5.0)
 
 SPEC REPOS:
   trunk:
+    - IQKeyboardManager
     - Presentr
     - RxCocoa
     - RxRelay
     - RxSwift
 
 SPEC CHECKSUMS:
+  IQKeyboardManager: 45a1fa55c1a5b02c61ac0fd7fd5b62bb4ad20d97
   Presentr: 7078d7eb5d1661ebeaae60c9e42a1e534de1b993
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
 
-PODFILE CHECKSUM: 68ce9eea003fb8231420c9981a647834eaabfefd
+PODFILE CHECKSUM: 04591a92ba5c7e6ef152f2d513454684b6493704
 
 COCOAPODS: 1.11.3
