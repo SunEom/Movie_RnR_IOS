@@ -21,27 +21,9 @@ class UserManager {
         return UserManager.user
     }
     
-    static func requestPostLogin(id: String, password: String) {
-
-        LoginNetwork().requestPostLogin(id: id, password: password)
-            .subscribe(onSuccess: { result in
-                guard case .success(let response) = result else { return }
-                UserDefaults.standard.setValue(id, forKey: "id")
-                UserDefaults.standard.setValue(password, forKey: "password")
-                user.onNext(response.data)
-            })
-            .disposed(by: disposeBag)
-        
-        
-    }
     
-    static func requestGetLogin() {
-        LoginNetwork().requestGetLogin()
-            .subscribe(onSuccess: { result in
-                guard case .success(let response) = result else { return }
-                user.onNext(response.data)
-            })
-            .disposed(by: disposeBag)
+    static func login(userData: Login?) {
+        self.user.onNext(userData)
     }
     
     static func logout() {
@@ -58,7 +40,7 @@ class UserManager {
                 return response.data
             }
             .subscribe(onSuccess: { _ in
-                self.requestGetLogin()
+                _ = UserRepository().getLoginRequest()
             })
             .disposed(by: disposeBag)
             

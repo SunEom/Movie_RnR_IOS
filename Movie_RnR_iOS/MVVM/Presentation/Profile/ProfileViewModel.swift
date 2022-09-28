@@ -52,8 +52,3 @@ class ProfileViewModel {
         
     }
 }
-
-struct RequestResult {
-    let isSuccess: Bool
-    let message: String?
-}

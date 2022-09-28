@@ -157,7 +157,7 @@ struct ProfileNetwork {
                     do {
                         let decodedData = try JSONDecoder().decode(DefaultResponse.self, from: data)
                         if decodedData.code == 201 {
-                            UserManager.requestGetLogin()
+                            _ = UserRepository().getLoginRequest()
                             UserDefaults.standard.set(newPassword, forKey: "password")
                         }
                         return .success(decodedData)

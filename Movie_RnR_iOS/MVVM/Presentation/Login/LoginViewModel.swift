@@ -14,43 +14,42 @@ class LoginViewModel {
     let id = BehaviorSubject<String?>(value: "")
     let password = BehaviorSubject<String?>(value: "")
     let loginPressed = PublishSubject<Void>()
-    let loginRequestResult = PublishSubject<LoginRequestResult>()
+    let loginRequestResult = PublishSubject<RequestResult>()
     
-    init() {
+    init(_ repository: UserRepository = UserRepository()) {
         let loginData = Observable
             .combineLatest(id, password)
         
+        //MARK: - 로그인 입력 오류
         loginPressed
             .withLatestFrom(loginData)
             .filter { $0! == "" || $1! == "" }
             .subscribe(onNext: { [weak self] (id, password) in
                 guard let self = self else { return }
                 if id! == "" {
-                    self.loginRequestResult.onNext(LoginRequestResult(isSuccess: false, message: "아이디를 입력해주세요."))
+                    self.loginRequestResult.onNext(RequestResult(isSuccess: false, message: "아이디를 입력해주세요."))
                 } else if password! == "" {
-                    self.loginRequestResult.onNext(LoginRequestResult(isSuccess: false, message: "비밀번호를 입력해주세요."))
+                    self.loginRequestResult.onNext(RequestResult(isSuccess: false, message: "비밀번호를 입력해주세요."))
                 }
             })
             .disposed(by: disposeBag)
-            
+        
+        
+        //MARK: - 로그인 요청
+        
         loginPressed
             .withLatestFrom(loginData)
             .filter { $0! != "" && $1! != "" }
-            .subscribe(onNext:{ [weak self] (id, password) in
+            .map { repository.postLoginRequest(id: $0.0!, password: $0.1!) }
+            .flatMapLatest{ $0 }
+            .subscribe(onNext: { [weak self] result in
                 guard let self = self else { return }
-                UserManager.requestPostLogin(id: id ?? "", password: password ?? "" )
+                self.loginRequestResult.onNext(result)
                 
-                //현재 로그인 요청의 실패여부를 확인하지 않고 항상 성공한다는 메세지가 표시됨.
-                // 존재하지 않는 아이디 혹은 비밀번호를 입력하거나 네트워크 에러 등으로 로그인이 되지 않았을 때 처리가 되어있지 않음
-                self.loginRequestResult.onNext(LoginRequestResult(isSuccess: true, message: nil))
             })
             .disposed(by: disposeBag)
-            
-            
+        
+        
+        
     }
-}
-
-struct LoginRequestResult {
-    let isSuccess: Bool
-    let message: String?
 }

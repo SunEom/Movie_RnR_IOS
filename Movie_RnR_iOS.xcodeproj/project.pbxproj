@@ -42,6 +42,8 @@
 		BF451B7428B36F610076D3E9 /* WritePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF451B7328B36F610076D3E9 /* WritePostViewController.swift */; };
 		BF451B7628B36F680076D3E9 /* WritePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF451B7528B36F680076D3E9 /* WritePostViewModel.swift */; };
 		BF451B7A28B375130076D3E9 /* WritePostFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF451B7928B375130076D3E9 /* WritePostFactory.swift */; };
+		BF46952028E2BA9500B8530C /* RequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46951F28E2BA9500B8530C /* RequestResult.swift */; };
+		BF46952228E2BB4F00B8530C /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46952128E2BB4F00B8530C /* UserRepository.swift */; };
 		BF49D97328A4A787008C93B9 /* PostDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D97228A4A787008C93B9 /* PostDetail.swift */; };
 		BF49D97528A4BFD9008C93B9 /* TitleCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D97428A4BFD9008C93B9 /* TitleCellViewModel.swift */; };
 		BF49D97D28A5FF0B008C93B9 /* DetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49D97C28A5FF0B008C93B9 /* DetailRepository.swift */; };
@@ -143,6 +145,8 @@
 		BF451B7328B36F610076D3E9 /* WritePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritePostViewController.swift; sourceTree = "<group>"; };
 		BF451B7528B36F680076D3E9 /* WritePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritePostViewModel.swift; sourceTree = "<group>"; };
 		BF451B7928B375130076D3E9 /* WritePostFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritePostFactory.swift; sourceTree = "<group>"; };
+		BF46951F28E2BA9500B8530C /* RequestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestResult.swift; sourceTree = "<group>"; };
+		BF46952128E2BB4F00B8530C /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		BF49D97228A4A787008C93B9 /* PostDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetail.swift; sourceTree = "<group>"; };
 		BF49D97428A4BFD9008C93B9 /* TitleCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCellViewModel.swift; sourceTree = "<group>"; };
 		BF49D97C28A5FF0B008C93B9 /* DetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRepository.swift; sourceTree = "<group>"; };
@@ -635,6 +639,7 @@
 				BF3F96C928B8CCA300422890 /* Password.swift */,
 				BFB0017628B5249F00FE6BF3 /* Nickname.swift */,
 				BF1DA86F28D2D41D00A7B20F /* NetworkError.swift */,
+				BF46951F28E2BA9500B8530C /* RequestResult.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -680,6 +685,7 @@
 			children = (
 				BF9095D328A1327800DA01B1 /* PostRepository.swift */,
 				BF9095D528A1342A00DA01B1 /* SearchRepository.swift */,
+				BF46952128E2BB4F00B8530C /* UserRepository.swift */,
 				BF49D97C28A5FF0B008C93B9 /* DetailRepository.swift */,
 			);
 			path = Repository;
@@ -952,6 +958,7 @@
 				BFB0017228B46B2D00FE6BF3 /* StartViewModel.swift in Sources */,
 				BF9095BA28A0ADF300DA01B1 /* HomeViewModel.swift in Sources */,
 				BF49D98428A76404008C93B9 /* Login.swift in Sources */,
+				BF46952028E2BA9500B8530C /* RequestResult.swift in Sources */,
 				BFA60D6D28C8E7B3003F5276 /* CommentEditViewFactory.swift in Sources */,
 				BFB0017528B46C6C00FE6BF3 /* StartFactory.swift in Sources */,
 				BF9F1E8328AF3B56003C6993 /* WebViewModel.swift in Sources */,
@@ -974,6 +981,7 @@
 				BF395F2428AD4B0600C5F11F /* Profile.swift in Sources */,
 				BF2F118828AE8EBC00082C96 /* ProfileNetwork.swift in Sources */,
 				BF98ED5328A2C80E001E65F6 /* CommentViewController.swift in Sources */,
+				BF46952228E2BB4F00B8530C /* UserRepository.swift in Sources */,
 				BF49D97528A4BFD9008C93B9 /* TitleCellViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
