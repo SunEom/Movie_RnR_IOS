@@ -41,15 +41,26 @@ class CommentEditViewController: UIViewController {
             .bind(to: viewModel.saveButtonTap)
             .disposed(by: disposeBag)
         
-        viewModel.alert
+        viewModel.editRequestResult
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { (title, message) in
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                let action = title == "성공" ? UIAlertAction(title: "확인", style: .default) { _ in
-                    self.dismiss(animated: true)
-                } : UIAlertAction(title: "확인", style: .default)
-                alert.addAction(action)
-                self.present(alert, animated: true)
+            .subscribe(onNext: { result in
+                if result.isSuccess {
+                    let alert = UIAlertController(title: "성공", message: "댓글이 정상적으로 수정되었습니다.", preferredStyle: .alert)
+                    
+                    let action = UIAlertAction(title: "확인", style: .default) { _ in
+                        self.dismiss(animated: true)
+                    }
+                    
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                } else {
+                    let alert = UIAlertController(title: "실패", message: result.message ?? "", preferredStyle: .alert)
+                    
+                    let action = UIAlertAction(title: "확인", style: .default)
+                    
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                }
             })
             .disposed(by: disposeBag)
         

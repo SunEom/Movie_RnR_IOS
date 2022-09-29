@@ -19,24 +19,17 @@ class CommentViewModel {
     
     let saveButotnTap = PublishSubject<Void>()
     
-    let createCommentRequestResult = PublishSubject<CommentNetworkResult>()
-    let deleteCommentRequestResult = PublishSubject<CommentNetworkResult>()
+    let createCommentRequestResult = PublishSubject<RequestResult>()
+    let deleteCommentRequestResult = PublishSubject<RequestResult>()
     
     let fetchComment = PublishSubject<Void>()
     
-    init(postID: Int) {
+    init(postID: Int, repository: CommentRepository = CommentRepository()) {
         
         self.postID = postID
         
         fetchComment
-            .flatMapLatest {
-                CommentNetwork().fetchComments(postID: postID)
-            }
-            .compactMap { result -> [Comment] in
-                guard case .success(let response) = result else { return [] }
-                return response.data
-            }
-            .asObservable()
+            .flatMapLatest{ repository.fetchComment(postID: self.postID) }
             .bind(to: cellData)
             .disposed(by: disposeBag)
         
@@ -46,7 +39,7 @@ class CommentViewModel {
             .withLatestFrom(content.asObservable())
             .filter { $0 == "" }
             .map { _ in
-                return CommentNetworkResult(isSuccess: false, message: "댓글의 내용을 입력해주세요.")
+                return RequestResult(isSuccess: false, message: "댓글의 내용을 입력해주세요.")
             }
             .bind(to: createCommentRequestResult)
             .disposed(by: disposeBag)
@@ -55,29 +48,15 @@ class CommentViewModel {
             .withLatestFrom(content.asObservable())
             .filter { $0 != "" }
             .map { (postID, $0) }
-            .flatMapLatest({ (id, contents) in
-                CommentNetwork().createNewComment(with: (id, contents))
-            })
+            .flatMapLatest(repository.createNewComment)
             .subscribe(onNext: { [weak self] result in
                 guard let self = self else { return }
-                switch result {
-                    case .success(_):
-                        self.createCommentRequestResult
-                            .onNext(CommentNetworkResult(isSuccess: true, message: nil))
-                        
-                        self.fetchComment.onNext(Void())
-                        
-                    case .failure(let error):
-                        self.createCommentRequestResult
-                            .onNext(CommentNetworkResult(isSuccess: false, message: error.rawValue))
+                if result.isSuccess {
+                    self.fetchComment.onNext(Void())
                 }
+                self.createCommentRequestResult.onNext(result)
             })
             .disposed(by: disposeBag)
         
     }
-}
-
-struct CommentNetworkResult {
-    let isSuccess: Bool
-    let message: String?
 }

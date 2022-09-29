@@ -14,14 +14,14 @@ struct CommentEditViewModel {
     
     let comment: Comment!
     
-    let alert = PublishSubject<(String, String)>()
+    let editRequestResult = PublishSubject<RequestResult>()
     
     let contents = PublishSubject<String>()
     
     let saveButtonTap = PublishSubject<Void>()
     
     
-    init(comment: Comment) {
+    init(comment: Comment, repository: CommentRepository = CommentRepository()) {
         self.comment = comment
         
         contents.onNext(comment.contents)
@@ -29,19 +29,15 @@ struct CommentEditViewModel {
         saveButtonTap
             .withLatestFrom(contents)
             .filter { $0 == "" }
-            .map { _ in ("실패", "댓글의 내용을 입력해주세요.") }
-            .bind(to: alert)
+            .map { _ in RequestResult(isSuccess: false, message: "댓글의 내용을 입력해주세요.") }
+            .bind(to: editRequestResult)
             .disposed(by: disposeBag)
         
         saveButtonTap
             .withLatestFrom(contents)
             .filter { $0 != "" }
-            .flatMapLatest { CommentNetwork().updateComment(with: (comment.id, $0)) }
-            .map { result -> (String, String) in
-                guard case .success(_) = result else { return ("실패", "댓글 수정에 실패하였습니다.\n잠시후 다시 시도해주세요.")}
-                return ("성공"," 정상적으로 수정되었습니다.")
-            }
-            .bind(to: alert)
+            .flatMapLatest { repository.updateComment(commentId: comment.id, contents: $0) }
+            .bind(to: editRequestResult)
             .disposed(by: disposeBag)
         
     }
