@@ -19,11 +19,12 @@ class CommentViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         attribute()
         layout()
         bind()
     }
-    
+
     private func bind(){
         viewModel.cellData
             .observe(on: MainScheduler.instance)

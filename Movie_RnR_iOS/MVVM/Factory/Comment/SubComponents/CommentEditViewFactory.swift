@@ -8,9 +8,9 @@
 import Foundation
 
 struct CommentEditViewFactory {
-    func getInstance(comment: Comment) -> CommentEditViewController {
+    func getInstance(comment: Comment, parentViewController: CommentViewController) -> CommentEditViewController {
         let vc = CommentEditViewController()
-        vc.viewModel = CommentEditViewModel(comment: comment)
+        vc.viewModel = CommentEditViewModel(comment: comment, parentViewController: parentViewController)
         return vc
     }
 }

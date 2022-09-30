@@ -48,6 +48,8 @@ class CommentEditViewController: UIViewController {
                     let alert = UIAlertController(title: "성공", message: "댓글이 정상적으로 수정되었습니다.", preferredStyle: .alert)
                     
                     let action = UIAlertAction(title: "확인", style: .default) { _ in
+                        // 댓글이 수정되었을 때 댓글 재 조회
+                        self.viewModel.parentViewController.viewModel.fetchComment.onNext(Void()) // Code가 매우 별로..
                         self.dismiss(animated: true)
                     }
                     

@@ -20,9 +20,13 @@ struct CommentEditViewModel {
     
     let saveButtonTap = PublishSubject<Void>()
     
+    let parentViewController: CommentViewController!
     
-    init(comment: Comment, repository: CommentRepository = CommentRepository()) {
+    
+    init(comment: Comment, parentViewController: CommentViewController, repository: CommentRepository = CommentRepository()) {
+        
         self.comment = comment
+        self.parentViewController = parentViewController
         
         contents.onNext(comment.contents)
         

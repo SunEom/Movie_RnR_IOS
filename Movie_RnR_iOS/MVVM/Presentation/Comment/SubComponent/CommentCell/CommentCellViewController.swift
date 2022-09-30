@@ -73,8 +73,9 @@ class CommentCellViewController: UITableViewCell {
         editButton.rx.tap
             .observe(on: MainScheduler.instance)
             .withLatestFrom(viewModel.data)
-            .subscribe(onNext: {
-                let vc = CommentEditViewFactory().getInstance(comment: $0)
+            .subscribe(onNext: { [weak self] comment in
+                guard let self = self else { return }
+                let vc = CommentEditViewFactory().getInstance(comment: comment, parentViewController: self.viewModel.parentViewController)
                 self.viewModel.parentViewController.customPresentViewController(self.presenter, viewController: vc, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)

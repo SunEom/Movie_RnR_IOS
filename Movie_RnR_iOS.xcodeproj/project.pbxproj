@@ -293,8 +293,8 @@
 		BF3D53B528D85D9100E72CEC /* CommentCell */ = {
 			isa = PBXGroup;
 			children = (
-				BFB59FD728DD84BE00548146 /* CommentCellViewModel.swift */,
 				BFB59FD928DD84E200548146 /* CommentCellViewController.swift */,
+				BFB59FD728DD84BE00548146 /* CommentCellViewModel.swift */,
 			);
 			path = CommentCell;
 			sourceTree = "<group>";
