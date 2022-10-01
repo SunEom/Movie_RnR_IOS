@@ -10,8 +10,7 @@ import Foundation
 struct ProfileFactory {
     func getInstance(userID: Int) -> ProfileViewController {
         let vc = ProfileViewController()
-        vc.viewModel = ProfileViewModel()
-        vc.viewModel.userID.onNext(userID)
+        vc.viewModel = ProfileViewModel(userID: userID)
         return vc
     }
 }

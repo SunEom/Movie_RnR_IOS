@@ -28,7 +28,7 @@ class DetailViewController: UIViewController {
     let ratesLabel = UILabel()
     let overviewTextView = UITextView()
     let dateLabel = UILabel()
-    let nicknameLabel = UILabel()
+    let nicknameButton = UIButton()
     
     let commentButton = UIButton()
     
@@ -74,7 +74,7 @@ class DetailViewController: UIViewController {
         
         viewModel.detailData
             .map { $0?.user.nickname ?? "" }
-            .bind(to: nicknameLabel.rx.text)
+            .bind(to: nicknameButton.rx.title())
             .disposed(by: disposeBag)
         
         editButton.rx.tap
@@ -93,6 +93,8 @@ class DetailViewController: UIViewController {
                 
             })
             .disposed(by: disposeBag)
+        
+        
     }
     
     private func attribute() {
@@ -110,11 +112,13 @@ class DetailViewController: UIViewController {
             genresLabel,
             ratesLabel,
             dateLabel,
-            nicknameLabel,
         ].forEach {
             $0.font = UIFont(name: "CarterOne", size: 13)
             $0.textColor = .black
         }
+        
+        nicknameButton.titleLabel?.font = UIFont(name: "CarterOne", size: 13)
+        nicknameButton.setTitleColor(.black, for: .normal)
         
         overviewTextView.textColor = .black
         overviewTextView.font = .systemFont(ofSize: 15)
@@ -141,6 +145,16 @@ class DetailViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        nicknameButton.rx.tap
+            .observe(on: MainScheduler.instance)
+            .withLatestFrom(viewModel.detailData)
+            .subscribe(onNext: { [weak self] detail in
+                guard let self = self else { return }
+                let vc = ProfileFactory().getInstance(userID: detail!.user.id)
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func layout() {
@@ -164,7 +178,8 @@ class DetailViewController: UIViewController {
         topStackView.distribution = .equalSpacing
         
         bottomStackView.addArrangedSubview(dateLabel)
-        bottomStackView.addArrangedSubview(nicknameLabel)
+        bottomStackView.addArrangedSubview(nicknameButton)
+        bottomStackView.distribution = .equalSpacing
         topStackView.alignment = .fill
         topStackView.distribution = .equalSpacing
         

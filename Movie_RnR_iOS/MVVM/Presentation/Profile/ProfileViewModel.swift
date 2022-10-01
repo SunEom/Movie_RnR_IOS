@@ -13,9 +13,9 @@ class ProfileViewModel {
     let disposeBag = DisposeBag()
 
     let refresh = PublishSubject<Void>()
-    let menuList = Driver<[String]>.just(["Edit Profile", "Change Password", "View Postings", "Danger Zone"])
+    let menuList: Driver<[String]>
     
-    let userID = PublishSubject<Int>()
+    let userID: Int!
     let profile = PublishSubject<[Profile?]>()
     
     let profileFetchResult = PublishSubject<RequestResult>()
@@ -23,11 +23,22 @@ class ProfileViewModel {
     let logoutBtnTap = PublishSubject<Void>()
     let logoutRequestResult = PublishSubject<RequestResult>()
     
-    init() {
+    let isMyProfile: Observable<Bool>
     
+    init(userID: Int) {
+    
+        self.userID = userID
+        
+        isMyProfile = UserManager.getInstance()
+            .map { return $0 != nil && $0!.id == userID}
+            .asObservable()
+        
+        menuList = isMyProfile
+            .map { $0 ? ["Edit Profile", "Change Password", "View Postings", "Danger Zone"] : ["View Postings"]}
+            .asDriver(onErrorJustReturn: [])
+        
         refresh
-            .withLatestFrom(userID)
-            .flatMapLatest(ProfileNetwork().fetchProfile)
+            .flatMapLatest{ ProfileNetwork().fetchProfile(userID: userID) }
             .subscribe(onNext: { [weak self] result in
                 
                 guard let self = self else { return }
@@ -43,6 +54,7 @@ class ProfileViewModel {
                 }
             })
             .disposed(by: disposeBag)
+            
         
         logoutBtnTap
             .map { UserManager.logout() }

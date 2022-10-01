@@ -85,20 +85,21 @@ class ProfileViewController: UIViewController {
             }
             .subscribe(onNext: { (indexPath, userData) in
                 self.menuTableView.cellForRow(at: indexPath)?.isSelected = false
-                switch indexPath.row {
-                case 0:
+                
+                switch self.menuTableView.cellForRow(at: indexPath)!.textLabel?.text {
+                case "Edit Profile":
                     let vc = EditProfileFactory().getInstance()
                     self.navigationController?.pushViewController(vc, animated: true)
                     
-                case 1:
+                case "Change Password":
                     let vc = ChangePasswordFactory().getInstance()
                     self.navigationController?.pushViewController(vc, animated: true)
                     
-                case 2:
+                case "View Postings":
                     let vc = UserPostingFactory().getInstance(userID: userData!.id)
                     self.navigationController?.pushViewController(vc, animated: true)
                     
-                case 3:
+                case "Danger Zone":
                     let vc = DangerZoneFactory().getInstance()
                     self.navigationController?.pushViewController(vc, animated: true)
                     
@@ -133,6 +134,11 @@ class ProfileViewController: UIViewController {
                 let webVC = WebFactory().getInstance(url: $0[0]?.twitter ?? "")
                 self.navigationController?.pushViewController(webVC, animated: true)
             })
+            .disposed(by: disposeBag)
+        
+        viewModel.isMyProfile
+            .map { !$0 }
+            .bind(to: logoutButton.rx.isHidden)
             .disposed(by: disposeBag)
         
         logoutButton.rx.tap
