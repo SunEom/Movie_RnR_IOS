@@ -80,29 +80,29 @@ class ProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         menuTableView.rx.itemSelected
-            .withLatestFrom(UserManager.getInstance()) { indexPath, userData in
-                return (indexPath, userData)
+            .withLatestFrom(viewModel.profile) { indexPath, profile in
+                return (indexPath, profile[0])
             }
-            .subscribe(onNext: { (indexPath, userData) in
+            .subscribe(onNext: { (indexPath, profile) in
                 self.menuTableView.cellForRow(at: indexPath)?.isSelected = false
-                
+
                 switch self.menuTableView.cellForRow(at: indexPath)!.textLabel?.text {
                 case "Edit Profile":
                     let vc = EditProfileFactory().getInstance()
                     self.navigationController?.pushViewController(vc, animated: true)
-                    
+
                 case "Change Password":
                     let vc = ChangePasswordFactory().getInstance()
                     self.navigationController?.pushViewController(vc, animated: true)
-                    
+
                 case "View Postings":
-                    let vc = UserPostingFactory().getInstance(userID: userData!.id)
+                    let vc = UserPostingFactory().getInstance(userID: profile!.id)
                     self.navigationController?.pushViewController(vc, animated: true)
-                    
+
                 case "Danger Zone":
                     let vc = DangerZoneFactory().getInstance()
                     self.navigationController?.pushViewController(vc, animated: true)
-                    
+
                 default:
                     return
                 }
