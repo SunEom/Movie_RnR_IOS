@@ -97,10 +97,12 @@ class CommentCellViewController: UITableViewCell {
         // attribute
         backgroundColor = UIColor(named: "mainColor")
         
-        editButton.setTitle("Edit", for: .normal)
+        editButton.tintColor = .black
+        editButton.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
         editButton.setTitleColor(.black, for: .normal)
         
-        deleteButton.setTitle("Delete", for: .normal)
+        deleteButton.tintColor = .black
+        deleteButton.setImage(UIImage(systemName: "xmark"), for: .normal)
         deleteButton.setTitleColor(.black, for: .normal)
         
         [editButton, deleteButton].forEach { $0.titleLabel?.font = .systemFont(ofSize: 14) }
@@ -141,7 +143,7 @@ class CommentCellViewController: UITableViewCell {
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            buttonStackView.widthAnchor.constraint(equalToConstant: 120),
+            buttonStackView.widthAnchor.constraint(equalToConstant: 60),
             
             contentsTextView.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor),
             dateLabel.topAnchor.constraint(equalTo: contentsTextView.bottomAnchor),
