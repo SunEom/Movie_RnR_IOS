@@ -9,25 +9,30 @@ import RxSwift
 import RxCocoa
 
 struct SearchViewModel {
-    let keyword = PublishSubject<String?>()
+    private let disposeBag = DisposeBag()
+    private let repository: SearchRepository
     
-    let cellData: Driver<[Post]>
-    let itemSelected = PublishSubject<Int>()
-    let selectedItem: Driver<Post?>
+    struct Input {
+        let keyword: Driver<String>
+        let selection: Driver<IndexPath>
+    }
+    
+    struct Output {
+        let posts: Driver<[Post]>
+        let selected: Driver<Post>
+    }
     
     init(_ repository: SearchRepository = SearchRepository()) {
+        self.repository = repository
+    }
+    
+    func transfrom(input: Input) -> Output {
         
-        cellData = keyword
-            .filter { query in
-                return query != nil && query != ""
-            }
-            .flatMapLatest(repository.searchPostings)
-            .asDriver(onErrorJustReturn: [])
+        let posts = input.keyword.filter { $0 != "" }
+            .flatMapLatest { repository.searchPostings(query: $0).asDriver(onErrorJustReturn: []) }
             
-        selectedItem = itemSelected
-            .withLatestFrom(cellData) { idx, list in
-                list[idx]
-            }
-            .asDriver(onErrorJustReturn: nil)
+        let selected = input.selection.withLatestFrom(posts) { indexPath, posts in posts[indexPath.row] }
+        
+        return Output(posts: posts, selected: selected)
     }
 }

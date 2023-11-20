@@ -9,10 +9,10 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     var viewModel: HomeViewModel!
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     let tableView: UITableView = {
         let tableView = UITableView()
