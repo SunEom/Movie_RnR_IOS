@@ -10,35 +10,27 @@ import RxSwift
 import RxCocoa
 
 
-class StartViewModel {
-    let disposeBag = DisposeBag()
+struct StartViewModel {
+    private let disposeBag = DisposeBag()
+    private let repository: UserRepository
     
-    let loginCheckStart = PublishSubject<Void>()
+    struct Input {
+        let trigger: Driver<Void>
+    }
     
-    let loginChecked = BehaviorSubject<Bool>(value: false)
+    struct Output {
+        let loginCheckFin: Driver<Void>
+    }
+    
     
     init(repository: UserRepository = UserRepository()) {
-        
-        UserManager.getInstance()
-            .map { $0 != nil}
-            .bind(to: loginChecked)
-            .disposed(by: disposeBag)
-        
-        
-        if let id = UserDefaults.standard.string(forKey: "id"), let password = UserDefaults.standard.string(forKey: "password") {
-//            UserManager.requestPostLogin(id: id, password: password)
-            
-            repository.postLoginRequest(id: id, password: password)
-                .subscribe(onNext:{ [weak self] _ in
-                    guard let self = self else { return }
-                    self.loginChecked.onNext(true)
-                })
-                .disposed(by: disposeBag)
-                
-        }
-        else {
-            loginChecked.onNext(true)
-        }
-        
+        self.repository = repository
     }
+    
+    func transfrom (input: Input) -> Output {
+        let loginCheckFin = input.trigger.flatMapLatest { repository.autoLoginRequest().map { _ in Void() }.asDriver(onErrorJustReturn: Void()) }
+        
+        return Output(loginCheckFin: loginCheckFin)
+    }
+    
 }

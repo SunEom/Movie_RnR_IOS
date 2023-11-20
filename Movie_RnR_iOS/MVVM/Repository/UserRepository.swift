@@ -9,6 +9,15 @@ import Foundation
 import RxSwift
 
 struct UserRepository {
+    
+    func autoLoginRequest() -> Observable<RequestResult> {
+        if let id = UserDefaults.standard.string(forKey: "id"), let password = UserDefaults.standard.string(forKey: "password") {
+            return postLoginRequest(id: id, password: password)
+        } else {
+            return Observable.just(RequestResult(isSuccess: false, message: nil))
+        }
+    }
+    
     func postLoginRequest(id: String, password: String) -> Observable<RequestResult> {
          return LoginNetwork().requestPostLogin(id: id, password: password)
             .map { result in

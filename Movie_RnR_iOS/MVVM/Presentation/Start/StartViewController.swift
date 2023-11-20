@@ -7,10 +7,11 @@
 
 import UIKit
 import RxSwift
+import SnapKit
 
 class StartViewController: UIViewController {
     
-    var viewModel: StartViewModel!
+    private var viewModel: StartViewModel!
     
     let disposeBag = DisposeBag()
     
@@ -21,45 +22,50 @@ class StartViewController: UIViewController {
         
         layout()
         attribute()
-        
+        bindViewModel()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        bind()
+    init(viewModel: StartViewModel!) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
-    private func bind() {
-        
-        viewModel.loginChecked
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
-                if $0 {
-                    let vc = UINavigationController(rootViewController: HomeFactory().getInstance())
-                    vc.modalPresentationStyle = .fullScreen
-                    vc.modalTransitionStyle = .crossDissolve
-                    self.present(vc, animated: true)
-                }
-            })
-            .disposed(by: disposeBag)
-        
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    
-    private func layout() {
-        view.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+    private func bindViewModel() {
         
-        [
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: 180),
-            imageView.heightAnchor.constraint(equalToConstant: 180)
-        ].forEach {$0.isActive = true}
+        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+            .map { _ in  Void()}
+            .asDriver(onErrorJustReturn: Void())
+    
+        let input = StartViewModel.Input(trigger: viewWillAppear)
+        
+        let output = viewModel.transfrom(input: input)
+        
+        output.loginCheckFin.drive(onNext: {
+            let vc = UINavigationController(rootViewController: HomeFactory().getInstance())
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            self.present(vc, animated: true)
+        })
+        .disposed(by: disposeBag)
+        
     }
     
     private func attribute() {
         view.backgroundColor = UIColor(named: "mainColor")
+    }
+    
+    private func layout() {
+        view.addSubview(imageView)
+        
+        imageView.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.height.width.equalTo(180)
+        }
 
     }
+    
 }

@@ -9,8 +9,7 @@ import Foundation
 
 struct StartFactory {
     func getInstance() -> StartViewController {
-        let vc = StartViewController()
-        vc.viewModel = StartViewModel()
+        let vc = StartViewController(viewModel: StartViewModel())
         return vc
     }
 }
