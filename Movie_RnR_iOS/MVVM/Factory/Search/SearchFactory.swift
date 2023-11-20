@@ -9,8 +9,7 @@ import Foundation
 
 struct SearchFactory {
     func getInstance() -> SearchViewController {
-        let vc = SearchViewController()
-        vc.viewModel = SearchViewModel()
+        let vc = SearchViewController(viewModel: SearchViewModel())
         return vc
     }
 }

@@ -7,13 +7,14 @@
 
 import UIKit
 import RxSwift
+import SnapKit
 
 final class SearchViewController: UIViewController {
-    var viewModel: SearchViewModel!
+    private var viewModel: SearchViewModel!
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
-    let searchBar: UISearchBar = {
+    private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.backgroundColor = UIColor(named: "mainColor")
         searchBar.barTintColor = UIColor(named: "mainColor")
@@ -22,13 +23,22 @@ final class SearchViewController: UIViewController {
         return searchBar
     }()
     
-    let tableView: UITableView = {
+    private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(PostCell.self, forCellReuseIdentifier: Constant.TableViewCellID.Posting)
         tableView.backgroundColor = UIColor(named: "mainColor")
         tableView.separatorStyle = .none
         return tableView
     }()
+    
+    init(viewModel: SearchViewModel!) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     override func viewDidLoad() {
@@ -78,21 +88,20 @@ final class SearchViewController: UIViewController {
         
         [searchBar, tableView].forEach{
             view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        [
-            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            searchBar.heightAnchor.constraint(equalToConstant: 40),
-            
-            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: searchBar.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: searchBar.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-        ].forEach{ $0.isActive = true }
+        searchBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(40)
+        }
+        
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom)
+            $0.leading.trailing.equalTo(searchBar)
+            $0.bottom.equalToSuperview()
+        }
+    
     }
     
 }
