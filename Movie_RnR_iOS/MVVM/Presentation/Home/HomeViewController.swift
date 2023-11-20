@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SnapKit
 
 final class HomeViewController: UIViewController {
     var viewModel: HomeViewModel!
@@ -40,7 +41,7 @@ final class HomeViewController: UIViewController {
         button.configuration = config
         button.tintColor = .white
         button.backgroundColor = UIColor(named: "headerColor")
-        button.layer.cornerRadius = 40
+        button.layer.cornerRadius = 25
         button.setImage(UIImage(systemName: "pencil"), for: .normal)
         button.imageView?.contentMode = .scaleToFill
         return button
@@ -157,21 +158,20 @@ final class HomeViewController: UIViewController {
     
     private func layout() {
         [tableView, newPostButton].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
         
-        [
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            
-            newPostButton.heightAnchor.constraint(equalToConstant: 80),
-            newPostButton.widthAnchor.constraint(equalToConstant: 80),
-            newPostButton.trailingAnchor.constraint(equalTo: tableView.frameLayoutGuide.trailingAnchor, constant: -20),
-            newPostButton.bottomAnchor.constraint(equalTo: tableView.frameLayoutGuide.bottomAnchor),
-        ].forEach{ $0.isActive = true}
+        tableView.snp.makeConstraints{
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        newPostButton.snp.makeConstraints {
+            $0.height.width.equalTo(50)
+            $0.trailing.equalTo(tableView.frameLayoutGuide.snp.trailing).offset(-20)
+            $0.bottom.equalTo(tableView.frameLayoutGuide.snp.bottom)
+        }
+
     }
     
 }
