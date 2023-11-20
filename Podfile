@@ -11,5 +11,6 @@ target 'Movie_RnR_iOS' do
   pod 'RxCocoa', '6.5.0'
   pod 'Presentr'
   pod 'IQKeyboardManager'
+  pod 'SnapKit', '~> 5.6.0'
   
 end
