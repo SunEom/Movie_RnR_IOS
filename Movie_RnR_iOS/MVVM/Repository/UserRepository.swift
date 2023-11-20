@@ -19,6 +19,14 @@ struct UserRepository {
     }
     
     func postLoginRequest(id: String, password: String) -> Observable<RequestResult> {
+        if id == "" {
+            return Observable.just(RequestResult(isSuccess: false, message: "아이디를 입력해주세요."))
+        }
+        
+        if password == "" {
+            return Observable.just(RequestResult(isSuccess: false, message: "비밀번호를 입력해주세요."))
+        }
+        
          return LoginNetwork().requestPostLogin(id: id, password: password)
             .map { result in
                 switch result {

@@ -9,8 +9,7 @@ import Foundation
 
 struct LoginFactory {
     func getInstance() -> LoginViewController {
-        let vc = LoginViewController()
-        vc.viewModel = LoginViewModel()
+        let vc = LoginViewController(viewModel: LoginViewModel())
         return vc
     }
 }

@@ -36,11 +36,11 @@ class StartViewController: UIViewController {
 
     private func bindViewModel() {
         
-        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+        let viewDidAppear = rx.sentMessage(#selector(UIViewController.viewDidAppear(_:)))
             .map { _ in  Void()}
             .asDriver(onErrorJustReturn: Void())
     
-        let input = StartViewModel.Input(trigger: viewWillAppear)
+        let input = StartViewModel.Input(trigger: viewDidAppear)
         
         let output = viewModel.transfrom(input: input)
         
