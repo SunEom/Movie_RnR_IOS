@@ -9,6 +9,17 @@ import Foundation
 import RxSwift
 
 struct UserRepository {
+    func getProfile(userId: Int) -> Observable<Profile?> {
+        return ProfileNetwork().fetchProfile(userID: userId)
+            .map { result in
+                switch result {
+                    case .success(let response):
+                        return response.data.first
+                    case .failure:
+                        return nil
+                }
+            }.asObservable()
+    }
     
     func autoLoginRequest() -> Observable<RequestResult> {
         if let id = UserDefaults.standard.string(forKey: "id"), let password = UserDefaults.standard.string(forKey: "password") {

@@ -7,147 +7,230 @@
 
 import RxSwift
 import UIKit
+import SnapKit
 
 class ProfileViewController: UIViewController {
     var viewModel: ProfileViewModel!
     
     let disposeBag = DisposeBag()
     
-    let scrollView = UIScrollView()
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = UIColor(named: "mainColor")
+        return scrollView
+    }()
+    
     let contentView = UIView()
     
-    let titleLabel = UILabel()
-    let subtitleLabel = UILabel()
-    let subtitleLabel2 = UILabel()
-    let nicknameLabel = UILabel()
-    let genderLabel = UILabel()
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Basic Information"
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 20, weight: .bold)
+        return label
+    }()
     
-    let titleLabel2 = UILabel()
-    let biographyTextView = UITextView()
+    let subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Nickname"
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 15, weight: .semibold)
+        return label
+    }()
     
-    let titleLabel3 = UILabel()
-    let igButton = UIButton()
-    let fbButton = UIButton()
-    let ttButton = UIButton()
+    let subtitleLabel2: UILabel = {
+        let label = UILabel()
+        label.text = "Gender"
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 15, weight: .semibold)
+        return label
+    }()
     
-    let titleLabel4 = UILabel()
-    let menuTableView = UITableView()
+    let nicknameLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 15)
+        return label
+    }()
     
-    let logoutButton = UIButton()
+    let genderLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let titleLabel2: UILabel = {
+        let label = UILabel()
+        label.text = "Biography"
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 20, weight: .bold)
+        return label
+    }()
+    
+    let biographyTextView: UITextView = {
+        let textView = UITextView()
+        textView.textColor = .black
+        textView.font = .systemFont(ofSize: 15)
+        textView.backgroundColor = .white
+        textView.isEditable = false
+        return textView
+    }()
+    
+    let titleLabel3: UILabel = {
+        let label = UILabel()
+        label.text = "SNS"
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 20, weight: .bold)
+        return label
+    }()
+    
+    let igButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "instagram"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        return button
+    }()
+    
+    let fbButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "facebook"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        return button
+    }()
+    
+    let ttButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "twitter"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        return button
+    }()
+    
+    let titleLabel4: UILabel = {
+        let label = UILabel()
+        label.text = "More"
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 20, weight: .bold)
+        return label
+    }()
+    
+    let menuTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "menuCell")
+        tableView.rowHeight = 40
+        tableView.backgroundColor = UIColor(named: "mainColor")
+        return tableView
+    }()
+    
+    let logoutButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor(named: "headerColor")
+        button.titleLabel?.textColor = .white
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
+        button.setTitle("Logout", for: .normal)
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layout()
-        attribute()
-        bind()
+        bindViewModel()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        viewModel.refresh.onNext(Void())
-    }
+    private func bindViewModel() {
+        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:))).map { _ in Void() }.asDriver(onErrorJustReturn: Void())
     
-    private func bind() {
+        menuTableView.rx.itemSelected
+            .asDriver()
+            .drive(onNext: {[weak self] indexPath in
+                self?.menuTableView.cellForRow(at: indexPath)?.isSelected = false
+            })
+            .disposed(by: disposeBag)
         
-        viewModel.menuList
+        let input = ProfileViewModel.Input(trigger: viewWillAppear,
+                                           logoutTrigger: logoutButton.rx.tap.asDriver(),
+                                           menuSelect: menuTableView.rx.itemSelected.asDriver())
+        
+        let output = viewModel.transform(input: input)
+        
+        output.menuList
             .drive(menuTableView.rx.items) { tv, row, data in
-                let cell = UITableViewCell()
+                let cell = tv.dequeueReusableCell(withIdentifier: "menuCell", for: IndexPath(row: row, section: 0)) as UITableViewCell
                 cell.backgroundColor = UIColor(named: "mainColor")
-                cell.textLabel?.text = data
+                cell.textLabel?.text = data.rawValue
                 cell.textLabel?.textColor = .black
                 return cell
             }
             .disposed(by: disposeBag)
         
-        viewModel.profile
-            .filter { $0.count > 0 }
-            .compactMap{ $0[0]?.nickname ?? "" }
-            .bind(to: nicknameLabel.rx.text)
+        output.profile
+            .filter { $0 != nil }
+            .drive(onNext: { [weak self] profile in
+                guard let profile = profile, let self = self else { return }
+                self.nicknameLabel.text = profile.nickname
+                self.genderLabel.text = profile.gender
+                self.biographyTextView.text = profile.biography
+            })
             .disposed(by: disposeBag)
-        
-        viewModel.profile
-            .filter { $0.count > 0 }
-            .compactMap{ $0[0]?.gender ?? ""}
-            .bind(to: genderLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        viewModel.profile
-            .filter { $0.count > 0 }
-            .compactMap{ $0[0]?.biography ?? ""}
-            .bind(to: biographyTextView.rx.text)
-            .disposed(by: disposeBag)
-        
-        menuTableView.rx.itemSelected
-            .withLatestFrom(viewModel.profile) { indexPath, profile in
-                return (indexPath, profile[0])
-            }
-            .subscribe(onNext: { (indexPath, profile) in
-                self.menuTableView.cellForRow(at: indexPath)?.isSelected = false
-
-                switch self.menuTableView.cellForRow(at: indexPath)!.textLabel?.text {
-                case "Edit Profile":
-                    let vc = EditProfileFactory().getInstance()
-                    self.navigationController?.pushViewController(vc, animated: true)
-
-                case "Change Password":
-                    let vc = ChangePasswordFactory().getInstance()
-                    self.navigationController?.pushViewController(vc, animated: true)
-
-                case "View Postings":
-                    let vc = UserPostingFactory().getInstance(userID: profile!.id)
-                    self.navigationController?.pushViewController(vc, animated: true)
-
-                case "Danger Zone":
-                    let vc = DangerZoneFactory().getInstance()
-                    self.navigationController?.pushViewController(vc, animated: true)
-
-                default:
-                    return
+    
+        output.selectedMenu
+            .withLatestFrom(output.profile) { ($0, $1) }
+            .drive(onNext: {menu, profile in
+                switch menu {
+                    case .editProfile:
+                        let vc = EditProfileFactory().getInstance()
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    case .changePassword:
+                        let vc = ChangePasswordFactory().getInstance()
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    case .viewPostings:
+                        let vc = UserPostingFactory().getInstance(userID: profile!.id)
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    case .dangerZone:
+                        let vc = DangerZoneFactory().getInstance()
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    default:
+                        return
+                        
                 }
             })
             .disposed(by: disposeBag)
-        
+
         igButton.rx.tap
-            .withLatestFrom(viewModel.profile)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
-                let webVC = WebFactory().getInstance(url: $0[0]?.instagram ?? "")
+            .withLatestFrom(output.profile)
+            .asDriver(onErrorJustReturn: nil)
+            .drive(onNext: {
+                let webVC = WebFactory().getInstance(url: $0?.instagram ?? "")
                 self.navigationController?.pushViewController(webVC, animated: true)
             })
             .disposed(by: disposeBag)
         
         fbButton.rx.tap
-            .withLatestFrom(viewModel.profile)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
-                let webVC = WebFactory().getInstance(url: $0[0]?.facebook ?? "")
+            .withLatestFrom(output.profile)
+            .asDriver(onErrorJustReturn: nil)
+            .drive(onNext: {
+                let webVC = WebFactory().getInstance(url: $0?.facebook ?? "")
                 self.navigationController?.pushViewController(webVC, animated: true)
             })
             .disposed(by: disposeBag)
         
         ttButton.rx.tap
-            .withLatestFrom(viewModel.profile)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
-                let webVC = WebFactory().getInstance(url: $0[0]?.twitter ?? "")
+            .withLatestFrom(output.profile)
+            .asDriver(onErrorJustReturn: nil)
+            .drive(onNext: {
+                let webVC = WebFactory().getInstance(url: $0?.twitter ?? "")
                 self.navigationController?.pushViewController(webVC, animated: true)
             })
             .disposed(by: disposeBag)
         
-        viewModel.isMyProfile
+        output.isMine
             .map { !$0 }
-            .bind(to: logoutButton.rx.isHidden)
+            .drive(logoutButton.rx.isHidden)
             .disposed(by: disposeBag)
         
-        logoutButton.rx.tap
-            .bind(to: viewModel.logoutBtnTap)
-            .disposed(by: disposeBag)
-        
-        viewModel.logoutRequestResult
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
+        output.logoutResult
+            .drive(onNext: {
                 if $0.isSuccess {
                     let alert = UIAlertController(title: "로그아웃", message: "정상적으로 로그아웃 되었습니다.", preferredStyle: .alert)
                     
@@ -167,9 +250,6 @@ class ProfileViewController: UIViewController {
     private func layout() {
         
         view.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
         
         [
@@ -190,145 +270,98 @@ class ProfileViewController: UIViewController {
         ]
             .forEach {
                 contentView.addSubview($0)
-                $0.translatesAutoresizingMaskIntoConstraints = false
             }
         
         
-        [
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo:scrollView.widthAnchor),
-            
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
-            
-            subtitleLabel.widthAnchor.constraint(equalToConstant: 100),
-            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
-            subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            
-            nicknameLabel.topAnchor.constraint(equalTo: subtitleLabel.topAnchor),
-            nicknameLabel.leadingAnchor.constraint(equalTo: subtitleLabel.trailingAnchor),
-            nicknameLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            subtitleLabel2.widthAnchor.constraint(equalToConstant: 100),
-            subtitleLabel2.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 15),
-            subtitleLabel2.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            
-            genderLabel.topAnchor.constraint(equalTo: subtitleLabel2.topAnchor),
-            genderLabel.leadingAnchor.constraint(equalTo: subtitleLabel2.trailingAnchor),
-            genderLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            titleLabel2.topAnchor.constraint(equalTo: subtitleLabel2.bottomAnchor, constant: 30),
-            titleLabel2.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            titleLabel2.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            biographyTextView.topAnchor.constraint(equalTo: titleLabel2.bottomAnchor, constant: 15),
-            biographyTextView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            biographyTextView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            biographyTextView.heightAnchor.constraint(equalToConstant: 150),
-            
-            titleLabel3.topAnchor.constraint(equalTo: biographyTextView.bottomAnchor, constant: 30),
-            titleLabel3.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            titleLabel3.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            igButton.widthAnchor.constraint(equalToConstant: 50),
-            igButton.heightAnchor.constraint(equalToConstant: 50),
-            igButton.topAnchor.constraint(equalTo: titleLabel3.bottomAnchor),
-            igButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            
-            fbButton.widthAnchor.constraint(equalTo: igButton.widthAnchor),
-            fbButton.heightAnchor.constraint(equalTo: igButton.heightAnchor),
-            fbButton.topAnchor.constraint(equalTo: igButton.topAnchor),
-            fbButton.leadingAnchor.constraint(equalTo: igButton.trailingAnchor),
-            
-            ttButton.widthAnchor.constraint(equalTo: igButton.widthAnchor),
-            ttButton.heightAnchor.constraint(equalTo: igButton.heightAnchor),
-            ttButton.topAnchor.constraint(equalTo: igButton.topAnchor),
-            ttButton.leadingAnchor.constraint(equalTo: fbButton.trailingAnchor),
-            
-            titleLabel4.topAnchor.constraint(equalTo: igButton.bottomAnchor, constant: 30),
-            titleLabel4.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            titleLabel4.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            menuTableView.topAnchor.constraint(equalTo: titleLabel4.bottomAnchor, constant: 10),
-            menuTableView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -10),
-            menuTableView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            menuTableView.heightAnchor.constraint(equalToConstant: 160),
-            
-            logoutButton.topAnchor.constraint(equalTo: menuTableView.bottomAnchor, constant: 30),
-            logoutButton.heightAnchor.constraint(equalToConstant: 40),
-            logoutButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            logoutButton.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            contentView.bottomAnchor.constraint(equalTo: logoutButton.bottomAnchor, constant: 20 )
-            
-        ].forEach {
-            $0.isActive = true
+        scrollView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalTo(view)
         }
-    }
-    
-    private func attribute() {
-        scrollView.backgroundColor = UIColor(named: "mainColor")
         
-        titleLabel.text = "Basic Information"
-        titleLabel.textColor = .black
-        titleLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        contentView.snp.makeConstraints {
+            $0.top.leading.trailing.width.equalTo(scrollView)
+            $0.bottom.equalTo(logoutButton).offset(10)
+        }
         
-        subtitleLabel.text = "Nickname"
-        subtitleLabel.textColor = .black
-        subtitleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
+        titleLabel.snp.makeConstraints {
+            $0.top.leading.equalTo(contentView).offset(15)
+            $0.trailing.equalTo(contentView).offset(-15)
+        }
         
-        nicknameLabel.textColor = .black
-        nicknameLabel.font = .systemFont(ofSize: 15)
+        subtitleLabel.snp.makeConstraints {
+            $0.width.equalTo(100)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(15)
+            $0.leading.equalTo(titleLabel)
+        }
         
-        subtitleLabel2.text = "Gender"
-        subtitleLabel2.textColor = .black
-        subtitleLabel2.font = .systemFont(ofSize: 15, weight: .semibold)
+        nicknameLabel.snp.makeConstraints {
+            $0.top.equalTo(subtitleLabel)
+            $0.leading.equalTo(subtitleLabel.snp.trailing)
+            $0.trailing.equalTo(titleLabel)
+        }
         
-        genderLabel.textColor = .black
-        genderLabel.font = .systemFont(ofSize: 15)
+        subtitleLabel2.snp.makeConstraints {
+            $0.width.equalTo(100)
+            $0.top.equalTo(subtitleLabel.snp.bottom).offset(15)
+            $0.leading.equalTo(titleLabel)
+        }
         
-        titleLabel2.text = "Biography"
-        titleLabel2.textColor = .black
-        titleLabel2.font = .systemFont(ofSize: 20, weight: .bold)
+        genderLabel.snp.makeConstraints {
+            $0.top.equalTo(subtitleLabel2)
+            $0.leading.equalTo(subtitleLabel2.snp.trailing)
+            $0.trailing.equalTo(titleLabel)
+        }
         
-        biographyTextView.textColor = .black
-        biographyTextView.font = .systemFont(ofSize: 15)
-        biographyTextView.backgroundColor = .white
-        biographyTextView.isEditable = false
+        titleLabel2.snp.makeConstraints {
+            $0.top.equalTo(subtitleLabel2.snp.bottom).offset(30)
+            $0.leading.trailing.equalTo(titleLabel)
+        }
         
-        titleLabel3.text = "SNS"
-        titleLabel3.textColor = .black
-        titleLabel3.font = .systemFont(ofSize: 20, weight: .bold)
+        biographyTextView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel2.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(titleLabel)
+            $0.height.equalTo(150)
+        }
         
-        igButton.setImage(UIImage(named: "instagram"), for: .normal)
-        igButton.imageView?.contentMode = .scaleAspectFill
+        titleLabel3.snp.makeConstraints {
+            $0.top.equalTo(biographyTextView.snp.bottom).offset(30)
+            $0.leading.trailing.equalTo(titleLabel)
+        }
         
-        fbButton.setImage(UIImage(named: "facebook"), for: .normal)
-        fbButton.imageView?.contentMode = .scaleAspectFill
+        igButton.snp.makeConstraints {
+            $0.width.height.equalTo(50)
+            $0.top.equalTo(titleLabel3.snp.bottom)
+            $0.leading.equalTo(titleLabel)
+        }
         
-        ttButton.setImage(UIImage(named: "twitter"), for: .normal)
-        ttButton.imageView?.contentMode = .scaleAspectFill
+        fbButton.snp.makeConstraints {
+            $0.width.height.equalTo(50)
+            $0.top.equalTo(igButton)
+            $0.leading.equalTo(igButton.snp.trailing)
+        }
         
-        titleLabel4.text = "More"
-        titleLabel4.textColor = .black
-        titleLabel4.font = .systemFont(ofSize: 20, weight: .bold)
+        ttButton.snp.makeConstraints {
+            $0.width.height.equalTo(50)
+            $0.top.equalTo(igButton)
+            $0.leading.equalTo(fbButton.snp.trailing)
+        }
         
-        menuTableView.rowHeight = 40
-        menuTableView.backgroundColor = UIColor(named: "mainColor")
+        titleLabel4.snp.makeConstraints {
+            $0.top.equalTo(igButton.snp.bottom).offset(30)
+            $0.leading.trailing.equalTo(titleLabel)
+        }
         
-        logoutButton.backgroundColor = UIColor(named: "headerColor")
-        logoutButton.titleLabel?.textColor = .white
-        logoutButton.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
-        logoutButton.setTitle("Logout", for: .normal)
+        menuTableView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel4.snp.bottom).offset(10)
+            $0.leading.equalTo(titleLabel).offset(-15)
+            $0.trailing.equalTo(titleLabel)
+            $0.height.equalTo(160)
+        }
+        
+        logoutButton.snp.makeConstraints {
+            $0.top.equalTo(menuTableView.snp.bottom).offset(30)
+            $0.height.equalTo(40)
+            $0.leading.trailing.equalTo(titleLabel)
+        }
         
     }
 }

@@ -9,58 +9,48 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class ProfileViewModel {
-    let disposeBag = DisposeBag()
+enum ProfileMenu: String {
+    case editProfile = "Edit Profile"
+    case changePassword = "Change Password"
+    case viewPostings = "View Postings"
+    case dangerZone = "Danger Zone"
+    case error = "Error"
+}
 
-    let refresh = PublishSubject<Void>()
-    let menuList: Driver<[String]>
+struct ProfileViewModel {
+    private let disposeBag = DisposeBag()
+    private let repository: UserRepository
+    private let userID: Int
+
+    struct Input {
+        let trigger: Driver<Void>
+        let logoutTrigger: Driver<Void>
+        let menuSelect: Driver<IndexPath>
+    }
     
-    let userID: Int!
-    let profile = PublishSubject<[Profile?]>()
+    struct Output {
+        let profile: Driver<Profile?>
+        let isMine: Driver<Bool>
+        let menuList: Driver<[ProfileMenu]>
+        let logoutResult: Driver<RequestResult>
+        let selectedMenu: Driver<ProfileMenu>
+    }
     
-    let profileFetchResult = PublishSubject<RequestResult>()
-    
-    let logoutBtnTap = PublishSubject<Void>()
-    let logoutRequestResult = PublishSubject<RequestResult>()
-    
-    let isMyProfile: Observable<Bool>
-    
-    init(userID: Int) {
-    
+    init(userID: Int,_ repository: UserRepository = UserRepository() ) {
         self.userID = userID
+        self.repository = repository
+    }
+    
+    func transform(input: Input) -> Output {
+        let profile = input.trigger.flatMapLatest { repository.getProfile(userId: userID).asDriver(onErrorJustReturn: nil) }
+        let isMine = UserManager.getInstance().map { $0 != nil && $0!.id == userID }.asDriver(onErrorJustReturn: false)
+        let menuList = isMine.map { $0 ? [ProfileMenu.editProfile, ProfileMenu.changePassword, ProfileMenu.viewPostings, ProfileMenu.dangerZone] : [ProfileMenu.viewPostings] }
+        let logoutResult = input.logoutTrigger.map { _ in
+            UserManager.logout()
+            return RequestResult(isSuccess: true, message: nil)
+        }.asDriver()
+        let selectedMenu = input.menuSelect.withLatestFrom(menuList) { indexPath, list in list[indexPath.row] }
         
-        isMyProfile = UserManager.getInstance()
-            .map { return $0 != nil && $0!.id == userID}
-            .asObservable()
-        
-        menuList = isMyProfile
-            .map { $0 ? ["Edit Profile", "Change Password", "View Postings", "Danger Zone"] : ["View Postings"]}
-            .asDriver(onErrorJustReturn: [])
-        
-        refresh
-            .flatMapLatest{ ProfileNetwork().fetchProfile(userID: userID) }
-            .subscribe(onNext: { [weak self] result in
-                
-                guard let self = self else { return }
-                
-                switch result {
-                    case .success(let response):
-                        self.profile.onNext(response.data)
-                        
-                    case .failure(let error):
-                        self.profile.onNext([])
-                        self.profileFetchResult.onNext(RequestResult(isSuccess: false, message: error.rawValue))
-                        
-                }
-            })
-            .disposed(by: disposeBag)
-            
-        
-        logoutBtnTap
-            .map { UserManager.logout() }
-            .map { RequestResult(isSuccess: true, message: nil) }
-            .bind(to: logoutRequestResult)
-            .disposed(by: disposeBag)
-        
+        return Output(profile: profile, isMine: isMine, menuList: menuList, logoutResult: logoutResult, selectedMenu: selectedMenu)
     }
 }
