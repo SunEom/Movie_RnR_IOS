@@ -18,7 +18,6 @@
 		BF395F2028AD454200C5F11F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F1F28AD454200C5F11F /* ProfileViewController.swift */; };
 		BF395F2228AD454B00C5F11F /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F2128AD454B00C5F11F /* ProfileViewModel.swift */; };
 		BF395F2428AD4B0600C5F11F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF395F2328AD4B0600C5F11F /* Profile.swift */; };
-		BF3D53B228D85D0100E72CEC /* TitleCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3D53B128D85D0100E72CEC /* TitleCellFactory.swift */; };
 		BF3D53B328D85D4E00E72CEC /* CommentEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3D53AF28D85CC800E72CEC /* CommentEditViewModel.swift */; };
 		BF3D53B428D85D5100E72CEC /* CommentEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3D53AE28D85CC800E72CEC /* CommentEditViewController.swift */; };
 		BF3F96CA28B8CCA300422890 /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F96C928B8CCA300422890 /* Password.swift */; };
@@ -121,7 +120,6 @@
 		BF395F2328AD4B0600C5F11F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		BF3D53AE28D85CC800E72CEC /* CommentEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentEditViewController.swift; sourceTree = "<group>"; };
 		BF3D53AF28D85CC800E72CEC /* CommentEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentEditViewModel.swift; sourceTree = "<group>"; };
-		BF3D53B128D85D0100E72CEC /* TitleCellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCellFactory.swift; sourceTree = "<group>"; };
 		BF3F96C928B8CCA300422890 /* Password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
 		BF440DED28872A7000DABCA5 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		BF440DEF28872AD200DABCA5 /* CommentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentManager.swift; sourceTree = "<group>"; };
@@ -282,14 +280,6 @@
 			path = CommentEditCell;
 			sourceTree = "<group>";
 		};
-		BF3D53B028D85CF200E72CEC /* UITableview */ = {
-			isa = PBXGroup;
-			children = (
-				BF3D53B128D85D0100E72CEC /* TitleCellFactory.swift */,
-			);
-			path = UITableview;
-			sourceTree = "<group>";
-		};
 		BF3D53B528D85D9100E72CEC /* CommentCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,7 +319,6 @@
 		BF451B4528B278C70076D3E9 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
-				BF3D53B028D85CF200E72CEC /* UITableview */,
 				BF6ED81A28C44F0C0003BD60 /* Join */,
 				BFB0017328B46C6500FE6BF3 /* Start */,
 				BF451B7728B374750076D3E9 /* WritePost */,
@@ -936,7 +925,6 @@
 				BF9095E428A15F8200DA01B1 /* PostCellViewModel.swift in Sources */,
 				BF9095D128A1299F00DA01B1 /* SearchViewModel.swift in Sources */,
 				BFC151B428E546B500235B04 /* CommentRepository.swift in Sources */,
-				BF3D53B228D85D0100E72CEC /* TitleCellFactory.swift in Sources */,
 				BF451B4D28B27ACB0076D3E9 /* ProfileFactory.swift in Sources */,
 				BF9095D628A1342A00DA01B1 /* SearchRepository.swift in Sources */,
 				BF451B6428B35B030076D3E9 /* UserPostingFactory.swift in Sources */,

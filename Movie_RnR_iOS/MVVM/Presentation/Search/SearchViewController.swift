@@ -59,7 +59,7 @@ final class SearchViewController: UIViewController {
             let indexPath = IndexPath(row: row, section: 0)
             let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
             let cellVM = PostCellViewModel(post)
-            cell.bind(cellVM)
+            cell.setUp(viewModel: cellVM)
             return cell
         }
         .disposed(by: disposeBag)

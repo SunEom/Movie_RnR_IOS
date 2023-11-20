@@ -7,42 +7,42 @@
 
 import UIKit
 import RxSwift
+import SnapKit
 
 class TitleCell: UITableViewCell {
     let disposeBag = DisposeBag()
-    let titleLabel = UILabel()
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = UIColor(named: "mainColor")
+        label.textAlignment = .center
+        label.textColor = .black
+        label.font = UIFont(name: "CarterOne", size: 20)
+        return label
+    }()
     
-    var viewModel: TitleCellViewModel!
+    private var viewModel: TitleCellViewModel!
     
-    func bind() {
-        viewModel.title
-            .bind(to: titleLabel.rx.text)
-            .disposed(by: disposeBag)
+    func setUp(viewModel: TitleCellViewModel) {
+        self.viewModel = viewModel
+        
+        bind()
+        attribute()
+        layout()
     }
     
-    func setUp() {
+    private func bind() {
+        titleLabel.text = viewModel.title
+    }
+    
+    
+    private func attribute() {
         contentView.backgroundColor = UIColor(named: "mainColor")
-        titleLabel.backgroundColor = UIColor(named: "mainColor")
-        
-        titleLabel.textAlignment = .center
-        titleLabel.textColor = .black
-        titleLabel.font = UIFont(name: "CarterOne", size: 20)
-        
-        
-        contentView.addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        [
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 50)
-        ].forEach{ $0.isActive = true}
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
+    private func layout(){
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
     }
 }

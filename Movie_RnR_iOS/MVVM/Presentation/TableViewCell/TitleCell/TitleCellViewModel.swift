@@ -9,5 +9,9 @@ import RxSwift
 import RxCocoa
 
 struct TitleCellViewModel {
-    let title = PublishSubject<String?>()
+    let title: String
+    
+    init(title: String) {
+        self.title = title
+    }
 }

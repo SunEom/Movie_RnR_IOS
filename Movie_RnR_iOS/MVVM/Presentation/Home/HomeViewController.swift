@@ -72,18 +72,15 @@ final class HomeViewController: UIViewController {
         let input = HomeViewModel.Input(triger: Driver.merge(viewWillAppear, pull), selection: tableView.rx.itemSelected.asDriver())
         
         let output = viewModel.transfrom(input: input)
-        
         output.posts.drive(tableView.rx.items) { tv, row, post in
             let indexPath = IndexPath(row: row, section: 0)
             if row == 0 {
-                let cell = TitleCellFactory().getInstance(tableView: tv, indexPath: indexPath)
-                cell.viewModel.title
-                    .onNext("Recent Postings")
+                let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Title, for: indexPath) as! TitleCell
+                cell.setUp(viewModel: TitleCellViewModel(title: "Recent Postings"))
                 return cell
             } else {
                 let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
-                let cellVM = PostCellViewModel(post)
-                cell.bind(cellVM)
+                cell.setUp(viewModel: PostCellViewModel(post))
                 return cell
             }
         }

@@ -8,26 +8,69 @@
 import UIKit
 
 class PostCell: UITableViewCell {
+    private var viewModel: PostCellViewModel!
 
-    let topView = UIView()
-    let postImageView = UIImageView()
-    let titleLabel = UILabel()
-    let genreLabel = UILabel()
-    let overviewLabel = UILabel()
-    let bottomStackview = UIStackView()
-    let rateLabel = UILabel()
-    let commentLabel = UILabel()
+    private let topView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "mainColor")
+        return view
+    }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
+    private let postImageView = UIImageView()
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.textAlignment = .center
+        return label
+    }()
     
-    required init?(coder: NSCoder) {
-        fatalError("Initialize with not available way")
+    private let genreLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 15, weight: .bold)
+        return label
+    }()
+    
+    private let overviewLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 13, weight: .semibold)
+        label.numberOfLines = 5
+        return label
+    }()
+    
+    private let bottomStackview: UIStackView = {
+        let stackView = UIStackView()
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
+    private let rateLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 13, weight: .bold)
+        return label
+    }()
+    
+    private let commentLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 13, weight: .bold)
+        label.textAlignment = .right
+        return label
+    }()
+    
+    func setUp(viewModel: PostCellViewModel){
+        self.viewModel = viewModel
+        
+        bind()
+        attribute()
+        layout()
     }
 
     
-    func bind(_ viewModel: PostCellViewModel) {
+    func bind() {
         postImageView.image = UIImage(named: "postImage1")
         
         titleLabel.text = viewModel.title
@@ -43,64 +86,55 @@ class PostCell: UITableViewCell {
     
     private func attribute() {
         backgroundColor = UIColor(named: "mainColor")
-        topView.backgroundColor = UIColor(named: "mainColor")
-        
-        [titleLabel, genreLabel, rateLabel, overviewLabel, commentLabel].forEach{
-            $0.textColor = .black
-            $0.font = UIFont(name: "CarterOne", size: 15)
-        }
-        
-        overviewLabel.numberOfLines = 6
-        
-        titleLabel.textAlignment = .center
-        
-        bottomStackview.alignment = .fill
-        bottomStackview.distribution = .fillEqually
-        
-        commentLabel.textAlignment = .right
-        
     }
     
     private func layout() {
         
-        bottomStackview.addArrangedSubview(rateLabel)
-        bottomStackview.addArrangedSubview(commentLabel)
-        
-        [topView,postImageView,titleLabel,genreLabel,overviewLabel, bottomStackview].forEach {
-            self.contentView.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
+        [rateLabel, commentLabel].forEach {
+            bottomStackview.addArrangedSubview($0)
         }
         
-        [
-            topView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            topView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            topView.widthAnchor.constraint(equalToConstant: 320),
-            topView.heightAnchor.constraint(equalToConstant: 450),
-            topView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            
-            postImageView.widthAnchor.constraint(equalToConstant: 290),
-            postImageView.heightAnchor.constraint(equalToConstant: 145),
-            postImageView.topAnchor.constraint(equalTo: topView.topAnchor, constant: 20),
-            postImageView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
-            
-            
-            titleLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: postImageView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo:postImageView.trailingAnchor),
-            
-            genreLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
-            genreLabel.leadingAnchor.constraint(equalTo: postImageView.leadingAnchor),
-            genreLabel.trailingAnchor.constraint(equalTo: postImageView.trailingAnchor),
-            
-            overviewLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 15),
-            overviewLabel.leadingAnchor.constraint(equalTo: postImageView.leadingAnchor),
-            overviewLabel.trailingAnchor.constraint(equalTo: postImageView.trailingAnchor),
-            
-            bottomStackview.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -15),
-            bottomStackview.leadingAnchor.constraint(equalTo: postImageView.leadingAnchor),
-            bottomStackview.trailingAnchor.constraint(equalTo: postImageView.trailingAnchor)
-        ].forEach{ $0.isActive = true }
+        contentView.addSubview(topView)
         
+        [postImageView,titleLabel,genreLabel,overviewLabel, bottomStackview].forEach {
+            topView.addSubview($0)
+        }
+        
+        topView.snp.makeConstraints {
+            $0.top.equalTo(contentView).offset(20)
+            $0.bottom.equalTo(contentView).offset(-20)
+            $0.width.equalTo(320)
+            $0.centerX.equalTo(contentView)
+        }
+        
+        postImageView.snp.makeConstraints {
+            $0.width.equalTo(290)
+            $0.height.equalTo(145)
+            $0.top.equalTo(topView).offset(20)
+            $0.centerX.equalTo(topView)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(postImageView.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(postImageView)
+        }
+        
+        genreLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(postImageView)
+        }
+        
+        overviewLabel.snp.makeConstraints {
+            $0.top.equalTo(genreLabel.snp.bottom).offset(5)
+            $0.leading.trailing.equalTo(postImageView)
+            $0.bottom.equalTo(bottomStackview.snp.top)
+        }
+        
+        bottomStackview.snp.makeConstraints {
+            $0.height.equalTo(50)
+            $0.leading.trailing.equalTo(postImageView)
+            $0.bottom.equalTo(topView).offset(-15)
+        }
     }
     
     private func shadowConfig() {
@@ -110,11 +144,5 @@ class PostCell: UITableViewCell {
         topView.layer.shadowOffset = CGSize.zero
         topView.layer.shadowPath = nil
         topView.layer.cornerRadius = 5
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
     }
 }

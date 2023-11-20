@@ -41,7 +41,7 @@ class UserPostingViewController: UIViewController {
             .drive(tableView.rx.items) { tv, row, data in
                 let indexPath = IndexPath(row: row, section: 0)
                 let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
-                cell.bind(PostCellViewModel(data))
+                cell.setUp(viewModel: PostCellViewModel(data))
                 return cell
             }
             .disposed(by: disposeBag)
