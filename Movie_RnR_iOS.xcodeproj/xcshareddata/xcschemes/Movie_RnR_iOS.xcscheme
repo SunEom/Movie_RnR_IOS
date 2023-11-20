@@ -53,7 +53,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "ServerURL"
-            value = "https://movie-rnr-server.herokuapp.com"
+            value = "https://13.210.68.161:8000"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

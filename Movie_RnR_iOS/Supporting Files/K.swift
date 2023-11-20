@@ -36,7 +36,7 @@ struct Constant {
         static let dangerZone = "Danger Zone"
     }
     
-    static let serverURL = "https://movie-rnr-server.herokuapp.com"
+    static let serverURL = "http://127.0.0.1:8000"
     
     static let genderList = ["None","Man","Woman"]
 }

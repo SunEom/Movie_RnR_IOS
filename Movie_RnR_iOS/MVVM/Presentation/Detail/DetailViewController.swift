@@ -231,6 +231,5 @@ class DetailViewController: UIViewController {
         }
         
         return String(with.split(separator: "T")[0])
-        
     }
 }

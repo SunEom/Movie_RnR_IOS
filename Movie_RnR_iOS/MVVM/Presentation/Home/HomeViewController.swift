@@ -14,13 +14,37 @@ class HomeViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
-    let tableView = UITableView()
+    let tableView: UITableView = {
+        let tableView = UITableView()
+        let refreshControl: UIRefreshControl = {
+            let refreshControl = UIRefreshControl()
+            refreshControl.tintColor = .black
+            return refreshControl
+        }()
+        tableView.backgroundColor = UIColor(named: "mainColor")
+        tableView.contentInset.top = 20
+        tableView.contentInset.bottom = 20
+        tableView.separatorStyle = .none
+        tableView.refreshControl = refreshControl
+        return tableView
+    }()
+    
     let rightBarButtonItem = UIBarButtonItem(systemItem: .search)
     let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil)
     
-    let refreshControl = UIRefreshControl()
-    
-    let newPostButton = UIButton()
+    let newPostButton: UIButton = {
+        let button = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20)
+        var config = UIButton.Configuration.plain()
+        config.preferredSymbolConfigurationForImage = imageConfig
+        button.configuration = config
+        button.tintColor = .white
+        button.backgroundColor = UIColor(named: "headerColor")
+        button.layer.cornerRadius = 40
+        button.setImage(UIImage(systemName: "pencil"), for: .normal)
+        button.imageView?.contentMode = .scaleToFill
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,63 +52,61 @@ class HomeViewController: UIViewController {
         tableView.register(PostCell.self, forCellReuseIdentifier: Constant.TableViewCellID.Posting)
         tableView.register(TitleCell.self, forCellReuseIdentifier: Constant.TableViewCellID.Title)
         
-        layout()
+        bindViewModel()
+        uiEvent()
         attribute()
-        bind()
+        layout()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        viewModel.refresh.onNext(Void())
+    private func bindViewModel() {
+        
+        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+            .map { _ in  Void()}
+            .asDriver(onErrorJustReturn: Void())
+    
+        let pull = tableView.refreshControl!.rx
+            .controlEvent(.valueChanged)
+            .asDriver()
+        
+        let input = HomeViewModel.Input(triger: Driver.merge(viewWillAppear, pull), selection: tableView.rx.itemSelected.asDriver())
+        
+        let output = viewModel.transfrom(input: input)
+        
+        output.posts.drive(tableView.rx.items) { tv, row, post in
+            let indexPath = IndexPath(row: row, section: 0)
+            if row == 0 {
+                let cell = TitleCellFactory().getInstance(tableView: tv, indexPath: indexPath)
+                cell.viewModel.title
+                    .onNext("Recent Postings")
+                return cell
+            } else {
+                let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
+                let cellVM = PostCellViewModel(post)
+                cell.bind(cellVM)
+                return cell
+            }
+        }
+        .disposed(by: disposeBag)
+    
+        output.selectedPost.drive(onNext: { post in
+            let vc = DetailFactory().getInstance(post: post)
+            self.navigationController?.pushViewController(vc, animated: true)
+        })
+        .disposed(by: disposeBag)
+        
+        output.fetching.drive(tableView.refreshControl!.rx.isRefreshing)
+            .disposed(by: disposeBag)
+        
+        output.login.map { !$0 }.drive(newPostButton.rx.isHidden)
+            .disposed(by: disposeBag)
+        
     }
     
-    private func bind() {
-        
-        viewModel.cellData
-            .observe(on: MainScheduler.instance)
-            .bind(to: tableView.rx.items) { tv, row, post in
-                let indexPath = IndexPath(row: row, section: 0)
-                if row == 0 {
-                    
-                    let cell = TitleCellFactory().getInstance(tableView: tv, indexPath: indexPath)
-                    cell.viewModel.title
-                        .onNext("Recent Postings")
-                    
-                    return cell
-                } else {
-                    
-                    let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
-                    let cellVM = PostCellViewModel(post)
-                    
-                    cell.bind(cellVM)
-                    
-                    return cell
-                }
-            }
-            .disposed(by: disposeBag)
-        
-        tableView.rx.itemSelected
-            .subscribe(onNext: {
-                self.tableView.cellForRow(at: $0)?.isSelected = false
-            })
-            .disposed(by: disposeBag)
-        
-        rightBarButtonItem.rx.tap
-            .subscribe(onNext: {_ in
-                let vc = SearchFactory().getInstance()
-                self.navigationController?.pushViewController(vc, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        tableView.rx.itemSelected
-            .map { indexPath -> Int in
-                indexPath.row
-            }
-            .bind(to: viewModel.itemSelected)
-            .disposed(by: disposeBag)
-        
-        viewModel.selectedItem
-            .drive(onNext: { post in
-                let vc = DetailFactory().getInstance(post: post!)
+    private func uiEvent() {
+        newPostButton.rx.tap
+            .asDriver()
+            .drive(onNext: {
+                let vc = WritePostFactory().getInstance()
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
@@ -102,43 +124,14 @@ class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        newPostButton.rx.tap
-            .bind(to: viewModel.newPostButtonTap)
-            .disposed(by: disposeBag)
-        
-        viewModel.newPostButtonTap
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
-                let vc = WritePostFactory().getInstance()
+        rightBarButtonItem.rx.tap
+            .subscribe(onNext: {_ in
+                let vc = SearchFactory().getInstance()
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
-        
-        UserManager.getInstance()
-            .map{ $0 == nil }
-            .bind(to: newPostButton.rx.isHidden)
-            .disposed(by: disposeBag)
-        
     }
-    
-    private func layout() {
-        [tableView, newPostButton].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview($0)
-        }
-        
-        [
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            
-            newPostButton.heightAnchor.constraint(equalToConstant: 80),
-            newPostButton.widthAnchor.constraint(equalToConstant: 80),
-            newPostButton.trailingAnchor.constraint(equalTo: tableView.frameLayoutGuide.trailingAnchor, constant: -20),
-            newPostButton.bottomAnchor.constraint(equalTo: tableView.frameLayoutGuide.bottomAnchor),
-        ].forEach{ $0.isActive = true}
-    }
+
     
     private func attribute() {
         let appearance = UINavigationBarAppearance()
@@ -159,31 +152,26 @@ class HomeViewController: UIViewController {
         
         view.backgroundColor = UIColor(named: "mainColor")
         
-        tableView.backgroundColor = UIColor(named: "mainColor")
-        tableView.contentInset.top = 20
-        tableView.contentInset.bottom = 20
-        tableView.separatorStyle = .none
-        
-        newPostButton.backgroundColor = UIColor(named: "headerColor")
-        newPostButton.layer.cornerRadius = 40
-        newPostButton.setImage(UIImage(systemName: "pencil"), for: .normal)
-        newPostButton.imageView?.contentMode = .scaleToFill
-        
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20)
-        var config = UIButton.Configuration.plain()
-        config.preferredSymbolConfigurationForImage = imageConfig
-        newPostButton.configuration = config
-        newPostButton.tintColor = .white
-        
-        refreshControl.tintColor = .black
-        refreshControl.addTarget(self, action: #selector(sendRefreshSignal), for: .valueChanged)
-        tableView.addSubview(refreshControl)
-        
     }
     
-    @objc private func sendRefreshSignal() {
-        viewModel.refresh.onNext(Void())
-        refreshControl.endRefreshing()
+    
+    private func layout() {
+        [tableView, newPostButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
+        
+        [
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            newPostButton.heightAnchor.constraint(equalToConstant: 80),
+            newPostButton.widthAnchor.constraint(equalToConstant: 80),
+            newPostButton.trailingAnchor.constraint(equalTo: tableView.frameLayoutGuide.trailingAnchor, constant: -20),
+            newPostButton.bottomAnchor.constraint(equalTo: tableView.frameLayoutGuide.bottomAnchor),
+        ].forEach{ $0.isActive = true}
     }
     
 }

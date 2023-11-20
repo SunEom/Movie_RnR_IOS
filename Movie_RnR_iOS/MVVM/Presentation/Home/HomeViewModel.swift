@@ -9,29 +9,33 @@ import RxSwift
 import RxCocoa
 
 struct HomeViewModel {
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    private let repository: PostRepository
     
-    let cellData =  PublishSubject<[Post]>()
-    let itemSelected = PublishSubject<Int>()
-    let selectedItem: Driver<Post?>
-    let newPostButtonTap = PublishSubject<Void>()
+    struct Input {
+        let triger: Driver<Void> // 최근 게시물 요청 트리거
+        let selection: Driver<IndexPath> // 특정 게시글 선택 트리거
+    }
     
-    let logined = BehaviorSubject<Bool>(value: false)
-    
-    let refresh = PublishSubject<Void>()
+    struct Output {
+        let posts: Driver<[Post]> // 최근 게시글 목록
+        let selectedPost: Driver<Post> // 선택된 게시글
+        let fetching: Driver<Bool> // 로딩 여부
+        let login: Driver<Bool> // 로그인 여부
+    }
 
     init(_ repository: PostRepository = PostRepository()) {
+        self.repository = repository
+    }
+    
+    func transfrom(input: Input) -> Output {
+        let posts = input.triger.flatMapLatest { repository.fetchRecentPostings().asDriver(onErrorJustReturn: []) }
+        let selectedPost = input.selection.withLatestFrom(posts) { (indexPath, posts) -> Post in
+            return posts[indexPath.row]
+        }
+        let fetching = posts.map { _ in false }
+        let login = UserManager.getInstance().map { $0 != nil }.asDriver(onErrorJustReturn: false)
         
-        refresh
-            .flatMapLatest{ repository.fetchRecentPostings() }
-            .bind(to: cellData)
-            .disposed(by: disposeBag)
-        
-        selectedItem = itemSelected
-            .withLatestFrom(cellData) { idx, list in
-                list[idx]
-            }
-            .asDriver(onErrorJustReturn: nil)
-            
+        return Output(posts: posts, selectedPost: selectedPost, fetching: fetching, login: login)
     }
 }
