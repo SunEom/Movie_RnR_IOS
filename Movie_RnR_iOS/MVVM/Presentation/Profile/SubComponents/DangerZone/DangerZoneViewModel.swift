@@ -9,34 +9,26 @@ import RxSwift
 import RxCocoa
 
 struct DangerZoneViewModel {
+    private let disposeBag = DisposeBag()
+    private let repository: ProfileRepository
     
-    let disposeBag = DisposeBag()
-    
-    let buttonSelected = PublishSubject<Void>()
-    let confirmSelected = PublishSubject<Void>()
-    
-    let accountRemoveRequestResult = PublishSubject<AccountRemoveRequestResult>()
-    
-    init() {
-        
-        confirmSelected
-            .flatMapLatest { ProfileNetwork().deleteAccount() }
-            .map { result in
-                switch result {
-                    case .success(_):
-                        return AccountRemoveRequestResult(isSuccess: true, message: nil)
-                    case .failure(let error):
-                        return AccountRemoveRequestResult(isSuccess: false, message: error.rawValue)
-                }
-            }
-            .bind(to: accountRemoveRequestResult)
-            .disposed(by: disposeBag)
-        
+    struct Input {
+        let trigger: Driver<Void>
     }
     
-}
-
-struct AccountRemoveRequestResult {
-    let isSuccess: Bool
-    let message: String?
+    struct Output {
+        let result: Driver<RequestResult>
+    }
+    
+    init(_ repoistory: ProfileRepository = ProfileRepository()) {
+        self.repository = repoistory
+    }
+    
+    func transform(input: Input) -> Output {
+        let result = input.trigger
+            .flatMapLatest { repository.deleteAccount().asDriver(onErrorJustReturn: RequestResult(isSuccess: false, message: nil)) }
+        
+        return Output(result: result)
+    }
+    
 }

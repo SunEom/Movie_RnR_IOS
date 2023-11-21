@@ -9,26 +9,29 @@ import RxSwift
 import RxCocoa
 
 struct UserPostingViewModel {
+    private var userID: Int!
+    private let disposeBag = DisposeBag()
+    private let repository: PostRepository
     
-    var userID: Int!
+    struct Input {
+        let selected: Driver<IndexPath>
+    }
     
-    let disposeBag = DisposeBag()
-    
-    let cellData: Driver<[Post]>
-    
-    let selectedIdx = PublishSubject<IndexPath>()
-    let selectedItem = PublishSubject<Post>()
+    struct Output {
+        let posts: Driver<[Post]>
+        let selectedPost: Driver<Post>
+    }
     
     init(userID: Int, _ repository: PostRepository = PostRepository()) {
         self.userID = userID
-        cellData = repository.fetchUserPostings(userID: self.userID)
+        self.repository = repository
+    }
+    
+    func transform(input: Input) -> Output {
+        let posts = repository.fetchUserPostings(userID: userID)
+            .asDriver()
+        let selectedPost = input.selected.withLatestFrom(posts) { indexPath, list in list[indexPath.row] }.asDriver()
         
-        selectedIdx
-            .withLatestFrom(cellData) { idx, posts in
-                return posts[idx.row]
-            }
-            .bind(to: selectedItem)
-            .disposed(by: disposeBag)
-        
+        return Output(posts: posts, selectedPost: selectedPost)
     }
 }

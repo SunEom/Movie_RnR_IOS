@@ -7,16 +7,37 @@
 
 import UIKit
 import RxSwift
+import SnapKit
 
-class UserPostingViewController: UIViewController {
+final class UserPostingViewController: UIViewController {
     
-    var viewModel: UserPostingViewModel!
+    private let viewModel: UserPostingViewModel
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
-    let tableView = UITableView()
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = UIColor(named: "mainColor")
+        tableView.separatorStyle = .none
+        return tableView
+    }()
     
-    let infoLabel = UILabel()
+    private let infoLabel: UILabel = {
+        let label = UILabel()
+        label.text = "작성된 게시글이 없습니다."
+        label.textColor = .black
+        label.textAlignment = .center
+        return label
+    }()
+    
+    init(viewModel: UserPostingViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,18 +47,21 @@ class UserPostingViewController: UIViewController {
         
         layout()
         attribute()
-        bind()
+        bindViewModel()
     }
     
-    private func bind() {
+    private func bindViewModel() {
         
-        viewModel.cellData
-            .asObservable()
+        let input = UserPostingViewModel.Input(selected: tableView.rx.itemSelected.asDriver())
+        
+        let output = viewModel.transform(input: input)
+        
+        output.posts
             .map { $0.count != 0 }
-            .bind(to: infoLabel.rx.isHidden)
+            .drive(infoLabel.rx.isHidden)
             .disposed(by: disposeBag)
         
-        viewModel.cellData
+        output.posts
             .drive(tableView.rx.items) { tv, row, data in
                 let indexPath = IndexPath(row: row, section: 0)
                 let cell = tv.dequeueReusableCell(withIdentifier: Constant.TableViewCellID.Posting, for: indexPath) as! PostCell
@@ -46,18 +70,9 @@ class UserPostingViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        tableView.rx.itemSelected
-            .map {
-                self.tableView.cellForRow(at: $0)?.isSelected = false
-                return $0
-            }
-            .bind(to: viewModel.selectedIdx)
-            .disposed(by: disposeBag)
-        
-        viewModel.selectedItem
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
-                let vc = DetailFactory().getInstance(post: $0)
+        output.selectedPost
+            .drive(onNext: { post in
+                let vc = DetailFactory().getInstance(post: post)
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
@@ -66,32 +81,21 @@ class UserPostingViewController: UIViewController {
     }
     
     private func layout() {
-        [tableView, infoLabel]
-            .forEach {
-                view.addSubview($0)
-                $0.translatesAutoresizingMaskIntoConstraints = false
-            }
+        [tableView, infoLabel].forEach { view.addSubview($0) }
         
-        [
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-            infoLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            infoLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ].forEach { $0.isActive = true }
+        tableView.snp.makeConstraints {
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalTo(view)
+        }
+        
+        infoLabel.snp.makeConstraints {
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalTo(view)
+        }
     }
     
     private func attribute() {
         view.backgroundColor = UIColor(named: "mainColor")
-        tableView.backgroundColor = UIColor(named: "mainColor")
-        
-        infoLabel.text = "작성된 게시글이 없습니다."
-        infoLabel.textColor = .black
-        infoLabel.textAlignment = .center
     }
     
     

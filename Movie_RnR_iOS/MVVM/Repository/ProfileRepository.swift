@@ -43,4 +43,38 @@ struct ProfileRepository {
             }
             .asObservable()
     }
+    
+    func updatePassword(current: String, new: String, check: String) -> Observable<RequestResult> {
+        
+        if current == "" {
+            return Observable.just(RequestResult(isSuccess: false, message: "현재 비밀번호를 입력해주세요."))
+        } else if new == "" {
+            return Observable.just(RequestResult(isSuccess: false, message: "새로운 비밀번호를 입력해주세요."))
+        } else if check == ""  {
+            return Observable.just(RequestResult(isSuccess: false, message: "새로운 비밀번호를 다시 입력해주세요."))
+        } else if new != check {
+            return Observable.just(RequestResult(isSuccess: false, message: "비밀번호가 서로 같지 않습니다."))
+        }
+        
+        return ProfileNetwork().updatePassword(password: current, newPassword: new)
+            .map { result in
+                guard case .success(_) = result else { return RequestResult(isSuccess: false, message: "잠시 후에 다시 시도해주세요.")}
+                
+                return RequestResult(isSuccess: true, message: "비밀번호가 정상적으로 변경 되었습니다.")
+            }
+            .asObservable()
+    }
+    
+    func deleteAccount() -> Observable<RequestResult> {
+        return ProfileNetwork().deleteAccount()
+            .map { result in
+                switch result {
+                    case .success(_):
+                        return RequestResult(isSuccess: true, message: nil)
+                    case .failure(let error):
+                        return RequestResult(isSuccess: false, message: error.rawValue)
+                }
+            }
+            .asObservable()
+    }
 }

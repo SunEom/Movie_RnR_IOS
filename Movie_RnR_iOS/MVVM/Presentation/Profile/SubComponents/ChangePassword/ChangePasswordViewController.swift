@@ -7,59 +7,79 @@
 
 import UIKit
 import RxSwift
+import SnapKit
 
 class ChangePasswordViewController: UIViewController {
     
-    var viewModel: ChangePasswordViewModel!
+    private let viewModel: ChangePasswordViewModel
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
-    let subtitleLabel = UILabel()
-    let currentTextField = UITextField()
+    private let subtitleLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Current Password"
+        return label
+    }()
     
-    let subtitleLabel2 = UILabel()
-    let newPasswordTextField = UITextField()
+    private let currentTextField = UITextField()
     
-    let subtitleLabel3 = UILabel()
-    let passwordCheckTextField = UITextField()
+    private let subtitleLabel2: UILabel = {
+        let label = UILabel()
+        label.text = "New Password"
+        return label
+    }()
     
-    let changeButton = UIButton()
+    private let newPasswordTextField = UITextField()
+    
+    private let subtitleLabel3: UILabel = {
+        let label = UILabel()
+        label.text = "New Password Check"
+        return label
+    }()
+    
+    private let passwordCheckTextField = UITextField()
+    
+    private let changeButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor(named: "headerColor")
+        button.titleLabel?.textColor = .white
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
+        button.setTitle("Change Password", for: .normal)
+        return button
+    }()
+    
+    init(viewModel: ChangePasswordViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layout()
         attribute()
-        bind()
+        bindViewModel()
     }
     
-    private func bind() {
-        currentTextField.rx.text
-            .map { $0 ?? ""}
-            .bind(to: viewModel.currentPassword)
-            .disposed(by: disposeBag)
+    private func bindViewModel() {
         
-        newPasswordTextField.rx.text
-            .map { $0 ?? ""}
-            .bind(to: viewModel.newPassword)
-            .disposed(by: disposeBag)
+        let input = ChangePasswordViewModel.Input(trigger: changeButton.rx.tap.asDriver(), 
+                                                  current: currentTextField.rx.text.orEmpty.asDriver(),
+                                                  new: newPasswordTextField.rx.text.orEmpty.asDriver(),
+                                                  newCheck: passwordCheckTextField.rx.text.orEmpty.asDriver())
+
+        let output = viewModel.transform(input: input)
         
-        passwordCheckTextField.rx.text
-            .map { $0 ?? ""}
-            .bind(to: viewModel.newPasswordCheck)
-            .disposed(by: disposeBag)
-        
-        changeButton.rx.tap
-            .bind(to: viewModel.saveButtonTap)
-            .disposed(by: disposeBag)
-        
-        viewModel.alert
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
-                let alert = UIAlertController(title: $0.title, message: $0.messsage, preferredStyle: .alert)
+        output.result
+            .drive(onNext: { result in
+                let alert = UIAlertController(title: result.isSuccess ? "성공" : "실패", message: result.message ?? "", preferredStyle: .alert)
                 let action: UIAlertAction!
                 
-                if $0.title == "성공" {
+                if result.isSuccess {
                     action = UIAlertAction(title: "확인", style: .default) {_ in
                         self.navigationController?.popViewController(animated: true)
                     }
@@ -79,55 +99,52 @@ class ChangePasswordViewController: UIViewController {
         view.addGestureRecognizer(tap)
     
         [subtitleLabel, currentTextField, subtitleLabel2, newPasswordTextField, subtitleLabel3, passwordCheckTextField, changeButton]
-            .forEach {
-                view.addSubview($0)
-                $0.translatesAutoresizingMaskIntoConstraints = false
-            }
+            .forEach { view.addSubview($0) }
         
-        [
-            subtitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            subtitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            subtitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
-            
-            currentTextField.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 10),
-            currentTextField.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
-            currentTextField.trailingAnchor.constraint(equalTo: subtitleLabel.trailingAnchor),
-            currentTextField.heightAnchor.constraint(equalToConstant: 40),
-            
-            subtitleLabel2.topAnchor.constraint(equalTo: currentTextField.bottomAnchor, constant: 15),
-            subtitleLabel2.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
-            subtitleLabel2.trailingAnchor.constraint(equalTo: subtitleLabel.trailingAnchor),
-            
-            newPasswordTextField.topAnchor.constraint(equalTo: subtitleLabel2.bottomAnchor, constant: 10),
-            newPasswordTextField.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
-            newPasswordTextField.trailingAnchor.constraint(equalTo: subtitleLabel.trailingAnchor),
-            newPasswordTextField.heightAnchor.constraint(equalToConstant: 40),
-            
-            subtitleLabel3.topAnchor.constraint(equalTo: newPasswordTextField.bottomAnchor, constant: 15),
-            subtitleLabel3.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
-            subtitleLabel3.trailingAnchor.constraint(equalTo: subtitleLabel.trailingAnchor),
-            
-            passwordCheckTextField.topAnchor.constraint(equalTo: subtitleLabel3.bottomAnchor, constant: 10),
-            passwordCheckTextField.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
-            passwordCheckTextField.trailingAnchor.constraint(equalTo: subtitleLabel.trailingAnchor),
-            passwordCheckTextField.heightAnchor.constraint(equalToConstant: 40),
-            
-            changeButton.topAnchor.constraint(equalTo: passwordCheckTextField.bottomAnchor, constant: 20),
-            changeButton.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
-            changeButton.trailingAnchor.constraint(equalTo: subtitleLabel.trailingAnchor),
-            changeButton.heightAnchor.constraint(equalToConstant: 40),
-            
-        ]
-            .forEach { $0.isActive = true }
+        subtitleLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.leading.equalTo(view).offset(15)
+            $0.trailing.equalTo(view).offset(-15)
+        }
+        
+        currentTextField.snp.makeConstraints {
+            $0.top.equalTo(subtitleLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(subtitleLabel)
+            $0.height.equalTo(40)
+        }
+        
+        subtitleLabel2.snp.makeConstraints {
+            $0.top.equalTo(currentTextField.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(subtitleLabel)
+        }
+        
+        newPasswordTextField.snp.makeConstraints {
+            $0.top.equalTo(subtitleLabel2.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(subtitleLabel)
+            $0.height.equalTo(40)
+        }
+        
+        subtitleLabel3.snp.makeConstraints {
+            $0.top.equalTo(newPasswordTextField.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(subtitleLabel)
+        }
+        
+        passwordCheckTextField.snp.makeConstraints {
+            $0.top.equalTo(subtitleLabel3.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(subtitleLabel)
+            $0.height.equalTo(40)
+        }
+        
+        changeButton.snp.makeConstraints {
+            $0.top.equalTo(passwordCheckTextField.snp.bottom).offset(20)
+            $0.leading.trailing.equalTo(subtitleLabel)
+            $0.height.equalTo(40)
+        }
         
     }
     
     private func attribute() {
         view.backgroundColor = UIColor(named: "mainColor")
-        
-        subtitleLabel.text = "Current Password"
-        subtitleLabel2.text = "New Password"
-        subtitleLabel3.text = "New Password Check"
         
         [subtitleLabel, subtitleLabel2, subtitleLabel3]
             .forEach {
@@ -149,11 +166,6 @@ class ChangePasswordViewController: UIViewController {
                 $0.autocapitalizationType = .none
                 $0.autocorrectionType = .no
             }
-        
-        changeButton.backgroundColor = UIColor(named: "headerColor")
-        changeButton.titleLabel?.textColor = .white
-        changeButton.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
-        changeButton.setTitle("Change Password", for: .normal)
         
     }
     

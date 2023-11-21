@@ -14,17 +14,17 @@ class EditProfileViewController: UIViewController {
     
     private let viewModel: EditProfileViewModel
     
-    let disposeBag = DisposeBag()
-    let scrollView = UIScrollView()
-    let contentView = UIView()
+    private let disposeBag = DisposeBag()
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
     
-    let nicknameTitleLabel: UILabel = {
+    private let nicknameTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Nickname"
         return label
     }()
     
-    let nicknameStackView: UIStackView = {
+    private let nicknameStackView: UIStackView = {
         let stackView = UIStackView()
         
         stackView.alignment = .fill
@@ -33,8 +33,8 @@ class EditProfileViewController: UIViewController {
         return stackView
     }()
     
-    let nicknameTextField = UITextField()
-    let nicknameCheckButton: UIButton = {
+    private let nicknameTextField = UITextField()
+    private let nicknameCheckButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor(named: "headerColor")
         button.setTitle("Check", for: .normal)
@@ -42,53 +42,53 @@ class EditProfileViewController: UIViewController {
         return button
     }()
     
-    let genderTitleLabel: UILabel = {
+    private let genderTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Gender"
         return label
     }()
     
-    let genderPicker: UIPickerView = {
+    private let genderPicker: UIPickerView = {
         let picker = UIPickerView()
         picker.setValue(UIColor.black, forKeyPath: "textColor")
         return picker
     }()
     
-    let biographyTitleLabel: UILabel = {
+    private let biographyTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Biography"
         return label
     }()
     
-    let biographyTextView: UITextView = {
+    private let biographyTextView: UITextView = {
         let textView = UITextView()
         textView.textColor = .black
         textView.backgroundColor = .white
         return textView
     }()
     
-    let fbTitleLabel: UILabel = {
+    private let fbTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Facebook"
         return label
     }()
-    let fbTextField = UITextField()
+    private let fbTextField = UITextField()
     
-    let igTitleLabel: UILabel = {
+    private let igTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Instagram"
         return label
     }()
-    let igTextField = UITextField()
+    private let igTextField = UITextField()
     
-    let ttTitleLabel: UILabel = {
+    private let ttTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Twitter"
         return label
     }()
-    let ttTextField = UITextField()
+    private let ttTextField = UITextField()
     
-    let saveButton: UIBarButtonItem = {
+    private let saveButton: UIBarButtonItem = {
         let button = UIBarButtonItem()
         button.title = "Save"
         return button

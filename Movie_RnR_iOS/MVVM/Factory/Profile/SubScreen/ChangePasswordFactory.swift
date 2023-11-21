@@ -9,8 +9,7 @@ import Foundation
 
 struct ChangePasswordFactory {
     func getInstance() -> ChangePasswordViewController {
-        let vc = ChangePasswordViewController()
-        vc.viewModel = ChangePasswordViewModel()
+        let vc = ChangePasswordViewController(viewModel: ChangePasswordViewModel())
         return vc
     }
 }

@@ -9,8 +9,7 @@ import Foundation
 
 struct DangerZoneFactory {
     func getInstance() -> DangerZoneViewController {
-        let vc = DangerZoneViewController()
-        vc.viewModel = DangerZoneViewModel()
+        let vc = DangerZoneViewController(viewModel: DangerZoneViewModel())
         return vc
     }
 }

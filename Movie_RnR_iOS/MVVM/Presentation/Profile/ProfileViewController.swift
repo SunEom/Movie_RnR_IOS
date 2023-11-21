@@ -278,8 +278,7 @@ class ProfileViewController: UIViewController {
         }
         
         contentView.snp.makeConstraints {
-            $0.top.leading.trailing.width.equalTo(scrollView)
-            $0.bottom.equalTo(logoutButton).offset(10)
+            $0.top.leading.trailing.bottom.width.equalTo(scrollView)
         }
         
         titleLabel.snp.makeConstraints {
@@ -361,6 +360,7 @@ class ProfileViewController: UIViewController {
             $0.top.equalTo(menuTableView.snp.bottom).offset(30)
             $0.height.equalTo(40)
             $0.leading.trailing.equalTo(titleLabel)
+            $0.bottom.equalTo(contentView).offset(-20)
         }
         
     }

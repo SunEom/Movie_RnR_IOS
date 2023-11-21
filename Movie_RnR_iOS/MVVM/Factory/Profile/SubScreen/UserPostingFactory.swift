@@ -9,9 +9,7 @@ import Foundation
 
 struct UserPostingFactory {
     func getInstance(userID: Int) -> UserPostingViewController {
-        let vc = UserPostingViewController()
-        let vm = UserPostingViewModel(userID: userID)
-        vc.viewModel = vm
+        let vc = UserPostingViewController(viewModel: UserPostingViewModel(userID: userID))
         return vc
     }
 }
