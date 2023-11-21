@@ -8,173 +8,180 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SnapKit
 
 class EditProfileViewController: UIViewController {
     
-    var viewModel : EditProfileViewModel!
+    private let viewModel: EditProfileViewModel
     
     let disposeBag = DisposeBag()
     let scrollView = UIScrollView()
     let contentView = UIView()
     
-    let nicknameTitleLabel = UILabel()
-    let nicknameStackView = UIStackView()
+    let nicknameTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Nickname"
+        return label
+    }()
+    
+    let nicknameStackView: UIStackView = {
+        let stackView = UIStackView()
+        
+        stackView.alignment = .fill
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 10
+        return stackView
+    }()
+    
     let nicknameTextField = UITextField()
-    let nicknameCheckButton = UIButton()
+    let nicknameCheckButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor(named: "headerColor")
+        button.setTitle("Check", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        return button
+    }()
     
-    let genderTitleLabel = UILabel()
-    let genderPicker = UIPickerView()
+    let genderTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Gender"
+        return label
+    }()
     
-    let biographyTitleLabel = UILabel()
-    let biographyTextView = UITextView()
+    let genderPicker: UIPickerView = {
+        let picker = UIPickerView()
+        picker.setValue(UIColor.black, forKeyPath: "textColor")
+        return picker
+    }()
     
-    let fbTitleLabel = UILabel()
+    let biographyTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Biography"
+        return label
+    }()
+    
+    let biographyTextView: UITextView = {
+        let textView = UITextView()
+        textView.textColor = .black
+        textView.backgroundColor = .white
+        return textView
+    }()
+    
+    let fbTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Facebook"
+        return label
+    }()
     let fbTextField = UITextField()
     
-    let igTitleLabel = UILabel()
+    let igTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Instagram"
+        return label
+    }()
     let igTextField = UITextField()
     
-    let ttTitleLabel = UILabel()
+    let ttTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Twitter"
+        return label
+    }()
     let ttTextField = UITextField()
     
-    let saveButton = UIBarButtonItem()
+    let saveButton: UIBarButtonItem = {
+        let button = UIBarButtonItem()
+        button.title = "Save"
+        return button
+    }()
+    
+    init(viewModel: EditProfileViewModel!) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bind()
+        bindViewModel()
         attribute()
         layout()
     }
     
-    private func bind() {
-        viewModel.genderList
+    private func bindViewModel() {
+        
+        let input = EditProfileViewModel.Input(nickCheckTrigger: nicknameCheckButton.rx.tap.asDriver(),
+                                               nickname: nicknameTextField.rx.text.orEmpty.asDriver(),
+                                               genderIdx: genderPicker.rx.itemSelected.map { $0.row }.asDriver(onErrorJustReturn: 0),
+                                               biography: biographyTextView.rx.text.orEmpty.asDriver(),
+                                               facebook: fbTextField.rx.text.orEmpty.asDriver(),
+                                               instagram: igTextField.rx.text.orEmpty.asDriver(),
+                                               twiiter: ttTextField.rx.text.orEmpty.asDriver(),
+                                               updateTrigger: saveButton.rx.tap.asDriver())
+        
+        let output = viewModel.transform(input: input)
+        
+        output.genderList
             .drive(genderPicker.rx.itemTitles) { idx, title in
                 return title
             }
             .disposed(by: disposeBag)
         
-        saveButton.rx.tap
-            .bind(to: viewModel.saveButtonTap)
-            .disposed(by: disposeBag)
-        
-        nicknameCheckButton.rx.tap
-            .bind(to: viewModel.nicknameButtonTap)
-            .disposed(by: disposeBag)
-        
-        //TextField Initialize
         UserManager.getInstance()
-            .map { $0?.nickname ?? "" }
-            .bind(to: nicknameTextField.rx.text)
-            .disposed(by: disposeBag)
-        
-        UserManager.getInstance()
-            .subscribe(onNext: {
-                self.viewModel.gender.onNext($0?.gender ?? "None")
-            })
-            .disposed(by: disposeBag)
-        
-        UserManager.getInstance()
+            .filter { $0 != nil }
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
+            .subscribe(onNext: { [weak self] user in
+                guard let user = user, let self = self else { return }
+                
+                self.nicknameTextField.rx.text.onNext(user.nickname)
+                
                 var row = 0
-                
-                switch $0?.gender ?? "None" {
-                case "None":
-                    row = 0
-                case "Man":
-                    row = 1
-                case "Woman":
-                    row = 2
-                default:
-                    row = 0
+                switch user.gender {
+                    case "None":
+                        row = 0
+                    case "Man":
+                        row = 1
+                    case "Woman":
+                        row = 2
+                    default:
+                        row = 0
                 }
+                self.genderPicker.selectRow(row, inComponent: 0, animated: false)
                 
-                self.genderPicker.selectRow(row, inComponent: 0, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        UserManager.getInstance()
-            .map { $0?.biography ?? "" }
-            .bind(to: biographyTextView.rx.text)
-            .disposed(by: disposeBag)
-        
-        UserManager.getInstance()
-            .map { $0?.facebook ?? "" }
-            .bind(to: fbTextField.rx.text)
-            .disposed(by: disposeBag)
-        
-        UserManager.getInstance()
-            .map { $0?.instagram ?? "" }
-            .bind(to: igTextField.rx.text)
-            .disposed(by: disposeBag)
-        
-        UserManager.getInstance()
-            .map { $0?.twitter ?? "" }
-            .bind(to: ttTextField.rx.text)
-            .disposed(by: disposeBag)
-        
-        // 수정사항 bind
-        
-        nicknameTextField.rx.text
-            .compactMap { $0 ?? ""}
-            .bind(to: viewModel.nickname)
-            .disposed(by: disposeBag)
-        
-        genderPicker.rx.itemSelected
-            .compactMap { $0.row }
-            .bind(to: viewModel.genderIdx)
-            .disposed(by: disposeBag)
-        
-        biographyTextView.rx.text
-            .compactMap { $0 ?? ""}
-            .bind(to: viewModel.biography)
-            .disposed(by: disposeBag)
-        
-        fbTextField.rx.text
-            .compactMap { $0 ?? ""}
-            .bind(to: viewModel.facebook)
-            .disposed(by: disposeBag)
-        
-        igTextField.rx.text
-            .compactMap { $0 ?? ""}
-            .bind(to: viewModel.instagram)
-            .disposed(by: disposeBag)
-        
-        ttTextField.rx.text
-            .compactMap { $0 ?? ""}
-            .bind(to: viewModel.twitter)
-            .disposed(by: disposeBag)
-        
-        // 정보 변경 확인
-        
-        viewModel.saveButtonTap
-            .withLatestFrom(UserManager.getInstance())
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { _ in
-                let alert = UIAlertController(title: "성공", message: "정상적으로 수정되었습니다.", preferredStyle: .alert)
-
-                let action = UIAlertAction(title: "OK", style: .default) { _ in
-                    self.navigationController?.popViewController(animated: true)
-                }
-
-                alert.addAction(action)
-
-                self.present(alert, animated: true)
+                self.biographyTextView.rx.text.onNext(user.biography)
+                self.fbTextField.rx.text.onNext(user.facebook)
+                self.igTextField.rx.text.onNext(user.instagram)
+                self.ttTextField.rx.text.onNext(user.twitter)
             })
             .disposed(by: disposeBag)
 
-        // Alert
+        output.updateResult
+            .drive(onNext: { result in
+                if result.isSuccess {
+                    let alert = UIAlertController(title: "성공", message: "정상적으로 수정되었습니다.", preferredStyle: .alert)
+
+                    let action = UIAlertAction(title: "OK", style: .default) { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    }
+
+                    alert.addAction(action)
+
+                    self.present(alert, animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
         
-        viewModel.alert
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { (title, message) in
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                
+        output.nickCheckResult
+            .drive(onNext: { result in
+                let alert = UIAlertController(title: result.isSuccess ? "성공" : "실패", message: result.message ?? "", preferredStyle: .alert)
+
                 let action = UIAlertAction(title: "OK", style: .default)
-                
+
                 alert.addAction(action)
-                
+
                 self.present(alert, animated: true)
             })
             .disposed(by: disposeBag)
@@ -182,27 +189,8 @@ class EditProfileViewController: UIViewController {
     
     private func attribute() {
         view.backgroundColor = UIColor(named: "mainColor")
-        
         self.navigationItem.rightBarButtonItem = saveButton
-        saveButton.title = "Save"
-        
-        nicknameStackView.addArrangedSubview(nicknameTextField)
-        nicknameStackView.addArrangedSubview(nicknameCheckButton)
-        nicknameStackView.alignment = .fill
-        nicknameStackView.distribution = .fillProportionally
-        nicknameStackView.spacing = 10
-        
-        nicknameCheckButton.backgroundColor = UIColor(named: "headerColor")
-        nicknameCheckButton.setTitle("Check", for: .normal)
-        nicknameCheckButton.setTitleColor(.white, for: .normal)
-        
-        nicknameTitleLabel.text = "Nickname"
-        genderTitleLabel.text = "Gender"
-        biographyTitleLabel.text = "Biography"
-        fbTitleLabel.text = "Facebook"
-        igTitleLabel.text = "Instagram"
-        ttTitleLabel.text = "Twitter"
-        
+
         [nicknameTitleLabel, genderTitleLabel, biographyTitleLabel, fbTitleLabel, igTitleLabel, ttTitleLabel]
             .forEach {
                 $0.textColor = .black
@@ -223,11 +211,6 @@ class EditProfileViewController: UIViewController {
                 $0.autocorrectionType = .no
             }
         
-        
-        biographyTextView.textColor = .black
-        biographyTextView.backgroundColor = .white
-        
-        genderPicker.setValue(UIColor.black, forKeyPath: "textColor")
     }
     
     private func layout() {
@@ -235,11 +218,13 @@ class EditProfileViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         view.addGestureRecognizer(tap)
     
+        
         // ScrollView Layout
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         
-        contentView.translatesAutoresizingMaskIntoConstraints = false
+        nicknameStackView.addArrangedSubview(nicknameTextField)
+        nicknameStackView.addArrangedSubview(nicknameCheckButton)
+        
         scrollView.addSubview(contentView)
         
         [
@@ -256,83 +241,86 @@ class EditProfileViewController: UIViewController {
             ttTitleLabel,
             ttTextField,
         ].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
         
-        [
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo:scrollView.widthAnchor),
-            
-            // leading trailing 기준
-            nicknameTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-            nicknameTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            nicknameTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
-            
-            nicknameStackView.topAnchor.constraint(equalTo: nicknameTitleLabel.bottomAnchor, constant: 10),
-            nicknameStackView.leadingAnchor.constraint(equalTo: nicknameTitleLabel.leadingAnchor),
-            nicknameStackView.trailingAnchor.constraint(equalTo: nicknameTitleLabel.trailingAnchor),
-            
-            nicknameCheckButton.widthAnchor.constraint(equalToConstant: 80),
-            
-            genderTitleLabel.topAnchor.constraint(equalTo: nicknameStackView.bottomAnchor, constant: 15),
-            genderTitleLabel.leadingAnchor.constraint(equalTo: nicknameTitleLabel.leadingAnchor),
-            genderTitleLabel.trailingAnchor.constraint(equalTo: nicknameTitleLabel.trailingAnchor),
-            
-            genderPicker.topAnchor.constraint(equalTo: genderTitleLabel.bottomAnchor, constant: 10),
-            genderPicker.leadingAnchor.constraint(equalTo: nicknameTitleLabel.leadingAnchor ),
-            genderPicker.trailingAnchor.constraint(equalTo: nicknameTitleLabel.trailingAnchor),
-            genderPicker.heightAnchor.constraint(equalToConstant: 120),
-            
-            biographyTitleLabel.topAnchor.constraint(equalTo: genderPicker.bottomAnchor, constant: 15),
-            biographyTitleLabel.leadingAnchor.constraint(equalTo: nicknameTitleLabel.leadingAnchor),
-            biographyTitleLabel.trailingAnchor.constraint(equalTo: nicknameTitleLabel.trailingAnchor),
-            
-            biographyTextView.topAnchor.constraint(equalTo: biographyTitleLabel.bottomAnchor, constant: 10),
-            biographyTextView.leadingAnchor.constraint(equalTo: nicknameTitleLabel.leadingAnchor),
-            biographyTextView.trailingAnchor.constraint(equalTo: nicknameTitleLabel.trailingAnchor),
-            biographyTextView.heightAnchor.constraint(equalToConstant: 150),
-            
-            fbTitleLabel.topAnchor.constraint(equalTo: biographyTextView.bottomAnchor, constant: 15),
-            fbTitleLabel.leadingAnchor.constraint(equalTo: nicknameTitleLabel.leadingAnchor),
-            fbTitleLabel.trailingAnchor.constraint(equalTo: nicknameTitleLabel.trailingAnchor),
-            
-            fbTextField.topAnchor.constraint(equalTo: fbTitleLabel.bottomAnchor, constant: 10),
-            fbTextField.leadingAnchor.constraint(equalTo: nicknameTitleLabel.leadingAnchor),
-            fbTextField.trailingAnchor.constraint(equalTo: nicknameTitleLabel.trailingAnchor),
-            fbTextField.heightAnchor.constraint(equalToConstant: 40),
-            
-            igTitleLabel.topAnchor.constraint(equalTo: fbTextField.bottomAnchor, constant: 15),
-            igTitleLabel.leadingAnchor.constraint(equalTo: nicknameTitleLabel.leadingAnchor),
-            igTitleLabel.trailingAnchor.constraint(equalTo: nicknameTitleLabel.trailingAnchor),
-            
-            igTextField.topAnchor.constraint(equalTo: igTitleLabel.bottomAnchor, constant: 10),
-            igTextField.leadingAnchor.constraint(equalTo: nicknameTitleLabel.leadingAnchor),
-            igTextField.trailingAnchor.constraint(equalTo: nicknameTitleLabel.trailingAnchor),
-            igTextField.heightAnchor.constraint(equalToConstant: 40),
-            
-            ttTitleLabel.topAnchor.constraint(equalTo: igTextField.bottomAnchor, constant: 15),
-            ttTitleLabel.leadingAnchor.constraint(equalTo: nicknameTitleLabel.leadingAnchor),
-            ttTitleLabel.trailingAnchor.constraint(equalTo: nicknameTitleLabel.trailingAnchor),
-            
-            ttTextField.topAnchor.constraint(equalTo: ttTitleLabel.bottomAnchor, constant: 10),
-            ttTextField.leadingAnchor.constraint(equalTo: nicknameTitleLabel.leadingAnchor),
-            ttTextField.trailingAnchor.constraint(equalTo: nicknameTitleLabel.trailingAnchor),
-            ttTextField.heightAnchor.constraint(equalToConstant: 40),
-            
-            contentView.bottomAnchor.constraint(equalTo: ttTextField.bottomAnchor,constant: 30)
-            
-            
-            
-        ].forEach { $0.isActive = true}
+        scrollView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.width.equalTo(scrollView)
+        }
+        
+        nicknameTitleLabel.snp.makeConstraints{
+            $0.top.leading.equalTo(contentView).offset(15)
+            $0.trailing.equalTo(contentView).offset(-15)
+        }
+        
+        nicknameStackView.snp.makeConstraints {
+            $0.top.equalTo(nicknameTitleLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(nicknameTitleLabel)
+        }
+        
+        nicknameCheckButton.snp.makeConstraints {
+            $0.width.equalTo(80)
+        }
+        
+        genderTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(nicknameStackView.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(nicknameTitleLabel)
+        }
+        
+        genderPicker.snp.makeConstraints {
+            $0.top.equalTo(genderTitleLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(nicknameTitleLabel)
+            $0.height.equalTo(120)
+        }
+        
+        biographyTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(genderPicker.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(nicknameTitleLabel)
+        }
+        
+        biographyTextView.snp.makeConstraints {
+            $0.top.equalTo(biographyTitleLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(nicknameTitleLabel)
+            $0.height.equalTo(150)
+        }
+        
+        fbTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(biographyTextView.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(nicknameTitleLabel)
+        }
+        
+        fbTextField.snp.makeConstraints {
+            $0.top.equalTo(fbTitleLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(nicknameTitleLabel)
+            $0.height.equalTo(40)
+        }
+        
+        igTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(fbTextField.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(nicknameTitleLabel)
+        }
+        
+        igTextField.snp.makeConstraints {
+            $0.top.equalTo(igTitleLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(nicknameTitleLabel)
+            $0.height.equalTo(40)
+        }
+        
+        ttTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(igTextField.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(nicknameTitleLabel)
+        }
+        
+        ttTextField.snp.makeConstraints {
+            $0.top.equalTo(ttTitleLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(nicknameTitleLabel)
+            $0.height.equalTo(40)
+            $0.bottom.equalTo(contentView)
+        }
         
     }
     

@@ -9,124 +9,65 @@ import RxSwift
 import RxCocoa
 
 struct EditProfileViewModel {
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    private let repository: ProfileRepository
     
-    let genderList = Driver.just(["None","Man","Woman"])
+    struct Input {
+        let nickCheckTrigger: Driver<Void>
+        let nickname: Driver<String>
+        let genderIdx: Driver<Int>
+        let biography: Driver<String>
+        let facebook: Driver<String>
+        let instagram: Driver<String>
+        let twiiter: Driver<String>
+        let updateTrigger: Driver<Void>
+    }
     
-    let alert = PublishSubject<(title: String, message: String)>()
-    let nickCheck = BehaviorSubject<Bool>(value: true)
-    let nickname = PublishSubject<String>()
-    let genderIdx = PublishSubject<Int>()
-    let gender = PublishSubject<String>()
-    let biography = PublishSubject<String>()
-    let facebook = PublishSubject<String>()
-    let instagram = PublishSubject<String>()
-    let twitter = PublishSubject<String>()
+    struct Output {
+        let genderList: Driver<[String]>
+        let nickCheckResult: Driver<RequestResult>
+        let updateResult: Driver<RequestResult>
+    }
     
-    let editData = PublishSubject<Profile>()
+    init(_ repository: ProfileRepository = ProfileRepository()) {
+        self.repository = repository
+    }
     
-    let saveButtonTap = PublishSubject<Void>()
-    let nicknameButtonTap = PublishSubject<Void>()
-    
-    init() {
+    func transform(input: Input) -> Output {
+        let genderList = Driver.just(["None","Man","Woman"])
         
-        // gender setting
-        genderIdx
-            .withLatestFrom(genderList) { $1[$0] }
-            .bind(to: gender)
-            .disposed(by: disposeBag)
+        let nickCheck = BehaviorSubject<Bool>(value: true)
+        input.nickname.distinctUntilChanged().map { _ in false }.asObservable().bind(to: nickCheck).disposed(by: disposeBag)
         
-        // nickname process
+        let nickCheckResult = input.nickCheckTrigger
+            .withLatestFrom(input.nickname)
+            .flatMap { repository.nicknameCheck(nickname: $0)
+                    .do { result in
+                        if result.isSuccess {
+                            nickCheck.onNext(true)
+                        }
+                    }
+                    .asDriver(onErrorJustReturn: RequestResult(isSuccess: false, message: nil))
+            }
+
         
-        let nickCheckResult = nicknameButtonTap
-            .withLatestFrom(nickname)
-            .flatMapLatest(ProfileNetwork().requestNicknameCheck)
+        let gender = input.genderIdx.withLatestFrom(genderList) { row, list in list[row] }
         
-        nickCheckResult
-            .map { result -> (title: String, message: String) in
-                guard case .success(let response) = result else { return ("오류", "잠시후에 다시 시도해주세요") }
-                if response.already {
-                    return ("실패", "이미 사용중인 닉네임입니다.")
+        let updateResult = input.updateTrigger
+            .withLatestFrom(Driver.combineLatest(UserManager.getInstance().asDriver(onErrorJustReturn: nil), input.nickname, gender, input.biography, input.facebook, input.instagram, input.twiiter))
+            .map {(user, nickname, gender, biography, facebook, instagram, twiiter) in
+                return Profile(id: user?.id ?? -1, nickname: nickname, gender: gender, biography: biography, facebook: facebook, instagram: instagram, twitter: twiiter)
+            }
+            .withLatestFrom(nickCheck.asDriver(onErrorJustReturn: false)) { ($0, $1) }
+            .flatMapLatest { profile, nickCheck in
+                if nickCheck {
+                    return repository.updateProfile(profile: profile).asDriver(onErrorJustReturn: RequestResult(isSuccess: false, message: nil))
                 } else {
-                    return ("성공", "사용 가능한 닉네임입니다.")
+                    return Driver.just(RequestResult(isSuccess: false, message: "닉네임 중복 확인을 해주세요."))
                 }
             }
-            .bind(to: alert)
-            .disposed(by: disposeBag)
-        
-        nickCheckResult
-            .map { result -> Bool in
-                guard case .success(let response) = result else { return false }
-                return !response.already
-            }
-            .bind(to: nickCheck)
-            .disposed(by: disposeBag)
-        
-        nickname
-            .distinctUntilChanged()
-            .withLatestFrom(UserManager.getInstance()) {
-                ($0, $1)
-            }
-            .filter { $0 != $1?.nickname }
-            .map { _ in
-                return false
-            }
-            .bind(to: nickCheck)
-            .disposed(by: disposeBag)
-        
-        // save button process
-        
-        let inputData = Observable
-            .combineLatest(UserManager.getInstance(), nickname, gender, biography, facebook, instagram, twitter)
-        
-        inputData
-            .map {
-                Profile(id: $0.0?.id ?? -1 , nickname: $0.1, gender: $0.2, biography: $0.3, facebook: $0.4, instagram: $0.5, twitter: $0.6)
-            }
-            .bind(to: editData)
-            .disposed(by: disposeBag)
-        
-        saveButtonTap
-            .withLatestFrom(inputData)
-            .filter { !($0.1 == "" || $0.2 == "" || $0.4 == "" || $0.5 == "" || $0.6 == "") }
-            .withLatestFrom(nickCheck)
-            .filter { $0 }
-            .withLatestFrom(editData)
-            .subscribe(onNext: { data in
-                UserManager.update(with: data)
-            })
-            .disposed(by: disposeBag)
         
         
-        saveButtonTap
-            .withLatestFrom(inputData)
-            .filter { $0.1 == "" || $0.2 == "" || $0.4 == "" || $0.5 == "" || $0.6 == ""}
-            .map { data -> (title: String, message: String) in
-                if data.1 == "" {
-                    return ("알림", "닉네임을 입력해주세요")
-                } else if data.2 == "" {
-                    return("알림", "성별을 선택해주세요")
-                } else if data.4 == "" {
-                    return ("알림", "페이스북 주소를 입력해주세요")
-                } else if data.5 == "" {
-                    return ("알림", "인스타그램 주소를 입력해주세요")
-                } else if data.6 == "" {
-                    return ("알림", "트위터 주소를 입력해주세요")
-                } else {
-                    return ("오류", "처리중에 오류가 발생하였습니다.")
-                }
-            }
-            .bind(to: alert)
-            .disposed(by: disposeBag)
-        
-        saveButtonTap
-            .withLatestFrom(nickCheck)
-            .filter { !$0 }
-            .map { _ in
-                return ("실패", "닉네임 확인 버튼을 눌러주세요")
-            }
-            .bind(to: alert)
-            .disposed(by: disposeBag)
-        
+        return Output(genderList: genderList, nickCheckResult: nickCheckResult, updateResult: updateResult)
     }
 }

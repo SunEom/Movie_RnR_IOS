@@ -34,15 +34,8 @@ class UserManager {
     }
     
     static func update(with profile: Profile) {
-        ProfileNetwork().updateProfile(with: profile)
-            .map { result -> [Profile] in
-                guard case .success(let response) = result else { return [] }
-                return response.data
-            }
-            .subscribe(onSuccess: { _ in
-                _ = UserRepository().getLoginRequest()
-            })
+        Observable.just(profile).withLatestFrom(user) { profile, user in Login(id: user!.id, password: user!.password, nickname: profile.nickname, gender: profile.gender, aboutId: user!.aboutId, biography: profile.biography, instagram: profile.instagram, facebook: profile.facebook, twitter: profile.twitter, my_id: user!.my_id)}
+            .bind(to: user)
             .disposed(by: disposeBag)
-            
     }
 }

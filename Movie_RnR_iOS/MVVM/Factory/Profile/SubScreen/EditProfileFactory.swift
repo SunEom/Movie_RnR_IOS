@@ -9,8 +9,7 @@ import Foundation
 
 struct EditProfileFactory {
     func getInstance() -> EditProfileViewController {
-        let vc = EditProfileViewController()
-        vc.viewModel = EditProfileViewModel()
+        let vc = EditProfileViewController(viewModel: EditProfileViewModel())
         return vc
     }
 }

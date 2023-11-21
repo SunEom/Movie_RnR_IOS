@@ -19,7 +19,7 @@ enum ProfileMenu: String {
 
 struct ProfileViewModel {
     private let disposeBag = DisposeBag()
-    private let repository: UserRepository
+    private let repository: ProfileRepository
     private let userID: Int
 
     struct Input {
@@ -36,7 +36,7 @@ struct ProfileViewModel {
         let selectedMenu: Driver<ProfileMenu>
     }
     
-    init(userID: Int,_ repository: UserRepository = UserRepository() ) {
+    init(userID: Int,_ repository: ProfileRepository = ProfileRepository() ) {
         self.userID = userID
         self.repository = repository
     }
