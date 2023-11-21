@@ -9,27 +9,46 @@ import RxSwift
 import RxCocoa
 
 struct DetailViewModel {
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    private let repository: DetailRepository
+    private let post: Post
+
+    struct Input {
+        let trigger: Driver<Void>
+    }
     
-    let post: Post!
-    
-    let cellList =  Driver<[String]>.just(["image","title","topStackView","overview","bottomStackview","comments"])
-        .asDriver(onErrorJustReturn: [])
-    
-    let detailData = PublishSubject<PostDetail?>()
-    
-    let refresh = PublishSubject<Void>()
+    struct Output {
+        let isMine: Driver<Bool>
+        let postDetail: Driver<PostDetail?>
+        let post: Post
+        let loading: Driver<Bool>
+    }
     
     init(_ post: Post, _ repository: DetailRepository = DetailRepository()) {
-        
         self.post = post
+        self.repository = repository
+    }
+    
+    func transform(input: Input) -> Output {
         
-        refresh
-            .flatMapLatest { repository.fetchPostDetail(post: post) }
-            .asObservable()
-            .bind(to: detailData)
-            .disposed(by: disposeBag)
-
+        let loading = BehaviorSubject(value: true)
         
+        let isMine = UserManager.getInstance().map { user in
+            if user == nil {
+                return false
+            } else {
+                return user!.id == post.user_id
+            }
+        }.asDriver(onErrorJustReturn: false)
+        
+        let postDetail = input.trigger
+            .do(onNext: { loading.onNext(true) })
+            .flatMapLatest {
+                repository.fetchPostDetail(post: post)
+                    .do(onSuccess: { _ in loading.onNext(false)})
+                    .asDriver(onErrorJustReturn: nil)
+            }
+        
+        return Output(isMine: isMine, postDetail: postDetail, post: post, loading: loading.asDriver(onErrorJustReturn: true))
     }
 }

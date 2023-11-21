@@ -66,8 +66,7 @@ final class SearchViewController: UIViewController {
         
         output.selected
             .drive(onNext: { post in
-                let vc = DetailViewController()
-                vc.viewModel = DetailViewModel(post)
+                let vc = DetailViewController(viewModel: DetailViewModel(post))
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)

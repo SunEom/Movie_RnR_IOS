@@ -9,8 +9,7 @@ import Foundation
 
 struct DetailFactory {
     func getInstance(post: Post) -> DetailViewController {
-        let vc = DetailViewController()
-        vc.viewModel = DetailViewModel(post)
+        let vc = DetailViewController(viewModel: DetailViewModel(post))
         return vc
     }
 }
