@@ -7,6 +7,8 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
+import SnapKit
 
 class WritePostViewController: UIViewController {
     
@@ -19,230 +21,232 @@ class WritePostViewController: UIViewController {
     let scrollView = UIScrollView()
     let contentView = UIView()
     
-    let titleLabel = UILabel()
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Title"
+        return label
+    }()
+    
     let titleTextField = UITextField()
     
-    let genreLabel = UILabel()
+    let genreLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Genres"
+        return label
+    }()
+    
     let genreStackView1 = UIStackView()
     let genreStackView2 = UIStackView()
     let genreStackView3 = UIStackView()
     let genreStackView4 = UIStackView()
     
-    let romanceButton = UIButton()
-    let actionButton = UIButton()
-    let comedyButton = UIButton()
-    let historicalButton = UIButton()
-    let horrorButton = UIButton()
-    let sfButton = UIButton()
-    let thrillerButton = UIButton()
-    let mysteryButton = UIButton()
-    let animationButton = UIButton()
-    let dramaButton = UIButton()
+    let romanceButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Romance", for: .normal)
+        return button
+    }()
     
+    let actionButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Action", for: .normal)
+        return button
+    }()
     
-    let rateLabel = UILabel()
-    let rateTextField = UITextField()
+    let comedyButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Comedy", for: .normal)
+        return button
+    }()
     
-    let overviewLabel = UILabel()
-    let overviewTextView = UITextView()
+    let historicalButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Historical", for: .normal)
+        return button
+    }()
     
-    let deleteButton = UIButton()
+    let horrorButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Horror", for: .normal)
+        return button
+    }()
+    
+    let sfButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Sci-Fi", for: .normal)
+        return button
+    }()
+    
+    let thrillerButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Thriller", for: .normal)
+        return button
+    }()
+    
+    let mysteryButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Mystery", for: .normal)
+        return button
+    }()
+    
+    let animationButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Animation", for: .normal)
+        return button
+    }()
+    
+    let dramaButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Drama", for: .normal)
+        return button
+    }()
+    
+    let rateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Rate"
+        return label
+    }()
+    
+    let rateTextField: UITextField = {
+        let textField = UITextField()
+        textField.keyboardType = .numberPad
+        return textField
+    }()
+    
+    let overviewLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Overview"
+        return label
+    }()
+    
+    let overviewTextView: UITextView = {
+        let textView = UITextView()
+        textView.textColor = .black
+        textView.backgroundColor = .white
+        return textView
+    }()
+    
+    let deleteButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "CarterOne", size: 15)
+        button.setTitle("Delete Post", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemRed
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layout()
         attribute()
-        bind()
+        bindViewModel()
         
     }
     
-    private func bind() {
-        // 게시글 수정인 경우 입력값을 기존값으로 초기화
-        viewModel.title
-            .take(1)
-            .bind(to: titleTextField.rx.text)
-            .disposed(by: disposeBag)
+    private func bindViewModel() {
+        let delete = PublishSubject<Void>()
         
-        viewModel.romance
-            .take(1)
-            .subscribe(onNext:{
-                if $0 {
-                    _ = self.genreButtonTap(btn: self.romanceButton)
-                }
+        let input = WritePostViewModel.Input(title: titleTextField.rx.text.orEmpty.asDriver(),
+                                             romanceTrigger: romanceButton.rx.tap.asDriver(),
+                                             actionTrigger: actionButton.rx.tap.asDriver(),
+                                             comedyTrigger: comedyButton.rx.tap.asDriver(),
+                                             historicalTrigger: historicalButton.rx.tap.asDriver(),
+                                             horrorTrigger: horrorButton.rx.tap.asDriver(),
+                                             sfTrigger: sfButton.rx.tap.asDriver(),
+                                             thrillerTrigger: thrillerButton.rx.tap.asDriver(),
+                                             mysteryTrigger: mysteryButton.rx.tap.asDriver(),
+                                             animationTrigger: animationButton.rx.tap.asDriver(),
+                                             dramaTrigger: dramaButton.rx.tap.asDriver(),
+                                             rate: rateTextField.rx.text.orEmpty.map { Double($0) ?? 0.0 }.asDriver(onErrorJustReturn: 0.0),
+                                             overview: overviewTextView.rx.text.orEmpty.asDriver(),
+                                             writeTrigger: saveButton.rx.tap.asDriver(),
+                                             deleteTrigger: delete.asDriver(onErrorJustReturn:()))
+        
+        let output = viewModel.transform(input: input)
+        
+        if let post = output.post {
+            titleTextField.rx.text.onNext(post.title)
+            rateTextField.rx.text.onNext ("\(post.rates)")
+            overviewTextView.rx.text.onNext(post.overview)
+        }
+        
+        output.romance
+            .drive(onNext: {[weak self] selected in
+                guard let self = self else { return }
+                genreButtonTap(btn: romanceButton, selected: selected)
             })
             .disposed(by: disposeBag)
         
-        viewModel.action
-            .take(1)
-            .subscribe(onNext:{
-                if $0 {
-                    _ = self.genreButtonTap(btn: self.actionButton)
-                }
+        output.action
+            .drive(onNext: {[weak self] selected in
+                guard let self = self else { return }
+                genreButtonTap(btn: actionButton, selected: selected)
             })
             .disposed(by: disposeBag)
         
-        viewModel.comedy
-            .take(1)
-            .subscribe(onNext:{
-                if $0 {
-                    _ = self.genreButtonTap(btn: self.comedyButton)
-                }
+        output.comedy
+            .drive(onNext: {[weak self] selected in
+                guard let self = self else { return }
+                genreButtonTap(btn: comedyButton, selected: selected)
             })
             .disposed(by: disposeBag)
         
-        viewModel.historical
-            .take(1)
-            .subscribe(onNext:{
-                if $0 {
-                    _ = self.genreButtonTap(btn: self.historicalButton)
-                }
+        output.historical
+            .drive(onNext: {[weak self] selected in
+                guard let self = self else { return }
+                genreButtonTap(btn: historicalButton, selected: selected)
             })
             .disposed(by: disposeBag)
         
-        viewModel.horror
-            .take(1)
-            .subscribe(onNext:{
-                if $0 {
-                    _ = self.genreButtonTap(btn: self.horrorButton)
-                }
+        output.horror
+            .drive(onNext: {[weak self] selected in
+                guard let self = self else { return }
+                genreButtonTap(btn: horrorButton, selected: selected)
             })
             .disposed(by: disposeBag)
         
-        viewModel.sf
-            .take(1)
-            .subscribe(onNext:{
-                if $0 {
-                    _ = self.genreButtonTap(btn: self.sfButton)
-                }
+        output.sf
+            .drive(onNext: {[weak self] selected in
+                guard let self = self else { return }
+                genreButtonTap(btn: sfButton, selected: selected)
             })
             .disposed(by: disposeBag)
         
-        viewModel.thriller
-            .take(1)
-            .subscribe(onNext:{
-                if $0 {
-                    _ = self.genreButtonTap(btn: self.thrillerButton)
-                }
+        output.thriller
+            .drive(onNext: {[weak self] selected in
+                guard let self = self else { return }
+                genreButtonTap(btn: thrillerButton, selected: selected)
             })
             .disposed(by: disposeBag)
         
-        viewModel.mystery
-            .take(1)
-            .subscribe(onNext:{
-                if $0 {
-                    _ = self.genreButtonTap(btn: self.mysteryButton)
-                }
+        output.mystery
+            .drive(onNext: {[weak self] selected in
+                guard let self = self else { return }
+                genreButtonTap(btn: mysteryButton, selected: selected)
             })
             .disposed(by: disposeBag)
         
-        viewModel.animation
-            .take(1)
-            .subscribe(onNext:{
-                if $0 {
-                    _ = self.genreButtonTap(btn: self.animationButton)
-                }
+        output.animation
+            .drive(onNext: {[weak self] selected in
+                guard let self = self else { return }
+                genreButtonTap(btn: animationButton, selected: selected)
             })
             .disposed(by: disposeBag)
         
-        viewModel.drama
-            .take(1)
-            .subscribe(onNext:{
-                if $0 {
-                    _ = self.genreButtonTap(btn: self.dramaButton)
-                }
+        output.drama
+            .drive(onNext: {[weak self] selected in
+                guard let self = self else { return }
+                genreButtonTap(btn: dramaButton, selected: selected)
             })
             .disposed(by: disposeBag)
         
-        viewModel.rate
-            .take(1)
-            .map { "\($0)" }
-            .bind(to: rateTextField.rx.text)
-            .disposed(by: disposeBag)
-        
-        viewModel.overview
-            .take(1)
-            .bind(to: overviewTextView.rx.text)
-            .disposed(by: disposeBag)
-        
-        
-        titleTextField.rx.text
-            .map { $0 ?? "" }
-            .bind(to: viewModel.title)
-            .disposed(by: disposeBag)
-        
-        //genre buttons
-        romanceButton.rx.tap
-            .map {self.genreButtonTap(btn: self.romanceButton)}
-            .bind(to: viewModel.romance)
-            .disposed(by: disposeBag)
-        
-        actionButton.rx.tap
-            .map {self.genreButtonTap(btn: self.actionButton)}
-            .bind(to: viewModel.action)
-            .disposed(by: disposeBag)
-        
-        comedyButton.rx.tap
-            .map {self.genreButtonTap(btn: self.comedyButton)}
-            .bind(to: viewModel.comedy)
-            .disposed(by: disposeBag)
-        
-        historicalButton.rx.tap
-            .map {self.genreButtonTap(btn: self.historicalButton)}
-            .bind(to: viewModel.historical)
-            .disposed(by: disposeBag)
-        
-        horrorButton.rx.tap
-            .map {self.genreButtonTap(btn: self.horrorButton)}
-            .bind(to: viewModel.horror)
-            .disposed(by: disposeBag)
-        
-        sfButton.rx.tap
-            .map {self.genreButtonTap(btn: self.sfButton)}
-            .bind(to: viewModel.sf)
-            .disposed(by: disposeBag)
-        
-        thrillerButton.rx.tap
-            .map {self.genreButtonTap(btn: self.thrillerButton)}
-            .bind(to: viewModel.thriller)
-            .disposed(by: disposeBag)
-        
-        mysteryButton.rx.tap
-            .map {self.genreButtonTap(btn: self.mysteryButton)}
-            .bind(to: viewModel.mystery)
-            .disposed(by: disposeBag)
-        
-        animationButton.rx.tap
-            .map {self.genreButtonTap(btn: self.animationButton)}
-            .bind(to: viewModel.animation)
-            .disposed(by: disposeBag)
-        
-        dramaButton.rx.tap
-            .map {self.genreButtonTap(btn: self.dramaButton)}
-            .bind(to: viewModel.drama)
-            .disposed(by: disposeBag)
-        
-        rateTextField.rx.text
-            .map { Double($0!) ?? 0.0 }
-            .bind(to: viewModel.rate)
-            .disposed(by: disposeBag)
-        
-        overviewTextView.rx.text
-            .map { $0 ?? "" }
-            .bind(to: viewModel.overview)
-            .disposed(by: disposeBag)
-        
-        saveButton.rx.tap
-            .bind(to: viewModel.saveButtonTap)
-            .disposed(by: disposeBag)
-        
-        viewModel.writePostRequestResult
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { result in
+        output.result
+            .drive(onNext: { [weak self] result in
+                guard let self = self else { return }
                 let alert: UIAlertController!
-                
+
                 var action: UIAlertAction!
-                
+
                 if result.isSuccess {
                     alert = UIAlertController(title: "성공", message: result.message, preferredStyle: .alert)
                     action = UIAlertAction(title: "확인", style: .default) { _ in
@@ -252,23 +256,28 @@ class WritePostViewController: UIViewController {
                     alert = UIAlertController(title: "실패", message: result.message, preferredStyle: .alert)
                     action = UIAlertAction(title: "확인", style: .default)
                 }
-                
+
                 alert.addAction(action)
-                
+
                 self.present(alert, animated: true)
             })
             .disposed(by: disposeBag)
         
+        if let post = output.post {
+            deleteButton.isHidden = false
+        } else {
+            deleteButton.isHidden = true
+        }
+        
         deleteButton.rx.tap
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                
+            .asDriver()
+            .drive(onNext: { [weak self] in
                 guard let self = self else { return }
                 
                 let alert = UIAlertController(title: "경고", message: "한번 삭제하면 복구할 수 없습니다.\n정말로 지우시겠습니까?", preferredStyle: .alert)
                 
                 let confirm = UIAlertAction(title: "삭제", style: .destructive) { _ in
-                    self.viewModel.deleteRequest.onNext(Void())
+                    delete.onNext(())
                 }
                 
                 let cancel = UIAlertAction(title: "취소", style: .cancel)
@@ -280,13 +289,13 @@ class WritePostViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.deletePostRequestResult
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { result in
+        output.deletResult
+            .drive(onNext: { [weak self] result in
+                guard let self = self else { return }
                 let alert: UIAlertController!
-                
+
                 var action: UIAlertAction!
-                
+
                 if result.isSuccess {
                     alert = UIAlertController(title: "성공", message: result.message, preferredStyle: .alert)
                     action = UIAlertAction(title: "확인", style: .default) { _ in
@@ -296,115 +305,13 @@ class WritePostViewController: UIViewController {
                     alert = UIAlertController(title: "실패", message: result.message, preferredStyle: .alert)
                     action = UIAlertAction(title: "확인", style: .default)
                 }
-                
+
                 alert.addAction(action)
-                
+
                 self.present(alert, animated: true)
             })
             .disposed(by: disposeBag)
         
-    }
-    
-    private func layout() {
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        view.addGestureRecognizer(tap)
-        
-        
-        view.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
-        scrollView.addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        
-        genreStackView1.addArrangedSubview(romanceButton)
-        genreStackView1.addArrangedSubview(actionButton)
-        genreStackView1.addArrangedSubview(comedyButton)
-        
-        genreStackView2.addArrangedSubview(historicalButton)
-        genreStackView2.addArrangedSubview(horrorButton)
-        genreStackView2.addArrangedSubview(sfButton)
-        
-        genreStackView3.addArrangedSubview(thrillerButton)
-        genreStackView3.addArrangedSubview(mysteryButton)
-        genreStackView3.addArrangedSubview(animationButton)
-        
-        genreStackView4.addArrangedSubview(dramaButton)
-        genreStackView4.addArrangedSubview(UIView())
-        genreStackView4.addArrangedSubview(UIView())
-        
-        [titleLabel, titleTextField, genreLabel, rateLabel, rateTextField, overviewLabel, overviewTextView, genreStackView1, genreStackView2, genreStackView3, genreStackView4, deleteButton]
-            .forEach {
-                contentView.addSubview($0)
-                $0.translatesAutoresizingMaskIntoConstraints = false
-            }
-        
-        [
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
-            
-            titleTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
-            titleTextField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            titleTextField.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            titleTextField.heightAnchor.constraint(equalToConstant: 40),
-            
-            genreLabel.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 15),
-            genreLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            genreLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            genreStackView1.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 15),
-            genreStackView1.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            genreStackView1.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            genreStackView2.topAnchor.constraint(equalTo: genreStackView1.bottomAnchor, constant: 15),
-            genreStackView2.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            genreStackView2.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            genreStackView3.topAnchor.constraint(equalTo: genreStackView2.bottomAnchor, constant: 15),
-            genreStackView3.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            genreStackView3.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            genreStackView4.topAnchor.constraint(equalTo: genreStackView3.bottomAnchor, constant: 15),
-            genreStackView4.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            genreStackView4.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            rateLabel.topAnchor.constraint(equalTo: genreStackView4.bottomAnchor, constant: 15),
-            rateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            rateLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            rateTextField.topAnchor.constraint(equalTo: rateLabel.bottomAnchor, constant: 15),
-            rateTextField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            rateTextField.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            rateTextField.heightAnchor.constraint(equalToConstant: 40),
-            
-            overviewLabel.topAnchor.constraint(equalTo: rateTextField.bottomAnchor, constant: 15),
-            overviewLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            overviewLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            overviewTextView.topAnchor.constraint(equalTo: overviewLabel.bottomAnchor, constant: 15),
-            overviewTextView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            overviewTextView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            overviewTextView.heightAnchor.constraint(equalToConstant: 200),
-            
-            deleteButton.topAnchor.constraint(equalTo: overviewTextView.bottomAnchor,constant: 50),
-            deleteButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            deleteButton.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            contentView.bottomAnchor.constraint(equalTo: deleteButton.bottomAnchor, constant: 15 )
-            
-        ].forEach { $0.isActive = true }
     }
     
     private func attribute() {
@@ -431,30 +338,6 @@ class WritePostViewController: UIViewController {
                 $0.autocapitalizationType = .none
                 $0.autocorrectionType = .no
             }
-        
-        overviewTextView.textColor = .black
-        overviewTextView.backgroundColor = .white
-        
-        
-        titleLabel.text = "Title"
-        genreLabel.text = "Genres"
-        rateLabel.text = "Rate"
-        overviewLabel.text = "Overview"
-        
-        rateTextField.keyboardType = .numberPad
-        rateTextField.delegate = self
-        
-        romanceButton.setTitle("Romance", for: .normal)
-        actionButton.setTitle("Action", for: .normal)
-        comedyButton.setTitle("Comedy", for: .normal)
-        historicalButton.setTitle("Historical", for: .normal)
-        horrorButton.setTitle("Horror", for: .normal)
-        sfButton.setTitle("Sci-Fi", for: .normal)
-        thrillerButton.setTitle("Thriller", for: .normal)
-        mysteryButton.setTitle("Mystery", for: .normal)
-        animationButton.setTitle("Animation", for: .normal)
-        dramaButton.setTitle("Drama", for: .normal)
-        
         
         [genreStackView1, genreStackView2, genreStackView3, genreStackView4]
             .forEach {
@@ -483,29 +366,119 @@ class WritePostViewController: UIViewController {
             }
         
         
-        deleteButton.isHidden = viewModel.post == nil
-        deleteButton.titleLabel?.font = UIFont(name: "CarterOne", size: 15)
-        deleteButton.setTitle("Delete Post", for: .normal)
-        deleteButton.setTitleColor(.white, for: .normal)
-        deleteButton.backgroundColor = .systemRed
     }
     
-    private func genreButtonTap(btn: UIButton) -> Bool {
-        btn.isSelected.toggle()
-        btn.backgroundColor = btn.isSelected ? UIColor(named: "headerColor") : UIColor(named: "mainColor")
-        return btn.isSelected
+    private func layout() {
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+        
+        
+        view.addSubview(scrollView)
+        
+        scrollView.addSubview(contentView)
+        
+        genreStackView1.addArrangedSubview(romanceButton)
+        genreStackView1.addArrangedSubview(actionButton)
+        genreStackView1.addArrangedSubview(comedyButton)
+        
+        genreStackView2.addArrangedSubview(historicalButton)
+        genreStackView2.addArrangedSubview(horrorButton)
+        genreStackView2.addArrangedSubview(sfButton)
+        
+        genreStackView3.addArrangedSubview(thrillerButton)
+        genreStackView3.addArrangedSubview(mysteryButton)
+        genreStackView3.addArrangedSubview(animationButton)
+        
+        genreStackView4.addArrangedSubview(dramaButton)
+        genreStackView4.addArrangedSubview(UIView())
+        genreStackView4.addArrangedSubview(UIView())
+        
+        [titleLabel, titleTextField, genreLabel, rateLabel, rateTextField, overviewLabel, overviewTextView, genreStackView1, genreStackView2, genreStackView3, genreStackView4, deleteButton]
+            .forEach { contentView.addSubview($0) }
+        
+        scrollView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.width.equalTo(scrollView)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.leading.equalTo(contentView).offset(15)
+            $0.trailing.equalTo(contentView).offset(-15)
+        }
+        
+        titleTextField.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(titleLabel)
+            $0.height.equalTo(40)
+        }
+        
+        genreLabel.snp.makeConstraints {
+            $0.top.equalTo(titleTextField.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(titleLabel)
+        }
+        
+        genreStackView1.snp.makeConstraints {
+            $0.top.equalTo(genreLabel.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(titleLabel)
+        }
+        
+        genreStackView2.snp.makeConstraints {
+            $0.top.equalTo(genreStackView1.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(titleLabel)
+        }
+        
+        genreStackView3.snp.makeConstraints {
+            $0.top.equalTo(genreStackView2.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(titleLabel)
+        }
+        
+        genreStackView4.snp.makeConstraints {
+            $0.top.equalTo(genreStackView3.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(titleLabel)
+        }
+        
+        rateLabel.snp.makeConstraints {
+            $0.top.equalTo(genreStackView4.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(titleLabel)
+        }
+        
+        rateTextField.snp.makeConstraints {
+            $0.top.equalTo(rateLabel.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(titleLabel)
+            $0.height.equalTo(40)
+        }
+        
+        overviewLabel.snp.makeConstraints {
+            $0.top.equalTo(rateTextField.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(titleLabel)
+        }
+        
+        overviewTextView.snp.makeConstraints {
+            $0.top.equalTo(overviewLabel.snp.bottom).offset(15)
+            $0.leading.trailing.equalTo(titleLabel)
+            $0.height.equalTo(200)
+        }
+        
+        deleteButton.snp.makeConstraints {
+            $0.top.equalTo(overviewTextView.snp.bottom).offset(50)
+            $0.leading.trailing.equalTo(titleLabel)
+            $0.bottom.equalTo(contentView.snp.bottom).offset(-15)
+        }
+    }
+    
+    private func genreButtonTap(btn: UIButton, selected: Bool){
+        if selected {
+            btn.backgroundColor = UIColor(named: "headerColor")
+        } else {
+            btn.backgroundColor = UIColor(named: "mainColor")
+        }
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
         view.endEditing(true)
-    }
-}
-
-extension WritePostViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let allowedCharacters = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: "."))
-        let characterSet = CharacterSet(charactersIn: string)
-        
-        return allowedCharacters.isSuperset(of: characterSet) && !(string == "." && rateTextField.text!.contains(".")) && (rateTextField.text! == "" || Double(rateTextField.text! + string)! <= 10 && (rateTextField.text!.count <= 2 || strcmp(string, "\\b") == -92 ))
     }
 }

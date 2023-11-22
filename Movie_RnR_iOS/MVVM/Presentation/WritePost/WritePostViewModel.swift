@@ -10,213 +10,234 @@ import RxCocoa
 import CoreText
 
 struct WritePostViewModel {
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    private let repository: PostRepository
+    private let post: Post?
     
-    var post: Post? = nil
-    
-    let title = BehaviorSubject<String>(value: "")
-    
-    let romance = BehaviorSubject<Bool>(value: false)
-    let action = BehaviorSubject<Bool>(value: false)
-    let comedy = BehaviorSubject<Bool>(value: false)
-    let historical = BehaviorSubject<Bool>(value: false)
-    let horror = BehaviorSubject<Bool>(value: false)
-    let sf = BehaviorSubject<Bool>(value: false)
-    let thriller = BehaviorSubject<Bool>(value: false)
-    let mystery = BehaviorSubject<Bool>(value: false)
-    let animation = BehaviorSubject<Bool>(value: false)
-    let drama = BehaviorSubject<Bool>(value: false)
-    
-    let rate = BehaviorSubject<Double>(value: 0)
-    let overview = BehaviorSubject<String>(value: "")
-    
-    let saveButtonTap = PublishSubject<Void>()
+    struct Input {
+        let title: Driver<String>
 
-    let writePostRequestResult = PublishSubject<PostRequestResult>()
-    
-    let deleteRequest = PublishSubject<Void>()
-    let deletePostRequestResult = PublishSubject<PostRequestResult>()
-    
-    init(post: Post? = nil) {
+        let romanceTrigger: Driver<Void>
+        let actionTrigger: Driver<Void>
+        let comedyTrigger: Driver<Void>
+        let historicalTrigger: Driver<Void>
+        let horrorTrigger: Driver<Void>
+        let sfTrigger: Driver<Void>
+        let thrillerTrigger: Driver<Void>
+        let mysteryTrigger: Driver<Void>
+        let animationTrigger: Driver<Void>
+        let dramaTrigger: Driver<Void>
         
-        // 게시글 수정의 경우 기존 값 초기화
-        if post != nil {
-            self.post = post
-            
-            title.onNext(post!.title)
+        let rate: Driver<Double>
+        let overview: Driver<String>
         
-            romance.onNext(post!.genres.lowercased().contains("romance"))
-            action.onNext(post!.genres.lowercased().contains("cction"))
-            comedy.onNext(post!.genres.lowercased().contains("comedy"))
-            historical.onNext(post!.genres.lowercased().contains("historical"))
-            horror.onNext(post!.genres.lowercased().contains("horror"))
-            sf.onNext(post!.genres.lowercased().contains("sci-fi"))
-            thriller.onNext(post!.genres.lowercased().contains("thriller"))
-            mystery.onNext(post!.genres.lowercased().contains("mystery"))
-            animation.onNext(post!.genres.lowercased().contains("animation"))
-            drama.onNext(post!.genres.lowercased().contains("drama"))
-            
-            rate.onNext(post!.rates)
-            overview.onNext(post!.overview)
-        }
-        
-        
-        let genres1 = Observable
-            .combineLatest(romance, action, comedy, historical, horror, sf)
-            
-        let genres2 = Observable
-            .combineLatest(sf, thriller, mystery, animation, drama)
-    
-        let genreString = Observable.combineLatest(genres1, genres2) {
-            return ($0.0, $0.1, $0.2, $0.3, $0.4, $1.0, $1.1, $1.2, $1.3, $1.4)
-        }
-        .map { (romance, action, comedy, historical, horror, sf, thriller, mystery, animation, drama) -> String in
-            var result = ""
-            
-            if romance {
-                result += "Romance, "
-            }
-            
-            if action {
-                result  += "Action, "
-            }
-
-            if comedy {
-                result += "Comedy, "
-            }
-            
-            if historical {
-                result += "Historical, "
-            }
-            
-            if horror {
-                result += "Horror, "
-            }
-            
-            if sf {
-                result += "Sci-Fi, "
-            }
-            
-            if thriller {
-                result += "Thriller, "
-            }
-            
-            if mystery {
-                result += "Mystery, "
-            }
-            
-            if animation {
-                result += "Animation, "
-            }
-            
-            if drama {
-                result += "Drama, "
-            }
-            
-            if result != "" {
-                result.removeLast(2)
-            }
-            
-            
-            return result
-        }
-
-        let inputData = Observable
-            .combineLatest(title, genreString, rate, overview )
-
-        
-        
-        // 입력 값 확인 결과 - 실패
-        saveButtonTap
-            .withLatestFrom(inputData)
-            .filter { (title, genre, rate, overview) in
-                return title == "" || genre == "" || rate == 0.0 || overview == ""
-            }
-            .map { (title, genre, rate, overview) -> PostRequestResult in
-                if title == "" {
-                    return PostRequestResult(isSuccess: false, message: "제목을 입력해주세요.")
-                }
-                else if genre == "" {
-                    return PostRequestResult(isSuccess: false, message: "1개 이상의 장르를 선택해주세요.")
-                }
-                else if rate == 0.0 {
-                    return PostRequestResult(isSuccess: false, message: "0.1점 이상의 평점을 입력해주세요.")
-                }
-                else if overview == "" {
-                    return PostRequestResult(isSuccess: false, message: "게시글 내용을 입력해주세요.")
-                }
-                else {
-                    return PostRequestResult(isSuccess: false, message: "처리중 오류가 발생하였습니다.")
-                }
-            }
-            .bind(to: writePostRequestResult)
-            .disposed(by: disposeBag)
-        
-        
-        // 입력값 확인 결과 - 성공
-        
-        let inputCheckSuccess = saveButtonTap
-            .withLatestFrom(inputData)
-            .filter { (title, genre, rate, overview) in
-                return !(title == "" || genre == "" || rate == 0.0 || overview == "")
-            }
-        
-        // 게시글 작성의 경우
-        inputCheckSuccess
-            .filter { _ in
-                return post == nil
-            }
-            .flatMapLatest(PostNetwork().createNewPost)
-            .map { result -> PostRequestResult in
-                switch result {
-                    case .success(_):
-                        return PostRequestResult(isSuccess: true, message: "게시글이 저장되었습니다.")
-                        
-                    case .failure(let error):
-                        return PostRequestResult(isSuccess: false, message: error.rawValue)
-                }
-            }
-            .bind(to: writePostRequestResult)
-            .disposed(by: disposeBag)
-        
-        //게시글 수정의 경우
-        inputCheckSuccess
-            .filter { _ in
-                return post != nil
-            }
-            .map { (post!.id, $0.0, $0.1, $0.2, $0.3) }
-            .flatMapLatest(PostNetwork().updatePost)
-            .map { result -> PostRequestResult in
-                switch result {
-                    case .success(_):
-                        return PostRequestResult(isSuccess: true, message: "게시글이 수정되었습니다.")
-                        
-                    case .failure(let error):
-                        return PostRequestResult(isSuccess: false, message: error.rawValue)
-                }
-            }
-            .bind(to: writePostRequestResult)
-            .disposed(by: disposeBag)
-        
-        deleteRequest
-            .flatMapLatest { PostNetwork().deletePost(postID: post!.id) }
-            .map { result -> PostRequestResult in
-                switch result {
-                    case .success(_):
-                        return PostRequestResult(isSuccess: true, message: "게시글이 삭제되었습니다.")
-                        
-                    case .failure(let error):
-                        return PostRequestResult(isSuccess: false, message: error.rawValue)
-                }
-            }
-            .bind(to: deletePostRequestResult)
-            .disposed(by: disposeBag)
+        let writeTrigger: Driver<Void>
+        let deleteTrigger: Driver<Void>
     }
     
-    
-}
+    struct Output {
+        let post: Post?
+        
+        let romance: Driver<Bool>
+        let action: Driver<Bool>
+        let comedy: Driver<Bool>
+        let historical: Driver<Bool>
+        let horror: Driver<Bool>
+        let sf: Driver<Bool>
+        let thriller: Driver<Bool>
+        let mystery: Driver<Bool>
+        let animation: Driver<Bool>
+        let drama: Driver<Bool>
+        
+        let result: Driver<RequestResult>
+        let deletResult: Driver<RequestResult>
+    }
 
-struct PostRequestResult {
-    let isSuccess: Bool
-    let message: String?
+    init(post: Post? = nil, _ repository: PostRepository = PostRepository()) {
+        self.post = post
+        self.repository = repository
+    }
+    
+    func transform(input: Input) -> Output {
+        let romanceState = BehaviorSubject<Bool>(value: false)
+        let actionState = BehaviorSubject<Bool>(value: false)
+        let comedyState = BehaviorSubject<Bool>(value: false)
+        let historicalState = BehaviorSubject<Bool>(value: false)
+        let horrorState = BehaviorSubject<Bool>(value: false)
+        let sfState = BehaviorSubject<Bool>(value: false)
+        let thrillerState = BehaviorSubject<Bool>(value: false)
+        let mysteryState = BehaviorSubject<Bool>(value: false)
+        let animationState = BehaviorSubject<Bool>(value: false)
+        let dramaState = BehaviorSubject<Bool>(value: false)
+        
+        if let post = post {
+            
+            if post.genres.lowercased().contains("romance"){
+                romanceState.onNext(true)
+            }
+            
+            if post.genres.lowercased().contains("action"){
+                actionState.onNext(true)
+            }
+            
+            if post.genres.lowercased().contains("comedy"){
+                comedyState.onNext(true)
+            }
+            
+            if post.genres.lowercased().contains("historical"){
+                historicalState.onNext(true)
+            }
+            
+            if post.genres.lowercased().contains("horror"){
+                horrorState.onNext(true)
+            }
+            
+            if post.genres.lowercased().contains("sci-fi"){
+                sfState.onNext(true)
+            }
+            
+            if post.genres.lowercased().contains("thriller"){
+                thrillerState.onNext(true)
+            }
+            
+            if post.genres.lowercased().contains("mystery"){
+                mysteryState.onNext(true)
+            }
+            
+            if post.genres.lowercased().contains("animation"){
+                animationState.onNext(true)
+            }
+            
+            if post.genres.lowercased().contains("drama"){
+                dramaState.onNext(true)
+            }
+            
+        }
+        
+        input.romanceTrigger
+            .asObservable()
+            .withLatestFrom(romanceState)
+            .map { !$0 }
+            .bind(to: romanceState)
+            .disposed(by: disposeBag)
+        
+        input.actionTrigger
+            .asObservable()
+            .withLatestFrom(actionState)
+            .map { !$0 }
+            .bind(to: actionState)
+            .disposed(by: disposeBag)
+        
+        input.comedyTrigger
+            .asObservable()
+            .withLatestFrom(comedyState)
+            .map { !$0 }
+            .bind(to: comedyState)
+            .disposed(by: disposeBag)
+        
+        input.historicalTrigger
+            .asObservable()
+            .withLatestFrom(historicalState)
+            .map { !$0 }
+            .bind(to: historicalState)
+            .disposed(by: disposeBag)
+        
+        input.horrorTrigger
+            .asObservable()
+            .withLatestFrom(horrorState)
+            .map { !$0 }
+            .bind(to: horrorState)
+            .disposed(by: disposeBag)
+        
+        input.sfTrigger
+            .asObservable()
+            .withLatestFrom(sfState)
+            .map { !$0 }
+            .bind(to: sfState)
+            .disposed(by: disposeBag)
+        
+        input.thrillerTrigger
+            .asObservable()
+            .withLatestFrom(thrillerState)
+            .map { !$0 }
+            .bind(to: thrillerState)
+            .disposed(by: disposeBag)
+        
+        input.mysteryTrigger
+            .asObservable()
+            .withLatestFrom(mysteryState)
+            .map { !$0 }
+            .bind(to: mysteryState)
+            .disposed(by: disposeBag)
+        
+        input.animationTrigger
+            .asObservable()
+            .withLatestFrom(animationState)
+            .map { !$0 }
+            .bind(to: animationState)
+            .disposed(by: disposeBag)
+        
+        input.dramaTrigger
+            .asObservable()
+            .withLatestFrom(dramaState)
+            .map { !$0 }
+            .bind(to: dramaState)
+            .disposed(by: disposeBag)
+    
+        let genreString = Observable.combineLatest(Observable.combineLatest(romanceState, actionState, comedyState, historicalState, horrorState), Observable.combineLatest(sfState, thrillerState, mysteryState, animationState, dramaState))
+            .map { (genres1, genres2) in
+                let (romance, action, comedy, historical, horror) = genres1
+                let (sf, thriller, mystery, animation, drama) = genres2
+                
+                var genres = [String]()
+                
+                
+                if romance { genres.append("Romance") }
+                if action { genres.append("Action") }
+                if comedy { genres.append("Comedy") }
+                if historical { genres.append("Historical") }
+                if horror { genres.append("Horror") }
+                if sf { genres.append("Sci-Fi") }
+                if thriller { genres.append("Thriller") }
+                if mystery { genres.append("Mystery") }
+                if animation { genres.append("Animation") }
+                if drama { genres.append("Drama") }
+                
+                return genres.joined(separator: ", ")
+            }
+            .asDriver(onErrorJustReturn: "")
+        
+        let result = input.writeTrigger
+            .filter { post == nil }
+            .withLatestFrom(Driver.combineLatest(input.title, genreString, input.rate, input.overview))
+            .flatMapLatest { title, genre, rate, overview in
+                if post == nil {
+                    repository.createNewPost(title: title, genres: genre, rates: rate, overview: overview)
+                        .asDriver(onErrorJustReturn: RequestResult(isSuccess: false, message: nil))
+                } else {
+                    repository.updatePost(id: post!.id, title: title, genres: genre, rates: rate, overview: overview)
+                        .asDriver(onErrorJustReturn: RequestResult(isSuccess: false, message: nil))
+                }
+                
+            }
+        
+        let deleteResult = input.deleteTrigger
+            .flatMapLatest { repository.deletePost(postID: post!.id).asDriver(onErrorJustReturn: RequestResult(isSuccess: false, message: nil)) }
+            
+        
+        return Output(post: post,
+                      romance: romanceState.asDriver(onErrorJustReturn: false),
+                      action: actionState.asDriver(onErrorJustReturn: false),
+                      comedy: comedyState.asDriver(onErrorJustReturn: false),
+                      historical: historicalState.asDriver(onErrorJustReturn: false),
+                      horror: horrorState.asDriver(onErrorJustReturn: false),
+                      sf: sfState.asDriver(onErrorJustReturn: false),
+                      thriller: thrillerState.asDriver(onErrorJustReturn: false),
+                      mystery: mysteryState.asDriver(onErrorJustReturn: false),
+                      animation: animationState.asDriver(onErrorJustReturn: false),
+                      drama: dramaState.asDriver(onErrorJustReturn: false),
+                      result: result,
+                      deletResult: deleteResult)
+    }
+    
 }

@@ -11,6 +11,33 @@ import RxCocoa
 
 struct PostRepository {
     
+    func deletePost(postID: Int) -> Observable<RequestResult> {
+        return PostNetwork().deletePost(postID: postID)
+            .map { result in
+                guard case .success = result else { return RequestResult(isSuccess: false, message: "오류가 발생했습니다.")}
+                return RequestResult(isSuccess: true, message: "삭제되었습니다!")
+            }
+            .asObservable()
+    }
+    
+    func createNewPost(title: String, genres: String, rates: Double, overview: String) -> Observable<RequestResult> {
+        return PostNetwork().createNewPost(with: (title, genres, rates, overview) )
+            .map { result in
+                guard case .success = result else { return RequestResult(isSuccess: false, message: "오류가 발생했습니다.")}
+                return RequestResult(isSuccess: true, message: "작성되었습니다!")
+            }
+            .asObservable()
+    }
+    
+    func updatePost(id: Int, title: String, genres: String, rates: Double, overview: String) -> Observable<RequestResult> {
+        return PostNetwork().updatePost(with: (id, title, genres, rates, overview))
+            .map { result in
+                guard case .success = result else { return RequestResult(isSuccess: false, message: "오류가 발생했습니다.")}
+                return RequestResult(isSuccess: true, message: "수정되었습니다!")
+            }
+            .asObservable()
+    }
+    
     func fetchRecentPostings() -> Observable<[Post]> {
         return PostNetwork().fetchRecentPosts()
             .asObservable()
