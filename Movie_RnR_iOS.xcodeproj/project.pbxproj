@@ -188,8 +188,9 @@
 				BF395F1F28AD454200C5F11F /* ProfileViewController.swift */,
 				BF395F2128AD454B00C5F11F /* ProfileViewModel.swift */,
 			);
-			path = Profile;
-			sourceTree = "<group>";
+			name = Profile;
+			path = Movie_RnR_iOS/Presentation/Profile;
+			sourceTree = SOURCE_ROOT;
 		};
 		BF3D53A828D85C8600E72CEC /* SubComponent */ = {
 			isa = PBXGroup;
@@ -242,8 +243,9 @@
 				BF451B7328B36F610076D3E9 /* WritePostViewController.swift */,
 				BF451B7528B36F680076D3E9 /* WritePostViewModel.swift */,
 			);
-			path = WritePost;
-			sourceTree = "<group>";
+			name = WritePost;
+			path = Movie_RnR_iOS/Presentation/WritePost;
+			sourceTree = SOURCE_ROOT;
 		};
 		BF49D97E28A6017C008C93B9 /* Login */ = {
 			isa = PBXGroup;
@@ -251,8 +253,9 @@
 				BF49D97F28A60189008C93B9 /* LoginViewController.swift */,
 				BF49D98128A601CD008C93B9 /* LoginViewModel.swift */,
 			);
-			path = Login;
-			sourceTree = "<group>";
+			name = Login;
+			path = Movie_RnR_iOS/Presentation/Login;
+			sourceTree = SOURCE_ROOT;
 		};
 		BF49D98928A802DB008C93B9 /* User */ = {
 			isa = PBXGroup;
@@ -301,8 +304,9 @@
 				BF6ED81628C44E140003BD60 /* JoinViewController.swift */,
 				BF6ED81828C44E190003BD60 /* JoinViewModel.swift */,
 			);
-			path = Join;
-			sourceTree = "<group>";
+			name = Join;
+			path = Movie_RnR_iOS/Presentation/Join;
+			sourceTree = SOURCE_ROOT;
 		};
 		BF9095B428A0A3DF00DA01B1 /* Presentation */ = {
 			isa = PBXGroup;
@@ -338,8 +342,9 @@
 				BF9095B628A0A40E00DA01B1 /* HomeViewController.swift */,
 				BF9095B928A0ADF300DA01B1 /* HomeViewModel.swift */,
 			);
-			path = Home;
-			sourceTree = "<group>";
+			name = Home;
+			path = Movie_RnR_iOS/Presentation/Home;
+			sourceTree = SOURCE_ROOT;
 		};
 		BF9095BC28A0AFF100DA01B1 /* Network */ = {
 			isa = PBXGroup;
@@ -374,8 +379,9 @@
 				BF9095C728A1003300DA01B1 /* PostCell */,
 				BF9095CC28A1155E00DA01B1 /* TitleCell */,
 			);
-			path = TableViewCell;
-			sourceTree = "<group>";
+			name = TableViewCell;
+			path = Movie_RnR_iOS/Presentation/TableViewCell;
+			sourceTree = SOURCE_ROOT;
 		};
 		BF9095C728A1003300DA01B1 /* PostCell */ = {
 			isa = PBXGroup;
@@ -401,8 +407,9 @@
 				BF9095CE28A124AE00DA01B1 /* SearchViewController.swift */,
 				BF9095D028A1299F00DA01B1 /* SearchViewModel.swift */,
 			);
-			path = Search;
-			sourceTree = "<group>";
+			name = Search;
+			path = Movie_RnR_iOS/Presentation/Search;
+			sourceTree = SOURCE_ROOT;
 		};
 		BF9095D228A1325E00DA01B1 /* Repository */ = {
 			isa = PBXGroup;
@@ -423,8 +430,9 @@
 				BF9095DF28A1389800DA01B1 /* DetailViewController.swift */,
 				BF9095E128A138B300DA01B1 /* DetailViewModel.swift */,
 			);
-			path = Detail;
-			sourceTree = "<group>";
+			name = Detail;
+			path = Movie_RnR_iOS/Presentation/Detail;
+			sourceTree = SOURCE_ROOT;
 		};
 		BF98ED5D28A2D296001E65F6 /* Comment */ = {
 			isa = PBXGroup;
@@ -433,8 +441,9 @@
 				BF98ED5228A2C80E001E65F6 /* CommentViewController.swift */,
 				BF98ED6028A2D2CA001E65F6 /* CommentViewModel.swift */,
 			);
-			path = Comment;
-			sourceTree = "<group>";
+			name = Comment;
+			path = Movie_RnR_iOS/Presentation/Comment;
+			sourceTree = SOURCE_ROOT;
 		};
 		BF9F1E7928AF29C7003C6993 /* SubComponents */ = {
 			isa = PBXGroup;
@@ -462,8 +471,9 @@
 				BF9F1E8028AF3AB0003C6993 /* WebViewController.swift */,
 				BF9F1E8228AF3B56003C6993 /* WebViewModel.swift */,
 			);
-			path = WebView;
-			sourceTree = "<group>";
+			name = WebView;
+			path = Movie_RnR_iOS/Presentation/WebView;
+			sourceTree = SOURCE_ROOT;
 		};
 		BF9F1E8428B07F34003C6993 /* ChangePassword */ = {
 			isa = PBXGroup;
@@ -480,8 +490,9 @@
 				BFB0016F28B46B2600FE6BF3 /* StartViewController.swift */,
 				BFB0017128B46B2D00FE6BF3 /* StartViewModel.swift */,
 			);
-			path = Start;
-			sourceTree = "<group>";
+			name = Start;
+			path = Movie_RnR_iOS/Presentation/Start;
+			sourceTree = SOURCE_ROOT;
 		};
 		D816FA1394C55BBEDB57F896 /* Pods */ = {
 			isa = PBXGroup;
