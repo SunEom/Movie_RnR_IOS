@@ -6,32 +6,30 @@
 //
 import Foundation
 import RxSwift
+import RxCocoa
 
-class CommentCellViewModel {
+struct CommentCellViewModel {
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    private let repository: CommentRepository
+    private let parentVM: CommentViewModel
+    private let comment: Comment
     
-    var parentViewController: CommentViewController!
-    
-    let data: Observable<Comment>
-    
-    let editRequest = PublishSubject<Void>()
-    let deleteRequest = PublishSubject<Void>()
-    
-    init(vc: CommentViewController, comment: Comment, repository: CommentRepository = CommentRepository()) {
-        self.parentViewController = vc;
+    struct Input {
         
-        data = Observable.of(comment)
-        
-        deleteRequest
-            .withLatestFrom(data)
-            .flatMapLatest { repository.deleteComment(commentId: $0.id) }
-            .subscribe(onNext: { [weak self] result in
-                guard let self = self else { return }
-                if result.isSuccess { self.parentViewController.viewModel.fetchComment.onNext(Void()) }
-                self.parentViewController.viewModel.deleteCommentRequestResult.onNext(result)
-            })
-            .disposed(by: disposeBag)
-            
+    }
+    
+    struct Output {
+        let comment: Comment
+    }
+    
+    init(vm: CommentViewModel, comment: Comment, repository: CommentRepository = CommentRepository()) {
+        self.repository = repository
+        self.parentVM = vm
+        self.comment = comment
+    }
+    
+    func transform() -> Output {
+        return Output(comment: comment)
     }
 }

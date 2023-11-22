@@ -9,8 +9,7 @@ import Foundation
 
 struct CommentFactory {
     func getInstance(postID: Int) -> CommentViewController {
-        let vc = CommentViewController()
-        vc.viewModel = CommentViewModel(postID: postID)
+        let vc = CommentViewController(viewModel: CommentViewModel(postID: postID))
         return vc
     }
 }

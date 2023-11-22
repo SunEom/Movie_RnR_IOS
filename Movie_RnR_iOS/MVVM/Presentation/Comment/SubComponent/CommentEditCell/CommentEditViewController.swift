@@ -49,7 +49,7 @@ class CommentEditViewController: UIViewController {
                     
                     let action = UIAlertAction(title: "확인", style: .default) { _ in
                         // 댓글이 수정되었을 때 댓글 재 조회
-                        self.viewModel.parentViewController.viewModel.fetchComment.onNext(Void()) // Code가 매우 별로..
+//                        self.viewModel.parentViewController.viewModel.fetchComment.onNext(Void()) // Code가 매우 별로..
                         self.dismiss(animated: true)
                     }
                     

@@ -7,49 +7,95 @@
 
 import UIKit
 import RxSwift
+import SnapKit
 
 class CommentViewController: UIViewController {
-    var viewModel: CommentViewModel!
+    private let viewModel: CommentViewModel
+    private let disposeBag = DisposeBag()
     
-    let disposeBag = DisposeBag()
-    let commentInputStackView = UIStackView()
-    let commentTextView = UITextView()
-    let commentButton = UIButton()
-    let tableView = UITableView()
-
+    private let loadingView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView()
+        view.backgroundColor = UIColor(named: "mainColor")
+        return view
+    }()
+    
+    private let commentInputStackView = UIStackView()
+    
+    private let commentTextView: UITextView = {
+        let textView = UITextView()
+        textView.textColor = .black
+        textView.backgroundColor = .white
+        return textView
+    }()
+    
+    private let commentButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor(named: "headerColor")
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("Save", for: .normal)
+        return button
+    }()
+    
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = UIColor(named: "mainColor")
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.register(CommentCellViewController.self, forCellReuseIdentifier: "CommentCell")
+        return tableView
+    }()
+    
+    init(viewModel: CommentViewModel!) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         attribute()
         layout()
-        bind()
+        bindViewModel()
     }
 
-    private func bind(){
-        viewModel.cellData
-            .observe(on: MainScheduler.instance)
-            .asDriver(onErrorJustReturn: [])
-            .drive(tableView.rx.items) { tv, row, comment in
+    private func bindViewModel(){
+        
+        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:))).map { _ in Void() }.asDriver(onErrorJustReturn: Void())
+        
+        let input = CommentViewModel.Input(trigger: viewWillAppear,
+                                           createTrigger: commentButton.rx.tap.asDriver(),
+                                           content: commentTextView.rx.text.orEmpty.asDriver())
+        
+        let output = viewModel.transfrom(input: input)
+        
+        output.loading
+            .drive(onNext: {[weak self] loading in
+                if loading {
+                    self?.loadingView.startAnimating()
+                    self?.loadingView.isHidden = false
+                } else {
+                    self?.loadingView.stopAnimating()
+                    self?.loadingView.isHidden = true
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output.comments
+            .drive(tableView.rx.items) {[weak self] tv, row, comment in
                 let indexPath = IndexPath(row: row, section: 0)
-                let cell = CommentCellFactory().getInstance(viewController: self, tableView: tv, indexPath: indexPath, comment: comment)
+                guard let self = self, let cell = tv.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentCellViewController else { return UITableViewCell() }
+                cell.cellInit(viewModel: CommentCellViewModel(vm: self.viewModel, comment: comment))
                 cell.selectionStyle = .none
                 
                 return cell
             }
             .disposed(by: disposeBag)
-        
-        commentTextView.rx.text
-            .map { $0 ?? ""}
-            .bind(to: viewModel.content)
-            .disposed(by: disposeBag)
-        
-        commentButton.rx.tap
-            .bind(to: viewModel.saveButotnTap)
-            .disposed(by: disposeBag)
-        
-        viewModel.createCommentRequestResult
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
+
+        output.createResult
+            .drive(onNext: {
                 if $0.isSuccess {
                     self.commentTextView.text = ""
                 } else {
@@ -64,53 +110,40 @@ class CommentViewController: UIViewController {
     
     
     private func attribute() {
-    
         title = "Comments"
-        
         view.backgroundColor = UIColor(named: "mainColor")
-    
-        
-        commentInputStackView.addArrangedSubview(commentTextView)
-        commentInputStackView.addArrangedSubview(commentButton)
-        commentInputStackView.alignment = .fill
-        
-        commentTextView.textColor = .black
-        commentTextView.backgroundColor = .white
-        
-        commentButton.backgroundColor = UIColor(named: "headerColor")
-        commentButton.setTitleColor(.white, for: .normal)
-        commentButton.setTitle("Save", for: .normal)
-        
-        tableView.backgroundColor = UIColor(named: "mainColor")
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        tableView.register(CommentCellViewController.self, forCellReuseIdentifier: "CommentCell")
-        
     }
     
     private func layout() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         view.addGestureRecognizer(tap)
         
-        [ commentInputStackView, tableView].forEach{
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview($0)
+        commentInputStackView.addArrangedSubview(commentTextView)
+        commentInputStackView.addArrangedSubview(commentButton)
+        
+        [ commentInputStackView, tableView, loadingView].forEach { view.addSubview($0) }
+        
+        loadingView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        [
-            
-            commentInputStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width-30),
-            commentInputStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            commentInputStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            commentInputStackView.heightAnchor.constraint(equalToConstant: 100),
-            
-            commentButton.widthAnchor.constraint(equalToConstant: 100),
-            
-            tableView.topAnchor.constraint(equalTo: commentInputStackView.bottomAnchor, constant: 20),
-            tableView.widthAnchor.constraint(equalTo: commentInputStackView.widthAnchor),
-            tableView.centerXAnchor.constraint(equalTo: commentInputStackView.centerXAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-        ].forEach { $0.isActive = true}
+        commentInputStackView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(15)
+            $0.leading.equalTo(view).offset(15)
+            $0.trailing.equalTo(view).offset(-15)
+            $0.height.equalTo(100)
+        }
+        
+        commentButton.snp.makeConstraints {
+            $0.width.equalTo(100)
+        }
+        
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(commentInputStackView.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(commentInputStackView)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {

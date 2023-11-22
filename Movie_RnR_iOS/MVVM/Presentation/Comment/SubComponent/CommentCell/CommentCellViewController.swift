@@ -10,146 +10,106 @@ import Presentr
 
 class CommentCellViewController: UITableViewCell {
     
-    let presenter: Presentr = {
-        let presenter = Presentr(presentationType: .bottomHalf)
-        presenter.keyboardTranslationType = .moveUp
-        presenter.roundCorners = true
-        presenter.cornerRadius = 20
-        return presenter
+    private var viewModel: CommentCellViewModel!
+    
+    private let disposeBag = DisposeBag()
+
+    private let stackView = UIStackView()
+    private let nicknameLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 13)
+        return label
     }()
     
-    var viewModel: CommentCellViewModel!
+//    private let buttonStackView: UIStackView = {
+//        let stackView = UIStackView()
+//        stackView.spacing = 10
+//        return stackView
+//    }()
+//    
+//    private let editButton: UIButton = {
+//        let button = UIButton()
+//        button.tintColor = .black
+//        button.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
+//        button.setTitleColor(.black, for: .normal)
+//        return button
+//    }()
+//    
+//    private let deleteButton: UIButton = {
+//        let button = UIButton()
+//        button.tintColor = .black
+//        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+//        button.setTitleColor(.black, for: .normal)
+//        return button
+//    }()
     
-    let disposeBag = DisposeBag()
+    private let contentsTextView: UITextView = {
+        let textView = UITextView()
+        textView.textColor = .black
+        textView.font = .systemFont(ofSize: 13)
+        textView.isScrollEnabled = false
+        textView.backgroundColor = UIColor(named: "mainColor")
+        textView.textContainer.lineFragmentPadding = 0
+        return textView
+    }()
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 10)
+        return label
+    }()
+    
+    
 
-    let stackView = UIStackView()
-    let nicknameLabel = UILabel()
-    let buttonStackView = UIStackView()
-    let editButton = UIButton()
-    let deleteButton = UIButton()
     
-    let contentsTextView = UITextView()
-    let dateLabel = UILabel()
-    
-    func cellInit() {
+    func cellInit(viewModel: CommentCellViewModel) {
+        self.viewModel = viewModel
         setUp()
         bind()
     }
     
     private func bind() {
         
-        viewModel.data
-            .map { $0.nickname }
-            .bind(to: nicknameLabel.rx.text)
-            .disposed(by: disposeBag)
+        let output = viewModel.transform()
         
-        viewModel.data
-            .map { $0.contents }
-            .bind(to: contentsTextView.rx.text)
-            .disposed(by: disposeBag)
-        
-        viewModel.data
-            .map { self.dateFormat(with: $0.created) }
-            .bind(to: dateLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        deleteButton.rx.tap
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { _ in
-                let alert = UIAlertController(title: "주의", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
-                let confirm = UIAlertAction(title: "삭제", style: .destructive) { _ in
-                    self.viewModel.deleteRequest.onNext(Void())
-                }
-                let cancel = UIAlertAction(title: "취소", style: .cancel)
-                
-                alert.addAction(confirm)
-                alert.addAction(cancel)
-                
-                self.viewModel.parentViewController.present(alert, animated: true)
-                
-            })
-            .disposed(by: disposeBag)
-        
-        editButton.rx.tap
-            .observe(on: MainScheduler.instance)
-            .withLatestFrom(viewModel.data)
-            .subscribe(onNext: { [weak self] comment in
-                guard let self = self else { return }
-                let vc = CommentEditViewFactory().getInstance(comment: comment, parentViewController: self.viewModel.parentViewController)
-                self.viewModel.parentViewController.customPresentViewController(self.presenter, viewController: vc, animated: true, completion: nil)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.data
-            .withLatestFrom(UserManager.getInstance()) {
-                if let id = $1?.id {
-                    return $0.commenter != id
-                } else  {
-                    return true
-                }
-            }
-            .bind(to: buttonStackView.rx.isHidden)
-            .disposed(by: disposeBag)
-        
+        nicknameLabel.text = output.comment.nickname
+        contentsTextView.text = output.comment.contents
+        dateLabel.text = dateFormat(with: output.comment.created)
+
     }
     
     private func setUp() {
         // attribute
         backgroundColor = UIColor(named: "mainColor")
+    
         
-        editButton.tintColor = .black
-        editButton.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
-        editButton.setTitleColor(.black, for: .normal)
-        
-        deleteButton.tintColor = .black
-        deleteButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-        deleteButton.setTitleColor(.black, for: .normal)
-        
-        [editButton, deleteButton].forEach { $0.titleLabel?.font = .systemFont(ofSize: 14) }
-        
-        buttonStackView.addArrangedSubview(editButton)
-        buttonStackView.addArrangedSubview(deleteButton)
-        buttonStackView.alignment = .fill
-        buttonStackView.distribution = .fillEqually
-        buttonStackView.spacing = 10
-        
+//        [editButton, deleteButton].forEach { $0.titleLabel?.font = .systemFont(ofSize: 14) }
+                
         stackView.addArrangedSubview(nicknameLabel)
-        stackView.addArrangedSubview(buttonStackView)
-        stackView.alignment = .fill
-        stackView.distribution = .fill
+//        stackView.addArrangedSubview(buttonStackView)
         
-        
-        nicknameLabel.textColor = .black
-        nicknameLabel.font = .systemFont(ofSize: 13)
-        
-        
-        contentsTextView.textColor = .black
-        contentsTextView.font = .systemFont(ofSize: 13)
-        contentsTextView.isScrollEnabled = false
-        contentsTextView.backgroundColor = UIColor(named: "mainColor")
-        contentsTextView.textContainer.lineFragmentPadding = 0
-        
-        dateLabel.textColor = .black
-        dateLabel.font = .systemFont(ofSize: 10)
-        
+//        buttonStackView.addArrangedSubview(editButton)
+//        buttonStackView.addArrangedSubview(deleteButton)
+    
         // layout
         [stackView, contentsTextView, dateLabel].forEach {
             contentView.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        [
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
-            buttonStackView.widthAnchor.constraint(equalToConstant: 60),
-            
-            contentsTextView.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor),
-            dateLabel.topAnchor.constraint(equalTo: contentsTextView.bottomAnchor),
+        stackView.snp.makeConstraints {
+            $0.top.equalTo(contentView).offset(15)
+            $0.leading.trailing.equalTo(contentView)
+        }
         
-            contentView.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 15),
-        ].forEach { $0.isActive = true }
+        contentsTextView.snp.makeConstraints {
+            $0.top.equalTo(nicknameLabel.snp.bottom)
+        }
+        
+        dateLabel.snp.makeConstraints {
+            $0.top.equalTo(contentsTextView.snp.bottom)
+            $0.bottom.equalTo(contentView).offset(-15)
+        }
     }
     
     private func dateFormat(with: String) -> String {

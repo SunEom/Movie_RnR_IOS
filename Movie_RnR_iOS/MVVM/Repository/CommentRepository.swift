@@ -19,8 +19,10 @@ struct CommentRepository {
             .asObservable()
     }
     
-    func createNewComment(id: Int, contents: String) -> Observable<RequestResult> {
-        return CommentNetwork().createNewComment(with: (id, contents))
+    func createNewComment(user: Login?, contents: String) -> Observable<RequestResult> {
+        guard let user = user else { return Observable.just(RequestResult(isSuccess: false, message: "로그인을 해주세요."))}
+        
+        return CommentNetwork().createNewComment(with: (user.id, contents))
             .compactMap{ result in
                 switch result {
                     case .success(_):

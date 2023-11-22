@@ -9,10 +9,9 @@ import Foundation
 import UIKit
 
 struct CommentCellFactory {
-    func getInstance(viewController: CommentViewController, tableView:UITableView, indexPath: IndexPath, comment: Comment) -> CommentCellViewController {
+    func getInstance(vm: CommentViewModel, tableView:UITableView, indexPath: IndexPath, comment: Comment) -> CommentCellViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CommentCellViewController
-        cell.viewModel = CommentCellViewModel(vc: viewController, comment: comment)
-        cell.cellInit()
+        cell.cellInit(viewModel: CommentCellViewModel(vm: vm, comment: comment))
         return cell
     }
 }

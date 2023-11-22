@@ -8,55 +8,48 @@
 import RxCocoa
 import RxSwift
 
-class CommentViewModel {
-    let disposeBag = DisposeBag()
+struct CommentViewModel {
+    private let disposeBag = DisposeBag()
+    private let repository: CommentRepository
+    private let postID: Int!
     
-    let postID: Int!
+    struct Input {
+        let trigger: Driver<Void>
+        let createTrigger: Driver<Void>
+        let content: Driver<String>
+    }
     
-    let cellData = PublishSubject<[Comment]>()
-    
-    let content = BehaviorSubject<String>(value: "")
-    
-    let saveButotnTap = PublishSubject<Void>()
-    
-    let createCommentRequestResult = PublishSubject<RequestResult>()
-    let deleteCommentRequestResult = PublishSubject<RequestResult>()
-    
-    let fetchComment = PublishSubject<Void>()
+    struct Output {
+        let comments: Driver<[Comment]>
+        let createResult: Driver<RequestResult>
+        let loading: Driver<Bool>
+    }
     
     init(postID: Int, repository: CommentRepository = CommentRepository()) {
-        
+        self.repository = repository
         self.postID = postID
+    }
+    
+    func transfrom(input: Input) -> Output {
+        let loading = PublishSubject<Bool>()
         
-        fetchComment
-            .flatMapLatest{ repository.fetchComment(postID: self.postID) }
-            .bind(to: cellData)
-            .disposed(by: disposeBag)
-        
-        fetchComment.onNext(Void()) // 최초 댓글 조회
-        
-        saveButotnTap
-            .withLatestFrom(content.asObservable())
-            .filter { $0 == "" }
-            .map { _ in
-                return RequestResult(isSuccess: false, message: "댓글의 내용을 입력해주세요.")
+        let comments = input.trigger
+            .do(onNext: { _ in loading.onNext(true)} )
+            .flatMapLatest {
+                repository.fetchComment(postID: postID)
+                    .do(onNext: { _ in loading.onNext(false)} )
+                    .asDriver(onErrorJustReturn: [])
             }
-            .bind(to: createCommentRequestResult)
-            .disposed(by: disposeBag)
         
-        saveButotnTap
-            .withLatestFrom(content.asObservable())
-            .filter { $0 != "" }
-            .map { (postID, $0) }
-            .flatMapLatest(repository.createNewComment)
-            .subscribe(onNext: { [weak self] result in
-                guard let self = self else { return }
-                if result.isSuccess {
-                    self.fetchComment.onNext(Void())
-                }
-                self.createCommentRequestResult.onNext(result)
-            })
-            .disposed(by: disposeBag)
+        let createResult = input.createTrigger
+            .withLatestFrom(Driver.combineLatest(UserManager.getInstance().asDriver(onErrorJustReturn: nil), input.content))
+            .do(onNext: { _ in loading.onNext(true)})
+            .flatMapLatest { user, content in
+                repository.createNewComment(user: user, contents: content)
+                    .do(onNext: { _ in loading.onNext(false)})
+                    .asDriver(onErrorJustReturn: RequestResult(isSuccess: false, message: nil))
+            }
         
+        return Output(comments: comments, createResult: createResult, loading: loading.asDriver(onErrorJustReturn: false))
     }
 }
