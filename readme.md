@@ -27,8 +27,3 @@
 <img src="https://github.com/SunEom/Movie_RnR_iOS/assets/75257785/c3ac16e9-dc4f-4e5a-84ec-dd4985a5ebfd" width="200">
 <img src="https://github.com/SunEom/Movie_RnR_iOS/assets/75257785/446e05cf-a369-4296-98d7-cbe76623dcbf" width="200">
 <img src="https://github.com/SunEom/Movie_RnR_iOS/assets/75257785/82fe0ea0-fb3c-4175-b2f5-1fc13e5b0179" width="200">
-
----
-<del>~2022.08.07 : MVC 패턴 구현</del>
-
-2022.08.08 ~ : MVVM 패턴 구현
