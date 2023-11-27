@@ -19,7 +19,7 @@
 * MVVM
 * RxSwift
 * URLSession(+RxSwift)을 이용한 Http 통신
-* 코드를 이용한 Layout
+* SnapKit
 
 <img src="https://github.com/SunEom/Movie_RnR_iOS/assets/75257785/8dd0f526-7837-48da-8ed8-2194bd564b37" width="200">
 <img src="https://github.com/SunEom/Movie_RnR_iOS/assets/75257785/9cedf3d9-c2e3-49f7-9ae6-305df4ae0c88" width="200">
